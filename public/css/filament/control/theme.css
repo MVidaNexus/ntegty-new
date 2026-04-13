@@ -1,0 +1,1086 @@
+/* 
+ * نتيجتي - لوحة التحكم
+ * تصميم عصري وإبداعي مع Font Awesome
+ */
+
+/* =============================================
+   CSS Variables & Theme Colors
+   ============================================= */
+:root {
+    --font-primary: 'Cairo', sans-serif;
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --primary-light: rgba(16, 185, 129, 0.1);
+    --secondary: #6366f1;
+    --accent: #f59e0b;
+    --gradient-1: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+    --gradient-2: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    --gradient-3: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 40px rgba(16, 185, 129, 0.15);
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+}
+
+body,
+.fi-body {
+    font-family: var(--font-primary) !important;
+}
+
+/* =============================================
+   Sidebar - Modern Glass Effect
+   ============================================= */
+.fi-sidebar {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+.fi-sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+.fi-sidebar-header {
+    padding: 1.5rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.fi-sidebar-nav-groups {
+    padding: 1rem !important;
+}
+
+.fi-sidebar-group-label {
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-size: 0.65rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    padding: 1rem 0.75rem 0.5rem !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fi-sidebar-group-label::before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: var(--gradient-1);
+    border-radius: 1px;
+}
+
+.fi-sidebar-item {
+    margin-bottom: 4px !important;
+}
+
+.fi-sidebar-item-button {
+    border-radius: var(--radius-lg) !important;
+    padding: 0.875rem 1rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.fi-sidebar-item-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fi-sidebar-item-button:hover {
+    transform: translateX(-4px);
+}
+
+.fi-sidebar-item-button:hover::before {
+    opacity: 0.15;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-button {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(5, 150, 105, 0.15) 100%) !important;
+    border-right: 3px solid transparent !important;
+    border-image: var(--gradient-1) 1 !important;
+    box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.fi-sidebar-item-label {
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    position: relative;
+    z-index: 1;
+}
+
+.fi-sidebar-item-icon {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* =============================================
+   Top Navigation - Floating Style
+   ============================================= */
+.fi-topbar {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: none !important;
+    box-shadow: var(--shadow-md) !important;
+    margin: 0.75rem;
+    margin-bottom: 0;
+    border-radius: var(--radius-lg);
+}
+
+.dark .fi-topbar {
+    background: rgba(15, 23, 42, 0.98) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* =============================================
+   Main Content Area
+   ============================================= */
+.fi-main {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    min-height: 100vh;
+}
+
+.dark .fi-main {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+/* =============================================
+   Cards & Sections - Neumorphic Style
+   ============================================= */
+.fi-section {
+    border-radius: var(--radius-xl) !important;
+    border: none !important;
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    overflow: hidden;
+    background: white;
+    position: relative;
+}
+
+.fi-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fi-section:hover::before {
+    opacity: 1;
+}
+
+.dark .fi-section {
+    background: rgba(30, 41, 59, 0.9) !important;
+    box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.fi-section-header {
+    padding: 1.25rem 1.5rem !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    background: linear-gradient(to bottom, rgba(16, 185, 129, 0.03), transparent) !important;
+}
+
+.fi-section-header-heading {
+    font-weight: 800 !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fi-section-content {
+    padding: 1.5rem !important;
+}
+
+/* =============================================
+   Stats Cards - Glassmorphism
+   ============================================= */
+.fi-wi-stats-overview-stat {
+    border-radius: var(--radius-xl) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: var(--shadow-md) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    overflow: hidden;
+    position: relative;
+    background: white !important;
+}
+
+.fi-wi-stats-overview-stat::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-lg), var(--shadow-glow) !important;
+}
+
+.fi-wi-stats-overview-stat:hover::before {
+    opacity: 1;
+}
+
+.dark .fi-wi-stats-overview-stat {
+    background: rgba(30, 41, 59, 0.95) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.fi-wi-stats-overview-stat-value {
+    font-size: 2.25rem !important;
+    font-weight: 900 !important;
+    line-height: 1.2 !important;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fi-wi-stats-overview-stat-label {
+    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    color: #64748b;
+}
+
+.fi-wi-stats-overview-stat-icon {
+    width: 3rem !important;
+    height: 3rem !important;
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    background: var(--primary-light);
+}
+
+/* =============================================
+   Tables - Clean Modern Style
+   ============================================= */
+.fi-ta {
+    border-radius: var(--radius-xl) !important;
+    overflow: hidden;
+    box-shadow: var(--shadow-md) !important;
+    border: none !important;
+}
+
+.fi-ta-header-cell {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+    color: white !important;
+    font-weight: 800 !important;
+    font-size: 0.75rem !important;
+    padding: 1.125rem 1rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    position: relative;
+}
+
+.fi-ta-header-cell:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.fi-ta-row {
+    transition: all 0.2s ease !important;
+    position: relative;
+}
+
+.fi-ta-row::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gradient-1);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.fi-ta-row:hover {
+    background: var(--primary-light) !important;
+}
+
+.fi-ta-row:hover::before {
+    opacity: 1;
+}
+
+.fi-ta-cell {
+    padding: 1rem !important;
+    font-size: 0.875rem;
+}
+
+/* =============================================
+   Buttons - Gradient Style
+   ============================================= */
+.fi-btn {
+    border-radius: var(--radius-md) !important;
+    font-weight: 700 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: var(--shadow-sm) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.fi-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.fi-btn:hover::before {
+    left: 100%;
+}
+
+.fi-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md) !important;
+}
+
+.fi-btn:active {
+    transform: translateY(0);
+}
+
+.fi-btn-primary {
+    background: var(--gradient-1) !important;
+    border: none !important;
+}
+
+.fi-btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+}
+
+.fi-btn-warning {
+    background: var(--gradient-3) !important;
+}
+
+/* =============================================
+   Forms - Modern Inputs
+   ============================================= */
+.fi-input,
+.fi-select,
+.fi-textarea {
+    border-radius: var(--radius-md) !important;
+    border: 2px solid rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.3s ease !important;
+    font-size: 0.9rem !important;
+    padding: 0.75rem 1rem !important;
+}
+
+.fi-input:hover,
+.fi-select:hover,
+.fi-textarea:hover {
+    border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+.fi-input:focus,
+.fi-select:focus,
+.fi-textarea:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px var(--primary-light), var(--shadow-sm) !important;
+    outline: none !important;
+}
+
+.fi-input-wrp {
+    position: relative;
+}
+
+/* =============================================
+   Badges & Tags - Pill Style
+   ============================================= */
+.fi-badge {
+    border-radius: 9999px !important;
+    font-weight: 700 !important;
+    font-size: 0.7rem !important;
+    padding: 0.35rem 0.875rem !important;
+    box-shadow: var(--shadow-sm);
+    letter-spacing: 0.02em;
+}
+
+.fi-badge-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+}
+
+.fi-badge-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+}
+
+.fi-badge-warning {
+    background: var(--gradient-3) !important;
+    color: white !important;
+}
+
+/* =============================================
+   Modals - Floating Cards
+   ============================================= */
+.fi-modal-window {
+    border-radius: var(--radius-xl) !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25), 0 0 60px rgba(16, 185, 129, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fi-modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.5rem !important;
+}
+
+/* =============================================
+   Notifications - Toast Style
+   ============================================= */
+.fi-notification {
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-lg), 0 0 30px rgba(16, 185, 129, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* =============================================
+   Dashboard Page Header
+   ============================================= */
+.fi-page-header {
+    margin-bottom: 2rem !important;
+    padding: 1.5rem;
+    background: white;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+}
+
+.dark .fi-page-header {
+    background: rgba(30, 41, 59, 0.9);
+}
+
+.fi-page-header-heading {
+    font-size: 2rem !important;
+    font-weight: 900 !important;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.fi-page-header-heading::before {
+    content: '\f0e4';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 1.5rem;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* =============================================
+   Widget Headers with Icons
+   ============================================= */
+.fi-wi-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: linear-gradient(to bottom, rgba(16, 185, 129, 0.02), transparent);
+}
+
+.fi-wi-header-heading {
+    font-weight: 800 !important;
+    font-size: 1rem !important;
+}
+
+/* =============================================
+   Animations - Smooth & Professional
+   ============================================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(16, 185, 129, 0.4);
+    }
+}
+
+.fi-section,
+.fi-wi-stats-overview-stat,
+.fi-ta {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.fi-wi-stats-overview-stat:nth-child(1) { animation-delay: 0.1s; }
+.fi-wi-stats-overview-stat:nth-child(2) { animation-delay: 0.2s; }
+.fi-wi-stats-overview-stat:nth-child(3) { animation-delay: 0.3s; }
+.fi-wi-stats-overview-stat:nth-child(4) { animation-delay: 0.4s; }
+.fi-wi-stats-overview-stat:nth-child(5) { animation-delay: 0.5s; }
+.fi-wi-stats-overview-stat:nth-child(6) { animation-delay: 0.6s; }
+
+/* =============================================
+   Custom Scrollbar - Minimalist
+   ============================================= */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(16, 185, 129, 0.3);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(16, 185, 129, 0.5);
+}
+
+/* =============================================
+   RTL Support
+   ============================================= */
+[dir="rtl"] .fi-sidebar-item-button:hover {
+    transform: translateX(4px);
+}
+
+[dir="rtl"] .fi-sidebar-item-active .fi-sidebar-item-button {
+    border-right: none !important;
+    border-left: 3px solid transparent !important;
+    border-image: var(--gradient-1) 1 !important;
+}
+
+[dir="rtl"] .fi-ta-row::before {
+    right: auto;
+    left: 0;
+}
+
+[dir="rtl"] .fi-ta-header-cell:not(:last-child)::after {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .fi-sidebar-group-label::before {
+    order: 1;
+}
+
+/* =============================================
+   Dark Mode - Enhanced
+   ============================================= */
+.dark .fi-section {
+    background: rgba(30, 41, 59, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark .fi-section-header {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark .fi-ta-header-cell {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+}
+
+.dark .fi-input,
+.dark .fi-select,
+.dark .fi-textarea {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
+.dark .fi-wi-stats-overview-stat-label {
+    color: #94a3b8 !important;
+}
+
+/* =============================================
+   Responsive Design
+   ============================================= */
+@media (max-width: 768px) {
+    .fi-wi-stats-overview-stat-value {
+        font-size: 1.5rem !important;
+    }
+    
+    .fi-page-header-heading {
+        font-size: 1.5rem !important;
+    }
+    
+    .fi-topbar {
+        margin: 0.5rem;
+        margin-bottom: 0;
+    }
+    
+    .fi-section,
+    .fi-ta {
+        border-radius: var(--radius-lg) !important;
+    }
+}
+
+/* =============================================
+   Loading States - Skeleton Animation
+   ============================================= */
+.fi-loading-indicator {
+    background: var(--gradient-1) !important;
+}
+
+.fi-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.dark .fi-skeleton {
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+}
+
+/* =============================================
+   Empty States - Friendly Design
+   ============================================= */
+.fi-ta-empty-state {
+    padding: 4rem 2rem !important;
+}
+
+.fi-ta-empty-state-icon {
+    color: var(--primary) !important;
+    width: 4rem !important;
+    height: 4rem !important;
+    margin-bottom: 1rem;
+}
+
+.fi-ta-empty-state-heading {
+    font-weight: 800 !important;
+    font-size: 1.25rem !important;
+    margin-bottom: 0.5rem;
+}
+
+.fi-ta-empty-state-description {
+    color: #64748b;
+}
+
+/* =============================================
+   Action Icons - Font Awesome Integration
+   ============================================= */
+.fi-ac-icon-btn {
+    border-radius: var(--radius-md) !important;
+    transition: all 0.2s ease !important;
+}
+
+.fi-ac-icon-btn:hover {
+    transform: scale(1.1);
+    background: var(--primary-light) !important;
+}
+
+/* =============================================
+   Pagination - Modern Style
+   ============================================= */
+.fi-pagination {
+    gap: 0.25rem;
+}
+
+.fi-pagination-item {
+    border-radius: var(--radius-md) !important;
+    font-weight: 600 !important;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    transition: all 0.2s ease !important;
+}
+
+.fi-pagination-item:hover {
+    background: var(--primary-light) !important;
+    transform: translateY(-2px);
+}
+
+.fi-pagination-item-active {
+    background: var(--gradient-1) !important;
+    color: white !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+
+/* =============================================
+   Tabs - Underline Style
+   ============================================= */
+.fi-tabs-nav {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    gap: 0;
+}
+
+.fi-tabs-item {
+    padding: 1rem 1.5rem !important;
+    font-weight: 700 !important;
+    position: relative;
+    transition: all 0.2s ease !important;
+}
+
+.fi-tabs-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-1);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.fi-tabs-item:hover::after,
+.fi-tabs-item-active::after {
+    transform: scaleX(1);
+}
+
+.fi-tabs-item-active {
+    color: var(--primary) !important;
+}
+
+/* =============================================
+   Breadcrumbs - Minimal Style
+   ============================================= */
+.fi-breadcrumbs {
+    font-size: 0.875rem;
+}
+
+.fi-breadcrumbs-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fi-breadcrumbs-item-separator {
+    color: #cbd5e1;
+}
+
+/* =============================================
+   Dropdown Menus - Floating Style
+   ============================================= */
+.fi-dropdown-panel {
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-lg) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 0.5rem !important;
+}
+
+.fi-dropdown-list-item {
+    border-radius: var(--radius-md) !important;
+    padding: 0.75rem 1rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.fi-dropdown-list-item:hover {
+    background: var(--primary-light) !important;
+}
+
+/* =============================================
+   Alerts & Info Boxes
+   ============================================= */
+.fi-infolist-entry {
+    padding: 1rem !important;
+    border-radius: var(--radius-md) !important;
+    margin-bottom: 0.5rem;
+}
+
+/* =============================================
+   Global Focus States - Accessibility
+   ============================================= */
+*:focus-visible {
+    outline: 2px solid var(--primary) !important;
+    outline-offset: 2px !important;
+}
+
+/* =============================================
+   Print Styles
+   ============================================= */
+@media print {
+    .fi-sidebar,
+    .fi-topbar {
+        display: none !important;
+    }
+    
+    .fi-main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+/* =============================================
+   Font Awesome Icon Helpers
+   ============================================= */
+.fa-icon-gradient {
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Stats Icon Decorations */
+.fi-wi-stats-overview-stat .fi-wi-stats-overview-stat-icon svg {
+    filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.3));
+}
+
+/* Fancy List Items */
+.fancy-list {
+    list-style: none;
+    padding: 0;
+}
+
+.fancy-list li {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    background: var(--primary-light);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.fancy-list li:hover {
+    transform: translateX(-4px);
+    background: rgba(16, 185, 129, 0.15);
+}
+
+.fancy-list li i {
+    color: var(--primary);
+    width: 1.25rem;
+    text-align: center;
+}
+
+/* Countdown Timer Styles */
+.countdown-timer {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.countdown-unit {
+    background: var(--gradient-1);
+    color: white;
+    padding: 0.375rem 0.625rem;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    min-width: 2.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.countdown-separator {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* Status Indicators */
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+.status-dot.active {
+    background: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    animation: pulse-glow 2s infinite;
+}
+
+.status-dot.pending {
+    background: #f59e0b;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.status-dot.inactive {
+    background: #6b7280;
+}
+
+/* Quick Info Cards */
+.info-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-card-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    background: var(--gradient-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.25rem;
+}
+
+.info-card-content h4 {
+    font-weight: 800;
+    margin: 0 0 0.25rem;
+    color: #1e293b;
+}
+
+.info-card-content p {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.dark .info-card {
+    background: rgba(30, 41, 59, 0.95);
+}
+
+.dark .info-card-content h4 {
+    color: white;
+}
+
+.dark .info-card-content p {
+    color: #94a3b8;
+}
+
+/* Progress Bars */
+.progress-bar-wrapper {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 9999px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--gradient-1);
+    border-radius: 9999px;
+    transition: width 0.6s ease;
+}
+
+.dark .progress-bar-wrapper {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Avatar Groups */
+.avatar-group {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.avatar-group .avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 3px solid white;
+    margin-right: -0.75rem;
+    background: var(--gradient-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.avatar-group .avatar:hover {
+    transform: translateY(-4px);
+    z-index: 10;
+}
+
+/* Sparkline Charts Container */
+.sparkline-container {
+    height: 40px;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.sparkline-bar {
+    flex: 1;
+    background: var(--primary-light);
+    border-radius: 2px 2px 0 0;
+    transition: all 0.2s ease;
+}
+
+.sparkline-bar:hover {
+    background: var(--primary);
+}

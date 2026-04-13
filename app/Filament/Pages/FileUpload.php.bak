@@ -1,0 +1,309 @@
+<?php
+
+namespace App\Filament\Pages;
+
+use App\Models\Country;
+use App\Models\ExamType;
+use App\Models\AcademicYear;
+use App\Models\Governorate;
+use App\Services\FileImportService;
+use Filament\Pages\Page;
+use Filament\Forms\Components\FileUpload as FileUploadComponent;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Storage;
+
+class FileUpload extends Page implements HasForms
+{
+    use InteractsWithForms;
+
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-up-tray';
+    protected static ?string $navigationLabel = 'رفع ملف نتائج';
+    protected static string $view = 'filament.pages.file-upload';
+    protected static ?string $navigationGroup = 'النتائج';
+    
+    public ?array $data = [];
+    public $previewHeaders = [];
+    public $previewRows = [];
+
+    public function mount(): void
+    {
+        $this->form->fill();
+    }
+
+    public function updatePreview($state)
+    {
+        $this->previewHeaders = [];
+        $this->previewRows = [];
+
+        if (empty($state)) {
+            return;
+        }
+
+        // Handle single file upload (string) or array
+        $file = is_array($state) ? array_values($state)[0] : $state;
+        
+        if (!$file) return;
+
+        try {
+            // Check existence on public disk (default for FileUpload below)
+            // Note: During upload (live), it might still be in livewire-tmp on 'default' disk (local)
+            // But we can check both locations
+            
+            $path = null;
+            
+            if (Storage::disk('public')->exists($file)) {
+                $path = Storage::disk('public')->path($file);
+            } elseif (Storage::exists($file)) { // Check default disk (local/livewire-tmp)
+                 $path = Storage::path($file);
+            }
+
+            if ($path && file_exists($path)) {
+                $service = app(FileImportService::class);
+                $preview = $service->preview($path);
+
+                if (isset($preview['error'])) {
+                    Notification::make()
+                        ->warning()
+                        ->title('تنبيه')
+                        ->body('لم نتمكن من عرض معاينة للملف: ' . $preview['error'])
+                        ->send();
+                } else {
+                    $this->previewHeaders = $preview['headers'];
+                    $this->previewRows = $preview['rows'];
+                }
+            }
+        } catch (\Exception $e) {
+            // Ignore preview errors
+        }
+    }
+    
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Section::make('رفع ملف النتائج')
+                    ->description('قم برفع ملف Excel أو CSV يحتوي على نتائج الطلاب')
+                    ->schema([
+                        FileUploadComponent::make('file')
+                            ->label('ملف النتائج')
+                            ->disk('local') // Match Livewire temporary disk
+                            ->directory('results')
+                            ->storeFileNamesIn('original_filename') // Store original name separately if needed
+                            ->preserveFilenames() // Try to keep original filename
+                            ->acceptedFileTypes([
+                                // MIME Types
+                                'application/vnd.ms-excel',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'text/csv',
+                                'application/x-msaccess',
+                                'application/vnd.ms-access',
+                                'application/msaccess',
+                                'application/x-jet',
+                                'application/x-sqlite3',
+                                'application/vnd.sqlite3',
+                                'application/octet-stream',
+                                'application/pdf',
+                                'application/xml',
+                                'text/xml',
+                                // Explicit Extensions (to fix OS file picker issues)
+                                '.xls', '.xlsx', '.csv',
+                                '.mdb', '.accdb', '.mde',
+                                '.db', '.sqlite', '.sqlite3',
+                                '.pdf',
+                                '.xml'
+                            ])
+                            ->maxSize(512000)
+                            ->required()
+                            ->live()
+                            ->afterStateUpdated(function ($state, $livewire) {
+                                $livewire->updatePreview($state);
+                            })
+                            ->helperText('يدعم Excel, CSV, Access (MDB, ACCDB), SQLite (DB), PDF - حجم أقصى 500MB')
+                            ->columnSpanFull(),
+                    ]),
+                    
+                Section::make('تحديد البيانات')
+                    ->description('حدد الدولة ونوع الامتحان والسنة الدراسية والمحافظة')
+                    ->schema([
+                        Select::make('country_id')
+                            ->label('الدولة')
+                            ->options(Country::where('is_active', true)->pluck('name_ar', 'id'))
+                            ->required()
+                            ->searchable()
+                            ->native(false)
+                            ->live()
+                            ->afterStateUpdated(function (callable $set) {
+                                $set('exam_type_id', null);
+                                $set('academic_year_id', null);
+                                $set('governorate_id', null);
+                            }),
+                            
+                        Select::make('exam_type_id')
+                            ->label('نوع الامتحان')
+                            ->options(function (Get $get) {
+                                $countryId = $get('country_id');
+                                if (!$countryId) {
+                                    return [];
+                                }
+                                return ExamType::where('country_id', $countryId)
+                                    ->pluck('name_ar', 'id');
+                            })
+                            ->required()
+                            ->searchable()
+                            ->native(false)
+                            ->live()
+                            ->disabled(fn (Get $get) => !$get('country_id'))
+                            ->afterStateUpdated(function (callable $set) {
+                                $set('academic_year_id', null);
+                                $set('governorate_id', null);
+                            }),
+                            
+                        Select::make('academic_year_id')
+                            ->label('السنة الدراسية')
+                            ->options(AcademicYear::all()->pluck('year', 'id'))
+                            ->default(AcademicYear::where('is_active', true)->first()?->id)
+                            ->required()
+                            ->native(false)
+                            ->live()
+                            ->disabled(fn (Get $get) => !$get('exam_type_id'))
+                            ->afterStateUpdated(function (callable $set) {
+                                $set('governorate_id', null);
+                            }),
+                            
+                        Select::make('governorate_id')
+                            ->label('المحافظة (اختياري للامتحانات العامة)')
+                            ->options(function (Get $get) {
+                                $countryId = $get('country_id');
+                                if (!$countryId) {
+                                    return [];
+                                }
+                                return Governorate::where('country_id', $countryId)
+                                    ->pluck('name_ar', 'id');
+                            })
+                            ->searchable()
+                            ->native(false)
+                            ->disabled(fn (Get $get) => !$get('academic_year_id')),
+                    ])
+                    ->columns(2),
+            ])
+            ->statePath('data');
+    }
+    
+    public function submit(): void
+    {
+        $data = $this->form->getState();
+        
+        try {
+            if (empty($data['file'])) {
+                Notification::make()
+                    ->danger()
+                    ->title('خطأ')
+                    ->body('يرجى رفع ملف أولاً')
+                    ->send();
+                return;
+            }
+            
+            $fileImportService = app(FileImportService::class);
+            
+            // Resolve file path
+            $filePath = null;
+            $originalPath = $data['file'];
+            
+            // Log the file path we're trying to access for debugging
+            // Log::info('Attempting to import file from: ' . $originalPath);
+
+            // Case 1: File is in 'public' disk (if configured there)
+            if (Storage::disk('public')->exists($originalPath)) {
+                $filePath = Storage::disk('public')->path($originalPath);
+            } 
+            // Case 2: File is in 'local' (default) disk (e.g. livewire-tmp)
+            elseif (Storage::exists($originalPath)) {
+                $filePath = Storage::path($originalPath);
+            }
+            // Case 3: Absolute path provided?
+            elseif (file_exists($originalPath)) {
+                $filePath = $originalPath;
+            }
+            // Case 4: livewire-tmp fallback (sometimes path is just filename)
+            elseif (file_exists(storage_path('app/livewire-tmp/' . $originalPath))) {
+                $filePath = storage_path('app/livewire-tmp/' . $originalPath);
+            }
+            // Case 5: 'results' directory fallback
+            elseif (file_exists(storage_path('app/results/' . $originalPath))) {
+                $filePath = storage_path('app/results/' . $originalPath);
+            }
+
+            if (!$filePath || !file_exists($filePath)) {
+                Notification::make()
+                    ->danger()
+                    ->title('خطأ')
+                    ->body('لم يتم العثور على الملف. يرجى إعادة الرفع.')
+                    ->send();
+                return;
+            }
+            
+            // Secure the file by moving it to a stable "imports" directory
+            // This prevents Livewire from cleaning it up while we process
+            $stableDir = storage_path('app/imports');
+            if (!file_exists($stableDir)) {
+                mkdir($stableDir, 0755, true);
+            }
+            
+            $stablePath = $stableDir . '/' . basename($filePath);
+            
+            // Copy instead of move to avoid permissions issues or breaking livewire state
+            copy($filePath, $stablePath);
+            $filePath = $stablePath;
+            
+            // Secure the file by moving it to a stable "imports" directory
+            // This prevents Livewire from cleaning it up while we process
+            $stableDir = storage_path('app/imports');
+            if (!file_exists($stableDir)) {
+                mkdir($stableDir, 0755, true);
+            }
+            
+            $stablePath = $stableDir . '/' . basename($filePath) . '_' . time(); // Unique name
+            
+            // Copy instead of move to avoid permissions issues or breaking livewire state
+            copy($filePath, $stablePath);
+            
+            // Dispatch Background Job
+            \App\Jobs\ProcessResultImport::dispatch(
+                $stablePath,
+                $data['exam_type_id'],
+                $data['academic_year_id'],
+                $data['governorate_id'],
+                null, // Auto-detect mapping
+                auth()->id()
+            );
+
+            Notification::make()
+                ->success()
+                ->title('تم بدء عملية الرفع')
+                ->body('جاري استيراد الملف في الخلفية. يمكنك متابعة الحالة من صفحة "سجلات الرفع".')
+                ->duration(10000)
+                ->send();
+                
+            $this->form->fill();
+            return;
+            
+            /* 
+            // Synchronous execution removed
+            $result = $fileImportService->import(...)
+            */
+            
+        } catch (\Exception $e) {
+            Notification::make()
+                ->danger()
+                ->title('حدث خطأ')
+                ->body($e->getMessage())
+                ->send();
+        }
+    }
+}

@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+    --navy-blue: #1e3a5f;
+    --dark-navy: #0f2744;
+    --orange: #f59e42;
+    --light-orange: #ffb366;
+    --white: #ffffff;
+    --light-bg: #f5f7fa;
+    --text-dark: #2d3748;
+}
+
+/* === BASE === */
+body, .fi-body {
+    font-family: 'Cairo', sans-serif !important;
+    font-size: 16px !important;
+    direction: rtl !important;
+    background: var(--light-bg) !important;
+}
+
+/* === CRITICAL: TABLE HEADERS === */
+.fi-ta-header-cell {
+    background: linear-gradient(135deg, var(--navy-blue) 0%, var(--dark-navy) 100%) !important;
+    padding: 1rem !important;
+}
+
+.fi-ta-header-cell,
+.fi-ta-header-cell span,
+.fi-ta-header-cell button,
+.fi-ta-header-cell .fi-ta-header-cell-label,
+.fi-ta-header-cell svg {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+}
+
+.fi-ta-header-cell:hover {
+    background: linear-gradient(135deg, var(--dark-navy) 0%, #000000 100%) !important;
+}
+
+/* === WIDGETS (REFINED) === */
+.fi-wi-stats-overview {
+    gap: 1.5rem !important;
+}
+
+.fi-wi-stats-overview-stat {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 1rem !important;
+    padding: 1.5rem !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.3s ease !important;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    border-color: var(--orange) !important;
+}
+
+.fi-wi-stats-overview-stat-value {
+    font-size: 3rem !important;
+    font-weight: 800 !important;
+    color: var(--navy-blue) !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.fi-wi-stats-overview-stat-label {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: var(--text-dark) !important;
+}
+
+.fi-wi-stats-overview-stat-description {
+    color: #64748b !important;
+}
+
+/* === HEADER === */
+.fi-header {
+    background: white !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+.fi-header-heading {
+    font-size: 2rem !important;
+    font-weight: 900 !important;
+    color: var(--navy-blue) !important;
+}
+
+/* === BUTTONS === */
+.fi-btn {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 0.75rem !important;
+}
+
+.fi-btn-primary {
+    background: linear-gradient(135deg, var(--orange) 0%, var(--light-orange) 100%) !important;
+    border: none !important;
+    box-shadow: 0 4px 8px rgba(245, 158, 66, 0.3) !important;
+}
+
+.fi-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(245, 158, 66, 0.4) !important;
+}
+
+/* === FORMS === */
+.fi-fo-field-wrp-label {
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    color: var(--navy-blue) !important;
+}
+
+input, select, textarea {
+    font-size: 1rem !important;
+    padding: 0.875rem 1rem !important;
+    border-radius: 0.5rem !important;
+    border: 2px solid #e2e8f0 !important;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--orange) !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 66, 0.1) !important;
+}
+
+/* === CARDS === */
+.fi-card {
+    border-radius: 1rem !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* === TABLES === */
+.fi-ta-table {
+    border-radius: 0.75rem !important;
+    overflow: hidden;
+}
+
+.fi-ta-row:hover {
+    background-color: #f8fafc !important;
+}
+
+/* === BADGES === */
+.fi-badge {
+    font-weight: 700 !important;
+    border-radius: 0.5rem !important;
+}
