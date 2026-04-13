@@ -80,7 +80,7 @@ class SettingResource extends Resource
     {
         return $table
             ->query(
-                Setting::query()->where('id', '<=', 6)->orderBy('id')
+                Setting::query()->whereIn('key', ['site_name', 'site_description', 'logo', 'header_icon', 'favicon', 'show_academic_year_filter'])
             )
             ->columns([
                 Tables\Columns\Layout\Split::make([

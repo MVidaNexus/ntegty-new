@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('results', function (Blueprint $table) {
-            $table->fullText('student_name');
-        });
+        if (config('database.default') !== 'sqlite' && \Illuminate\Support\Facades\DB::connection()->getDriverName() !== 'sqlite') {
+            Schema::table('results', function (Blueprint $table) {
+                $table->fullText('student_name');
+            });
+        }
     }
 
     /**
@@ -21,8 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('results', function (Blueprint $table) {
-            $table->dropFullText(['student_name']);
-        });
+        if (config('database.default') !== 'sqlite' && \Illuminate\Support\Facades\DB::connection()->getDriverName() !== 'sqlite') {
+            Schema::table('results', function (Blueprint $table) {
+                $table->dropFullText(['student_name']);
+            });
+        }
     }
 };

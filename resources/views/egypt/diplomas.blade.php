@@ -23,9 +23,9 @@
     @endif
 
     @php
-        $serviceType = $diplomaExamType->result_service_type ?? 'search';
-        $embedCode = $diplomaExamType->embed_code ?? '';
-        $pdfPath = $diplomaExamType->pdf_file_path ?? '';
+        $serviceType = $diplomaExamType?->result_service_type ?? 'search';
+        $embedCode = $diplomaExamType?->embed_code ?? '';
+        $pdfPath = $diplomaExamType?->pdf_file_path ?? '';
         
         // تحويل الشُعب لـ JSON للـ JavaScript
         $branchesJson = $branches->map(function($branch) {
@@ -333,7 +333,7 @@ function searchDiplomas() {
                     },
                     body: JSON.stringify({
                         query: this.query,
-                        exam_type_id: '{{ $diplomaExamType->id }}',
+                        exam_type_id: '{{ $diplomaExamType ? $diplomaExamType?->id : "" }}',
                         academic_year_id: this.academicYearId,
                         branch: this.selectedBranchCode,
                         branch_id: this.selectedBranchId
@@ -363,16 +363,16 @@ function searchDiplomas() {
 @endpush
 
 {{-- Content Section for SEO --}}
-@if(isset($diplomaExamType) && $diplomaExamType->show_content_section && ($diplomaExamType->content_title || $diplomaExamType->content_body))
+@if(isset($diplomaExamType) && $diplomaExamType?->show_content_section && ($diplomaExamType?->content_title || $diplomaExamType?->content_body))
 <div class="w-full max-w-6xl mx-auto mt-12 px-3">
     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-10 border border-gray-100">
-        @if($diplomaExamType->content_title)
-        <h2 class="text-xl md:text-2xl lg:text-3xl font-black text-gray-800 mb-5 pb-3 border-b-2 border-gray-100">{{ $diplomaExamType->content_title }}</h2>
+        @if($diplomaExamType?->content_title)
+        <h2 class="text-xl md:text-2xl lg:text-3xl font-black text-gray-800 mb-5 pb-3 border-b-2 border-gray-100">{{ $diplomaExamType?->content_title }}</h2>
         @endif
-        @if($diplomaExamType->content_intro)
-        <p class="text-gray-600 mb-6 text-base md:text-lg leading-relaxed">{{ $diplomaExamType->content_intro }}</p>
+        @if($diplomaExamType?->content_intro)
+        <p class="text-gray-600 mb-6 text-base md:text-lg leading-relaxed">{{ $diplomaExamType?->content_intro }}</p>
         @endif
-        @if($diplomaExamType->content_body)
+        @if($diplomaExamType?->content_body)
         <div class="prose prose-base md:prose-lg max-w-none text-gray-700 leading-loose
                     prose-headings:font-bold prose-headings:text-gray-800 prose-headings:mt-6 prose-headings:mb-3
                     prose-h2:text-xl prose-h2:md:text-2xl prose-h2:border-r-4 prose-h2:border-emerald-500 prose-h2:pr-4 prose-h2:py-1
@@ -380,7 +380,7 @@ function searchDiplomas() {
                     prose-p:mb-4 prose-p:text-base prose-p:md:text-lg
                     prose-ul:my-4 prose-ul:pr-6 prose-li:mb-2 prose-li:text-base prose-li:md:text-lg
                     prose-a:text-emerald-600 prose-a:hover:text-emerald-700">
-            {!! $diplomaExamType->content_body !!}
+            {!! $diplomaExamType?->content_body !!}
         </div>
         @endif
     </div>

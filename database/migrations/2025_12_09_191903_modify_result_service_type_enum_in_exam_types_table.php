@@ -13,7 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         // تعديل enum لإضافة governorate_table
-        DB::statement("ALTER TABLE exam_types MODIFY COLUMN result_service_type ENUM('search', 'embed', 'pdf', 'governorate_table') DEFAULT 'search'");
+        if (config('database.default') !== 'sqlite' && \Illuminate\Support\Facades\DB::connection()->getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE exam_types MODIFY COLUMN result_service_type ENUM('search', 'embed', 'pdf', 'governorate_table') DEFAULT 'search'");
+        }
     }
 
     /**
@@ -22,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         // إرجاع القيم القديمة
-        DB::statement("UPDATE exam_types SET result_service_type = 'search' WHERE result_service_type = 'governorate_table'");
-        DB::statement("ALTER TABLE exam_types MODIFY COLUMN result_service_type ENUM('search', 'embed', 'pdf') DEFAULT 'search'");
+        if (config('database.default') !== 'sqlite' && \Illuminate\Support\Facades\DB::connection()->getDriverName() !== 'sqlite') {
+            DB::statement("UPDATE exam_types SET result_service_type = 'search' WHERE result_service_type = 'governorate_table'");
+            DB::statement("ALTER TABLE exam_types MODIFY COLUMN result_service_type ENUM('search', 'embed', 'pdf') DEFAULT 'search'");
+        }
     }
 };

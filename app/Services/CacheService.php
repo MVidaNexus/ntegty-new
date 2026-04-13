@@ -252,6 +252,9 @@ class CacheService
      */
     public static function invalidateSettings(?string $key = null): void
     {
+        Cache::forget('all_settings');
+        Cache::forget('all_site_settings');
+        
         if ($key) {
             Cache::forget(self::PREFIX_SETTINGS . $key);
         } else {
@@ -314,6 +317,10 @@ class CacheService
     {
         $deleted = 0;
         
+        if (config('cache.default') !== 'redis') {
+            return 0;
+        }
+
         try {
             $fullPrefix = self::getCachePrefix();
             $fullPattern = $fullPrefix . $pattern;

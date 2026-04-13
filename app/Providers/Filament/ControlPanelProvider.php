@@ -39,7 +39,7 @@ class ControlPanelProvider extends PanelProvider
                 'gray' => \Filament\Support\Colors\Color::Slate,
             ])
             ->font('Cairo')
-            ->darkMode(true)
+            ->darkMode(false)
             ->renderHook(
                 \Filament\View\PanelsRenderHook::HEAD_END,
                 fn (): string => '
@@ -47,7 +47,6 @@ class ControlPanelProvider extends PanelProvider
                     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
                     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
                     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
-                    <link rel="stylesheet" href="' . asset('css/filament/control/theme.css') . '?v=' . time() . '" />
                 ',
             )
             ->maxContentWidth('full')
