@@ -86,7 +86,7 @@ class SettingResource extends Resource
                 Tables\Columns\Layout\Split::make([
                     Tables\Columns\ImageColumn::make('preview_image')
                         ->label('')
-                        ->state(fn (?Setting $record) => $record?->type === 'image' ? asset('storage/' . $record->value) : null)
+                        ->state(fn (?Setting $record) => $record?->type === 'image' ? asset('uploads/' . $record->value) : null)
                         ->size(80)
                         ->circular()
                         ->grow(false)
