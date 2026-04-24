@@ -17,3 +17,34 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Storage - generated/cached files
+/storage/framework/views/*
+/storage/framework/sessions/*
+/storage/framework/cache/data/*
+!/storage/framework/views/.gitkeep
+!/storage/framework/sessions/.gitkeep
+!/storage/framework/cache/data/.gitkeep
+/storage/logs/*.log
+
+# Error logs
+error_log
+*/error_log
+**/error_log
+
+# Debug & utility scripts (should not be in repo)
+/debug_*.php
+/create_setting.php
+/generate_*.php
+/content_plan.csv
+
+# Composer binary
+/composer.phar
+
+# Temp/deploy scripts
+/fix_repo.php
+/do_sync.php
+/run_sync.php
+/sync2.php
+/check_exec.php
+/test_ping.php
