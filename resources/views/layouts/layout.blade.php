@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<!-- DEBUG: CACHE TEST 12345 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,9 +10,9 @@
         @yield('meta')
     @else
         @php
-            $seoTitle = \App\Models\SiteSetting::get('seo_title', 'نتائج الطلاب في الوطن العربي | نتيجتي');
-            $seoDescription = \App\Models\SiteSetting::get('seo_description', 'منصة نتيجتي لعرض نتائج الشهادات الإعدادية والثانوية والدبلومات في الوطن العربي');
-            $seoKeywords = \App\Models\SiteSetting::get('seo_keywords', 'نتائج, امتحانات, شهادة إعدادية, شهادة ثانوية, دبلومات, مصر, الوطن العربي');
+            $seoTitle = $settings['seo_title'] ?? 'نتائج الطلاب في الوطن العربي | نتيجتي';
+            $seoDescription = $settings['seo_description'] ?? 'منصة نتيجتي لعرض نتائج الشهادات الإعدادية والثانوية والدبلومات في الوطن العربي';
+            $seoKeywords = $settings['seo_keywords'] ?? 'نتائج, امتحانات, شهادة إعدادية, شهادة ثانوية, دبلومات, مصر, الوطن العربي';
         @endphp
         <title>{{ $meta['title'] ?? $seoTitle }}</title>
         <meta name="description" content="{{ $meta['description'] ?? $seoDescription }}">
@@ -54,9 +53,10 @@
     <meta name="apple-mobile-web-app-title" content="نتيجتي">
     <meta name="application-name" content="نتيجتي">
     
-    <!-- Fonts -->
+    <!-- Fonts - Preconnect + Preload for better CWV -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@400;500;700;900&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
@@ -221,7 +221,7 @@
     @endif
     
     {{-- Google Analytics --}}
-    @php $gaId = \App\Models\SiteSetting::get('google_analytics_id'); @endphp
+    @php $gaId = $settings['google_analytics_id'] ?? null; @endphp
     @if($gaId)
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
     <script>
@@ -233,14 +233,14 @@
     @endif
     
     {{-- Meta Verification Tags --}}
-    {!! \App\Models\SiteSetting::get('meta_verification', '') !!}
+    {!! $settings['meta_verification'] ?? '' !!}
     
     {{-- AdSense Script - New System --}}
     @php
-        $adsenseEnabled = \App\Models\SiteSetting::get('adsense_enabled', '0') === '1';
-        $publisherId = \App\Models\SiteSetting::get('adsense_publisher_id', '');
-        $loadScript = \App\Models\SiteSetting::get('load_adsense_script', '1') === '1';
-        $autoAds = \App\Models\SiteSetting::get('adsense_auto_ads', '0') === '1';
+        $adsenseEnabled = ($settings['adsense_enabled'] ?? '0') === '1';
+        $publisherId = $settings['adsense_publisher_id'] ?? '';
+        $loadScript = ($settings['load_adsense_script'] ?? '1') === '1';
+        $autoAds = ($settings['adsense_auto_ads'] ?? '0') === '1';
     @endphp
     @if($adsenseEnabled && !empty($publisherId) && $loadScript)
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ $publisherId }}"
@@ -256,10 +256,10 @@
     @endif
     
     {{-- Custom AdSense Script --}}
-    {!! \App\Models\SiteSetting::get('adsense_custom_script', '') !!}
+    {!! $settings['adsense_custom_script'] ?? '' !!}
     
     {{-- Custom Header Scripts --}}
-    {!! \App\Models\SiteSetting::get('header_scripts', '') !!}
+    {!! $settings['header_scripts'] ?? '' !!}
     
     {{-- Ad Container CSS --}}
     <style>
@@ -270,17 +270,17 @@
     </style>
     
     {{-- Custom CSS --}}
-    @php $customCss = \App\Models\SiteSetting::get('custom_css'); @endphp
+    @php $customCss = $settings['custom_css'] ?? null; @endphp
     @if($customCss)
     <style>{!! $customCss !!}</style>
     @endif
 </head>
-<body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen" x-data="{ mobileMenuOpen: false }">
+<body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
     
     <!-- Header -->
     <!-- Top Bar -->
     @php
-        $topBarText = \App\Models\SiteSetting::get('hero_badge', 'بوابة نتائج الامتحانات الرسمية');
+        $topBarText = $settings['hero_badge'] ?? 'بوابة نتائج الامتحانات الرسمية';
     @endphp
     <div class="bg-slate-900 text-slate-300 text-xs py-2 no-print">
         <div class="w-full px-4 lg:px-8 flex justify-between items-center">
@@ -297,8 +297,8 @@
 
     <!-- Top Bar (Optional, for announcements) -->
     @php
-        $headerAnnouncementActive = \App\Models\SiteSetting::get('header_announcement_active', '1') === '1';
-        $headerAnnouncementText = \App\Models\SiteSetting::get('header_announcement_text', 'حصرياً: نتائج الشهادات العامة فور اعتمادها! تابعونا لحظة بلحظة.');
+        $headerAnnouncementActive = ($settings['header_announcement_active'] ?? '1') === '1';
+        $headerAnnouncementText = $settings['header_announcement_text'] ?? 'حصرياً: نتائج الشهادات العامة فور اعتمادها! تابعونا لحظة بلحظة.';
     @endphp
     @if($headerAnnouncementActive && $headerAnnouncementText)
     <div class="bg-emerald-600 text-white py-2 text-center text-xs font-bold hidden sm:block no-print">
@@ -575,13 +575,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 text-center md:text-right">
                 <!-- About -->
                 @php
-                    $footerAboutTitle = \App\Models\SiteSetting::get('footer_about_title', 'نتيجتي');
-                    $footerAboutText = \App\Models\SiteSetting::get('footer_about_text', 'منصة نتائج الطلاب الأولى في الوطن العربي. نوفر لك الوصول السريع والمجاني لنتائج الامتحانات في مصر والدول العربية.');
-                    $footerCopyright = \App\Models\SiteSetting::get('footer_copyright', 'نتيجتي - جميع الحقوق محفوظة');
-                    $footerSlogan = \App\Models\SiteSetting::get('footer_slogan', 'صنع بحب في الوطن العربي');
-                    $footerFacebookUrl = \App\Models\SiteSetting::get('footer_facebook_url', '');
-                    $footerTelegramUrl = \App\Models\SiteSetting::get('footer_telegram_url', '');
-                    $footerWhatsappUrl = \App\Models\SiteSetting::get('footer_whatsapp_url', '');
+                    $footerAboutTitle = $settings['footer_about_title'] ?? 'نتيجتي';
+                    $footerAboutText = $settings['footer_about_text'] ?? 'منصة نتائج الطلاب الأولى في الوطن العربي. نوفر لك الوصول السريع والمجاني لنتائج الامتحانات في مصر والدول العربية.';
+                    $footerCopyright = $settings['footer_copyright'] ?? 'نتيجتي - جميع الحقوق محفوظة';
+                    $footerSlogan = $settings['footer_slogan'] ?? 'صنع بحب في الوطن العربي';
+                    $footerFacebookUrl = $settings['footer_facebook_url'] ?? '';
+                    $footerTelegramUrl = $settings['footer_telegram_url'] ?? '';
+                    $footerWhatsappUrl = $settings['footer_whatsapp_url'] ?? '';
                 @endphp
                 <div>
                     <h3 class="text-2xl font-black mb-4 text-emerald-400">{{ $footerAboutTitle }}</h3>
@@ -698,6 +698,6 @@
     @stack('scripts')
     
     {{-- Custom Footer Scripts --}}
-    {!! \App\Models\SiteSetting::get('footer_scripts', '') !!}
+    {!! $settings['footer_scripts'] ?? '' !!}
 </body>
 </html>

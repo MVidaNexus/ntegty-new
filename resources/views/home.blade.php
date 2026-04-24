@@ -8,8 +8,8 @@
 <div class="container mx-auto px-4 py-12">
     <!-- Hero Section -->
     @php
-        $heroTitle = \App\Models\SiteSetting::get('hero_title', 'نتيجتي');
-        $heroSubtitle = \App\Models\SiteSetting::get('hero_subtitle', 'بوابتك الرسمية لنتائج الامتحانات في الوطن العربي');
+        $heroTitle = $settings['hero_title'] ?? 'نتيجتي';
+        $heroSubtitle = $settings['hero_subtitle'] ?? 'بوابتك الرسمية لنتائج الامتحانات في الوطن العربي';
     @endphp
     <div class="text-center mb-12 mt-4">
         <h1 class="text-2xl md:text-4xl font-black text-slate-800 mb-6 leading-relaxed flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3">
@@ -230,9 +230,9 @@
     
     <!-- About Section - من الإعدادات -->
     @php
-        $aboutActive = \App\Models\SiteSetting::get('about_section_active', '1') === '1';
-        $aboutTitle = \App\Models\SiteSetting::get('about_section_title', 'عن نتيجتي');
-        $aboutContent = \App\Models\SiteSetting::get('about_section_content', 'موقع نتيجتي هو المنصة العربية الأكبر والأحدث المخصصة لعرض نتائج الشهادات العامة والأزهرية والدبلومات الفنية فور اعتمادها رسمياً. ننفرد بتغطية شاملة وحصرية لنتائج الامتحانات في مصر، العراق، ليبيا، فلسطين وغيرها من الدول. لا نكتفي بعرض النتيجة فحسب، بل نقدم أدوات ذكية تتيح لك البحث بالاسم أو رقم الجلوس، تصميم شهادات تقدير احترافية، وطباعة كشف الدرجات بضغطة زر. هدفنا هو توفير تجربة مستخدم سهلة، سريعة، وموثوقة لجميع الطلاب وأولياء الأمور.');
+        $aboutActive = ($settings['about_section_active'] ?? '1') === '1';
+        $aboutTitle = $settings['about_section_title'] ?? 'عن نتيجتي';
+        $aboutContent = $settings['about_section_content'] ?? 'موقع نتيجتي هو المنصة العربية الأكبر والأحدث المخصصة لعرض نتائج الشهادات العامة والأزهرية والدبلومات الفنية فور اعتمادها رسمياً. ننفرد بتغطية شاملة وحصرية لنتائج الامتحانات في مصر، العراق، ليبيا، فلسطين وغيرها من الدول. لا نكتفي بعرض النتيجة فحسب، بل نقدم أدوات ذكية تتيح لك البحث بالاسم أو رقم الجلوس، تصميم شهادات تقدير احترافية، وطباعة كشف الدرجات بضغطة زر. هدفنا هو توفير تجربة مستخدم سهلة، سريعة، وموثوقة لجميع الطلاب وأولياء الأمور.';
     @endphp
     
     @if($aboutActive && $aboutContent)

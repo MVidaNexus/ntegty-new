@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
         
-        Model::unguard();
+        // Models use $fillable for mass assignment protection
 
         // Register Observers for cache invalidation
         \App\Models\Result::observe(ResultObserver::class);

@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Home
-Route::get('/test-admin', function () {
-    return 'Admin Test OK';
-});
-
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(['cache.response']);
 
 // Dynamic Robots.txt - read from database
@@ -120,7 +116,7 @@ Route::prefix('egypt')->name('egypt.')->middleware(['cache.response'])->group(fu
 
 // Unified Country Routes (For all other countries: Libya, Iraq, Sudan, etc.)
 // Search Routes
-Route::post('/search', [SearchController::class, 'search'])->name('search');
+Route::post('/search', [SearchController::class, 'search'])->name('search')->middleware('throttle:30,1');
 Route::get('/result/{id}', [SearchController::class, 'show'])->name('result.show')->middleware(['cache.response']);
 Route::get('/result/{id}/print', [SearchController::class, 'print'])->name('result.print');
 

@@ -48,3 +48,12 @@ error_log
 /sync2.php
 /check_exec.php
 /test_ping.php
+
+# Sitemap backups
+sitemap.xml.backup
+sitemap.xml.bak
+*.xml.backup
+*.xml.bak
+
+# Temp data files
+/website_pages.xlsx

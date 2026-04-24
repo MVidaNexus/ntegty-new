@@ -54,14 +54,6 @@ class Country extends Model
 
     /**
      * Get dynamic page title based on country settings
-     */
-    /**
-     * Get dynamic page title based on country settings
-     * 
-     * @param bool $includePrefix Whether to include "نتائج شهادات" prefix
-     */
-    /**
-     * Get dynamic page title based on country settings
      * 
      * @param bool $includePrefix Whether to include "نتائج شهادات" prefix
      * @param bool $includeSemester Whether to include semester (e.g. for mid-year vs end-year)

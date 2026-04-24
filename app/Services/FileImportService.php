@@ -131,9 +131,9 @@ class FileImportService
                 private $startRow = 1;
                 private $endRow = 10;
                 
-                public function readCell($columnAddress, $row, $worksheetName = '')
+                public function readCell($columnAddress, $row, $worksheetName = ''): bool
                 {
-                    return $row >= $this->startRow && $row <= $this->endRow;
+                    return ($row >= $this->startRow && $row <= $this->endRow);
                 }
             };
             
