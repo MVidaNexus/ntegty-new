@@ -1461,3 +1461,169 @@
 #20 /Users/Masry/GitHub/ntegty/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #21 {main}
 "} 
+[2026-04-25 07:18:22] local.ERROR: Writing to /Users/Masry/.config/psysh/psysh_history is not allowed. {"exception":"[object] (ErrorException(code: 0): Writing to /Users/Masry/.config/psysh/psysh_history is not allowed. at /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/ConfigPaths.php:419)
+[stacktrace]
+#0 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(1024, 'Writing to /Use...', '/Users/Masry/Gi...', 419)
+#1 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(1024, 'Writing to /Use...', '/Users/Masry/Gi...', 419)
+#2 /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/ConfigPaths.php(419): trigger_error('Writing to /Use...', 1024)
+#3 /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/Configuration.php(683): Psy\\ConfigPaths::touchFileWithMkdir('/Users/Masry/.c...')
+#4 /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/Configuration.php(707): Psy\\Configuration->setHistoryFile('/Users/Masry/.c...')
+#5 /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/Configuration.php(852): Psy\\Configuration->getHistoryFile()
+#6 /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/Shell.php(94): Psy\\Configuration->getReadline()
+#7 /Users/Masry/GitHub/ntegty/vendor/laravel/tinker/src/Console/TinkerCommand.php(59): Psy\\Shell->__construct(Object(Psy\\Configuration))
+#8 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Laravel\\Tinker\\Console\\TinkerCommand->handle()
+#9 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Container/Util.php(41): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#10 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#11 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#12 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Container/Container.php(662): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#13 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Console/Command.php(211): Illuminate\\Container\\Container->call(Array)
+#14 /Users/Masry/GitHub/ntegty/vendor/symfony/console/Command/Command.php(326): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#15 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Console/Command.php(180): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 /Users/Masry/GitHub/ntegty/vendor/symfony/console/Application.php(1088): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#17 /Users/Masry/GitHub/ntegty/vendor/symfony/console/Application.php(324): Symfony\\Component\\Console\\Application->doRunCommand(Object(Laravel\\Tinker\\Console\\TinkerCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 /Users/Masry/GitHub/ntegty/vendor/symfony/console/Application.php(175): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 /Users/Masry/GitHub/ntegty/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 {main}
+"} 
+[2026-04-25 07:18:28] local.ERROR: Uncaught PDOException: SQLSTATE[HY000]: General error: 1 no such column: meta_description in /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php:608
+Stack trace:
+#0 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(608): PDO->prepare('update "exam_ty...')
+#1 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(816): Illuminate\Database\Connection->Illuminate\Database\{closure}('update "exam_ty...', Array)
+#2 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(783): Illuminate\Database\Connection->runQueryCallback('update "exam_ty...', Array, Object(Closure))
+#3 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(600): Illuminate\Database\Connection->run('update "exam_ty...', Array, Object(Closure))
+#4 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(552): Illuminate\Database\Connection->affectingStatement('update "exam_ty...', Array)
+#5 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3602): Illuminate\Database\Connection->update('update "exam_ty...', Array)
+#6 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1061): Illuminate\Database\Query\Builder->update(Array)
+#7 /Users/Masry/GitHub/ntegty/scratch/update_seo_content.php(37): Illuminate\Database\Eloquent\Builder->update(Array)
+#8 Command line code(1): require('/Users/Masry/Gi...')
+#9 {main}
+
+Next Illuminate\Database\QueryException: SQLSTATE[HY000]: General error: 1 no such column: meta_description (Connection: sqlite, SQL: update "exam_types" set "content_title" = دليل نتيجة الشهادة الإعدادية 2026 في مصر - المواعيد والروابط الرسمية, "content_intro" = بوابة نتيجتي توفر لك أسرع وسيلة للحصول على نتيجة الشهادة الإعدادية 2026 بالاسم ورقم الجلوس لكافة المحافظات., "content_body" = <h2>موعد نتيجة الشهادة الإعدادية 2026 الترم الثاني</h2>
+<p>ينتظر ملايين الطلاب وأولياء الأمور موعد ظهور نتيجة الشهادة الإعدادية لعام 2026. وفقاً للخريطة الزمنية لوزارة التربية والتعليم، ستبدأ امتحانات الفصل الدراسي الثاني في 4 يونيو 2026 وتستمر حتى 11 يونيو. ومن المتوقع أن يتم الإعلان عن النتائج تدريجياً في كل محافظة بعد انتهاء أعمال التصحيح والمراجعة، والتي تستغرق عادة من 7 إلى 10 أيام.</p>
+
+<h3>خطوات الاستعلام عن نتيجة الشهادة الإعدادية برقم الجلوس</h3>
+<ul>
+    <li>اختر المحافظة التابع لها من القائمة أعلاه.</li>
+    <li>أدخل رقم الجلوس الخاص بالطالب بشكل صحيح.</li>
+    <li>اضغط على زر "عرض النتيجة".</li>
+    <li>ستظهر لك تفاصيل الدرجات في جميع المواد (اللغة العربية، الرياضيات، العلوم، الدراسات، اللغة الإنجليزية) والمجموع الكلي.</li>
+</ul>
+
+<h3>توزيع درجات الشهادة الإعدادية 2026</h3>
+<p>المجموع الكلي للشهادة الإعدادية هو 280 درجة، موزعة على الفصلين الدراسيين (140 درجة لكل ترم). يشمل ذلك المواد المضافة للمجموع وهي:</p>
+<table class="min-w-full divide-y divide-gray-200 mt-4">
+    <thead class="bg-gray-50">
+        <tr>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">المادة</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الدرجة</th>
+        </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+        <tr><td class="px-6 py-4 whitespace-nowrap">اللغة العربية</td><td class="px-6 py-4 whitespace-nowrap">80 درجة</td></tr>
+        <tr><td class="px-6 py-4 whitespace-nowrap">اللغة الإنجليزية</td><td class="px-6 py-4 whitespace-nowrap">60 درجة</td></tr>
+        <tr><td class="px-6 py-4 whitespace-nowrap">الدراسات الاجتماعية</td><td class="px-6 py-4 whitespace-nowrap">40 درجة</td></tr>
+        <tr><td class="px-6 py-4 whitespace-nowrap">الرياضيات</td><td class="px-6 py-4 whitespace-nowrap">60 درجة</td></tr>
+        <tr><td class="px-6 py-4 whitespace-nowrap">العلوم</td><td class="px-6 py-4 whitespace-nowrap">40 درجة</td></tr>
+    </tbody>
+</table>, "meta_description" = نتيجة الشهادة الإعدادية 2026 برقم الجلوس والاسم - بوابة نتيجتي تعرض نتائج الإعدادية لكافة محافظات مصر فور اعتمادها رسمياً. تابع مواعيد الامتحانات والنتائج., "show_content_section" = 1, "updated_at" = 2026-04-25 07:18:28 where "id" = 1) in /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php:829
+Stack trace:
+#0 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(783): Illuminate\Database\Connection->runQueryCallback('update "exam_ty...', Array, Object(Closure))
+#1 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(600): Illuminate\Database\Connection->run('update "exam_ty...', Array, Object(Closure))
+#2 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(552): Illuminate\Database\Connection->affectingStatement('update "exam_ty...', Array)
+#3 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3602): Illuminate\Database\Connection->update('update "exam_ty...', Array)
+#4 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1061): Illuminate\Database\Query\Builder->update(Array)
+#5 /Users/Masry/GitHub/ntegty/scratch/update_seo_content.php(37): Illuminate\Database\Eloquent\Builder->update(Array)
+#6 Command line code(1): require('/Users/Masry/Gi...')
+#7 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught PDOException: SQLSTATE[HY000]: General error: 1 no such column: meta_description in /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php:608
+Stack trace:
+#0 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(608): PDO->prepare('update \"exam_ty...')
+#1 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(816): Illuminate\\Database\\Connection->Illuminate\\Database\\{closure}('update \"exam_ty...', Array)
+#2 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(783): Illuminate\\Database\\Connection->runQueryCallback('update \"exam_ty...', Array, Object(Closure))
+#3 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(600): Illuminate\\Database\\Connection->run('update \"exam_ty...', Array, Object(Closure))
+#4 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(552): Illuminate\\Database\\Connection->affectingStatement('update \"exam_ty...', Array)
+#5 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3602): Illuminate\\Database\\Connection->update('update \"exam_ty...', Array)
+#6 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1061): Illuminate\\Database\\Query\\Builder->update(Array)
+#7 /Users/Masry/GitHub/ntegty/scratch/update_seo_content.php(37): Illuminate\\Database\\Eloquent\\Builder->update(Array)
+#8 Command line code(1): require('/Users/Masry/Gi...')
+#9 {main}
+
+Next Illuminate\\Database\\QueryException: SQLSTATE[HY000]: General error: 1 no such column: meta_description (Connection: sqlite, SQL: update \"exam_types\" set \"content_title\" = دليل نتيجة الشهادة الإعدادية 2026 في مصر - المواعيد والروابط الرسمية, \"content_intro\" = بوابة نتيجتي توفر لك أسرع وسيلة للحصول على نتيجة الشهادة الإعدادية 2026 بالاسم ورقم الجلوس لكافة المحافظات., \"content_body\" = <h2>موعد نتيجة الشهادة الإعدادية 2026 الترم الثاني</h2>
+<p>ينتظر ملايين الطلاب وأولياء الأمور موعد ظهور نتيجة الشهادة الإعدادية لعام 2026. وفقاً للخريطة الزمنية لوزارة التربية والتعليم، ستبدأ امتحانات الفصل الدراسي الثاني في 4 يونيو 2026 وتستمر حتى 11 يونيو. ومن المتوقع أن يتم الإعلان عن النتائج تدريجياً في كل محافظة بعد انتهاء أعمال التصحيح والمراجعة، والتي تستغرق عادة من 7 إلى 10 أيام.</p>
+
+<h3>خطوات الاستعلام عن نتيجة الشهادة الإعدادية برقم الجلوس</h3>
+<ul>
+    <li>اختر المحافظة التابع لها من القائمة أعلاه.</li>
+    <li>أدخل رقم الجلوس الخاص بالطالب بشكل صحيح.</li>
+    <li>اضغط على زر \"عرض النتيجة\".</li>
+    <li>ستظهر لك تفاصيل الدرجات في جميع المواد (اللغة العربية، الرياضيات، العلوم، الدراسات، اللغة الإنجليزية) والمجموع الكلي.</li>
+</ul>
+
+<h3>توزيع درجات الشهادة الإعدادية 2026</h3>
+<p>المجموع الكلي للشهادة الإعدادية هو 280 درجة، موزعة على الفصلين الدراسيين (140 درجة لكل ترم). يشمل ذلك المواد المضافة للمجموع وهي:</p>
+<table class=\"min-w-full divide-y divide-gray-200 mt-4\">
+    <thead class=\"bg-gray-50\">
+        <tr>
+            <th class=\"px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider\">المادة</th>
+            <th class=\"px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider\">الدرجة</th>
+        </tr>
+    </thead>
+    <tbody class=\"bg-white divide-y divide-gray-200\">
+        <tr><td class=\"px-6 py-4 whitespace-nowrap\">اللغة العربية</td><td class=\"px-6 py-4 whitespace-nowrap\">80 درجة</td></tr>
+        <tr><td class=\"px-6 py-4 whitespace-nowrap\">اللغة الإنجليزية</td><td class=\"px-6 py-4 whitespace-nowrap\">60 درجة</td></tr>
+        <tr><td class=\"px-6 py-4 whitespace-nowrap\">الدراسات الاجتماعية</td><td class=\"px-6 py-4 whitespace-nowrap\">40 درجة</td></tr>
+        <tr><td class=\"px-6 py-4 whitespace-nowrap\">الرياضيات</td><td class=\"px-6 py-4 whitespace-nowrap\">60 درجة</td></tr>
+        <tr><td class=\"px-6 py-4 whitespace-nowrap\">العلوم</td><td class=\"px-6 py-4 whitespace-nowrap\">40 درجة</td></tr>
+    </tbody>
+</table>, \"meta_description\" = نتيجة الشهادة الإعدادية 2026 برقم الجلوس والاسم - بوابة نتيجتي تعرض نتائج الإعدادية لكافة محافظات مصر فور اعتمادها رسمياً. تابع مواعيد الامتحانات والنتائج., \"show_content_section\" = 1, \"updated_at\" = 2026-04-25 07:18:28 where \"id\" = 1) in /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php:829
+Stack trace:
+#0 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(783): Illuminate\\Database\\Connection->runQueryCallback('update \"exam_ty...', Array, Object(Closure))
+#1 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(600): Illuminate\\Database\\Connection->run('update \"exam_ty...', Array, Object(Closure))
+#2 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php(552): Illuminate\\Database\\Connection->affectingStatement('update \"exam_ty...', Array)
+#3 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3602): Illuminate\\Database\\Connection->update('update \"exam_ty...', Array)
+#4 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1061): Illuminate\\Database\\Query\\Builder->update(Array)
+#5 /Users/Masry/GitHub/ntegty/scratch/update_seo_content.php(37): Illuminate\\Database\\Eloquent\\Builder->update(Array)
+#6 Command line code(1): require('/Users/Masry/Gi...')
+#7 {main}
+  thrown at /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Database/Connection.php:829)
+[stacktrace]
+#0 {main}
+"} 
+[2026-04-25 07:24:24] local.ERROR: Uncaught Error: Class "Country" not found in /Users/Masry/GitHub/ntegty/scratch/update_seo_content.php:91
+Stack trace:
+#0 Command line code(1): require()
+#1 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught Error: Class \"Country\" not found in /Users/Masry/GitHub/ntegty/scratch/update_seo_content.php:91
+Stack trace:
+#0 Command line code(1): require()
+#1 {main}
+  thrown at /Users/Masry/GitHub/ntegty/scratch/update_seo_content.php:91)
+[stacktrace]
+#0 {main}
+"} 
+[2026-04-25 07:24:30] local.ERROR: Writing to /Users/Masry/.config/psysh/psysh_history is not allowed. {"exception":"[object] (ErrorException(code: 0): Writing to /Users/Masry/.config/psysh/psysh_history is not allowed. at /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/ConfigPaths.php:419)
+[stacktrace]
+#0 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(1024, 'Writing to /Use...', '/Users/Masry/Gi...', 419)
+#1 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(1024, 'Writing to /Use...', '/Users/Masry/Gi...', 419)
+#2 /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/ConfigPaths.php(419): trigger_error('Writing to /Use...', 1024)
+#3 /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/Configuration.php(683): Psy\\ConfigPaths::touchFileWithMkdir('/Users/Masry/.c...')
+#4 /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/Configuration.php(707): Psy\\Configuration->setHistoryFile('/Users/Masry/.c...')
+#5 /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/Configuration.php(852): Psy\\Configuration->getHistoryFile()
+#6 /Users/Masry/GitHub/ntegty/vendor/psy/psysh/src/Shell.php(94): Psy\\Configuration->getReadline()
+#7 /Users/Masry/GitHub/ntegty/vendor/laravel/tinker/src/Console/TinkerCommand.php(59): Psy\\Shell->__construct(Object(Psy\\Configuration))
+#8 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Laravel\\Tinker\\Console\\TinkerCommand->handle()
+#9 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Container/Util.php(41): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#10 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#11 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#12 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Container/Container.php(662): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#13 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Console/Command.php(211): Illuminate\\Container\\Container->call(Array)
+#14 /Users/Masry/GitHub/ntegty/vendor/symfony/console/Command/Command.php(326): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#15 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Console/Command.php(180): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 /Users/Masry/GitHub/ntegty/vendor/symfony/console/Application.php(1088): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#17 /Users/Masry/GitHub/ntegty/vendor/symfony/console/Application.php(324): Symfony\\Component\\Console\\Application->doRunCommand(Object(Laravel\\Tinker\\Console\\TinkerCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 /Users/Masry/GitHub/ntegty/vendor/symfony/console/Application.php(175): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 /Users/Masry/GitHub/ntegty/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 /Users/Masry/GitHub/ntegty/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 {main}
+"} 

@@ -9,7 +9,7 @@
     <!-- Hero Section -->
     @php
         $heroTitle = $settings['hero_title'] ?? 'نتيجتي';
-        $heroSubtitle = $settings['hero_subtitle'] ?? 'بوابتك الرسمية لنتائج الامتحانات في الوطن العربي';
+        $heroSubtitle = $settings['hero_subtitle'] ?? 'المنصة الأولى لنتائج الشهادات العامة والأزهرية 2026 في الوطن العربي';
     @endphp
     <div class="text-center mb-12 mt-4">
         <h1 class="text-2xl md:text-4xl font-black text-slate-800 mb-6 leading-relaxed flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3">
@@ -17,6 +17,9 @@
             <span class="hidden md:inline text-slate-300">|</span>
             <span class="text-xl md:text-3xl text-slate-700">{{ $heroSubtitle }}</span>
         </h1>
+        <p class="max-w-2xl mx-auto text-slate-500 font-medium text-sm md:text-base px-4">
+            تابع نتائج الشهادة الإعدادية، الثانوية العامة، والدبلومات الفنية لعام 2026 لحظة بلحظة. استعلام سريع برقم الجلوس والاسم مع تقارير تحليلية شاملة.
+        </p>
     </div>
 
     {{-- Ad: Header Bottom --}}
@@ -162,9 +165,9 @@
                     <div class="mb-4 text-blue-600 group-hover:scale-110 transition-transform duration-300">
                         <i class="fa-solid fa-magnifying-glass text-5xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">بحث سهل</h3>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">بحث ذكي 2026</h3>
                     <p class="text-slate-600 text-sm leading-relaxed">
-                        ابحث بالاسم أو رقم الجلوس بسهولة وسرعة فائقة
+                        تقنيات بحث متطورة تتيح لك الوصول لنتيجتك برقم الجلوس أو الاسم الرباعي في ثوانٍ معدودة.
                     </p>
                 </div>
             </div>
@@ -231,36 +234,66 @@
     <!-- About Section - من الإعدادات -->
     @php
         $aboutActive = ($settings['about_section_active'] ?? '1') === '1';
-        $aboutTitle = $settings['about_section_title'] ?? 'عن نتيجتي';
-        $aboutContent = $settings['about_section_content'] ?? 'موقع نتيجتي هو المنصة العربية الأكبر والأحدث المخصصة لعرض نتائج الشهادات العامة والأزهرية والدبلومات الفنية فور اعتمادها رسمياً. ننفرد بتغطية شاملة وحصرية لنتائج الامتحانات في مصر، العراق، ليبيا، فلسطين وغيرها من الدول. لا نكتفي بعرض النتيجة فحسب، بل نقدم أدوات ذكية تتيح لك البحث بالاسم أو رقم الجلوس، تصميم شهادات تقدير احترافية، وطباعة كشف الدرجات بضغطة زر. هدفنا هو توفير تجربة مستخدم سهلة، سريعة، وموثوقة لجميع الطلاب وأولياء الأمور.';
+        $aboutTitle = $settings['about_section_title'] ?? 'لماذا نتيجتي؟';
+        $aboutContent = $settings['about_section_content'] ?? 'موقع نتيجتي هو المصدر الأكثر موثوقية لنتائج الامتحانات في مصر والشرق الأوسط. نخدم أكثر من 10 مليون طالب سنوياً عبر تغطية شاملة لنتائج الشهادة الإعدادية والثانوية العامة. نتميز بالسرعة الفائقة والدقة المتناهية، حيث يتم تحديث قواعد البيانات مباشرة من المصادر الرسمية فور اعتمادها. نوفر لك أدوات حصرية مثل حساب المجموع المئوي، طباعة شهادات التقدير، والبحث المتقدم بالاسم.';
     @endphp
     
     @if($aboutActive && $aboutContent)
-    <div class="mt-16 mb-8">
-        <div class="max-w-4xl mx-auto bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-6 md:p-10 border-2 border-emerald-200 shadow-lg relative overflow-hidden">
-            <!-- الديكور -->
-            <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-200/30 rounded-full -mr-10 -mt-10"></div>
-            <div class="absolute bottom-0 left-0 w-24 h-24 bg-teal-200/30 rounded-full -ml-8 -mb-8"></div>
-            
+    <div class="mt-16 mb-12">
+        <div class="max-w-4xl mx-auto bg-gradient-to-br from-slate-50 to-emerald-50 rounded-3xl p-6 md:p-10 border border-emerald-100 shadow-sm relative overflow-hidden">
             <div class="relative z-10">
-                <!-- العنوان -->
                 <div class="flex items-center justify-center gap-3 mb-6">
-                    <div class="h-px flex-1 bg-gradient-to-l from-emerald-400 to-transparent"></div>
-                    <h2 class="text-xl md:text-2xl font-black text-emerald-700 flex items-center gap-2">
-                        <i class="fa-solid fa-info-circle"></i>
-                        {{ $aboutTitle }}
-                    </h2>
-                    <div class="h-px flex-1 bg-gradient-to-r from-emerald-400 to-transparent"></div>
+                    <h2 class="text-xl md:text-2xl font-black text-emerald-800">{{ $aboutTitle }}</h2>
                 </div>
-                
-                <!-- المحتوى -->
-                <p class="text-base md:text-lg text-slate-700 leading-loose text-justify md:text-center font-medium">
+                <p class="text-base md:text-lg text-slate-700 leading-loose text-center font-medium">
                     {!! nl2br(e($aboutContent)) !!}
                 </p>
             </div>
         </div>
     </div>
     @endif
+
+    <!-- GEO/AI Optimized FAQ Section -->
+    <div class="max-w-4xl mx-auto mt-12 mb-16 px-4">
+        <h2 class="text-2xl font-black text-slate-800 mb-8 text-center">الأسئلة الشائعة حول نتائج 2026</h2>
+        <div class="space-y-4">
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+                <h4 class="font-bold text-slate-800 mb-2">متى تظهر نتيجة الشهادة الإعدادية 2026؟</h4>
+                <p class="text-slate-600 text-sm leading-relaxed">من المقرر إعلان نتائج الشهادة الإعدادية للفصل الدراسي الثاني 2026 في منتصف شهر يونيو، وذلك فور انتهاء أعمال التصحيح والمراجعة في كل محافظة واعتمادها رسمياً من المحافظ المختص.</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+                <h4 class="font-bold text-slate-800 mb-2">كيفية الاستعلام عن نتيجة الثانوية العامة 2026؟</h4>
+                <p class="text-slate-600 text-sm leading-relaxed">يمكنك الاستعلام عن نتيجة الثانوية العامة 2026 برقم الجلوس عبر موقع نتيجتي. ستبدأ الامتحانات في 20 يونيو 2026، ومن المتوقع ظهور النتيجة في أواخر شهر يوليو عبر رابطنا المباشر والسريع.</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+                <h4 class="font-bold text-slate-800 mb-2">هل موقع نتيجتي يعرض نتائج جميع الدول العربية؟</h4>
+                <p class="text-slate-600 text-sm leading-relaxed">نعم، نوفر تغطية شاملة لنتائج الامتحانات في مصر، العراق، ليبيا، فلسطين، والأردن. نضمن لك الحصول على المعلومة الأكيدة من المصدر الرسمي فور صدورها.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Structured Data for GEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "متى تظهر نتيجة الشهادة الإعدادية 2026؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "من المقرر إعلان نتائج الشهادة الإعدادية للفصل الدراسي الثاني 2026 في منتصف شهر يونيو، وذلك فور انتهاء أعمال التصحيح والمراجعة في كل محافظة واعتمادها رسمياً من المحافظ المختص."
+        }
+      }, {
+        "@type": "Question",
+        "name": "كيفية الاستعلام عن نتيجة الثانوية العامة 2026؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "يمكنك الاستعلام عن نتيجة الثانوية العامة 2026 برقم الجلوس عبر موقع نتيجتي. ستبدأ الامتحانات في 20 يونيو 2026، ومن المتوقع ظهور النتيجة في أواخر شهر يوليو عبر رابطنا المباشر والسريع."
+        }
+      }]
+    }
+    </script>
 
     <!-- كلمات البحث الشائعة -->
     <div class="max-w-4xl mx-auto">
