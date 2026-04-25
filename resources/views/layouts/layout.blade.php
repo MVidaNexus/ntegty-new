@@ -63,6 +63,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Suppress Tailwind Play CDN warning in production */
+        @media print { .no-print { display: none !important; } }
+    </style>
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <script>
@@ -238,16 +242,22 @@
     {{-- AdSense Script - New System --}}
     @php
         $adsenseEnabled = ($settings['adsense_enabled'] ?? '0') === '1';
-        $publisherId = $settings['adsense_publisher_id'] ?? '';
+        $publisherId = trim($settings['adsense_publisher_id'] ?? '');
         $loadScript = ($settings['load_adsense_script'] ?? '1') === '1';
         $autoAds = ($settings['adsense_auto_ads'] ?? '0') === '1';
+        
+        // Ensure publisher ID starts with ca-pub-
+        if (!empty($publisherId) && !str_starts_with($publisherId, 'ca-pub-') && !str_starts_with($publisherId, 'pub-')) {
+            $publisherId = 'ca-pub-' . $publisherId;
+        }
     @endphp
     @if($adsenseEnabled && !empty($publisherId) && $loadScript)
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ $publisherId }}"
          crossorigin="anonymous"></script>
     @if($autoAds)
     <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
+        window.adsbygoogle = window.adsbygoogle || [];
+        window.adsbygoogle.push({
             google_ad_client: "{{ $publisherId }}",
             enable_page_level_ads: true
         });
@@ -311,20 +321,44 @@
         <div class="w-full px-4 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logo Section -->
-                <a href="{{ route('home') }}" class="flex items-center gap-4 group">
+                <a href="{{ route('home') }}" class="flex items-center gap-2 md:gap-4 group">
                     @if(isset($settings['logo']))
-                        <img src="{{ asset('uploads/' . $settings['logo']) }}" alt="{{ $settings['site_name'] ?? 'نتيجتي' }}" class="h-14 w-auto object-contain">
+                        <img src="{{ asset('uploads/' . $settings['logo']) }}" alt="{{ $settings['site_name'] ?? 'نتيجتي' }}" class="h-10 md:h-14 w-auto object-contain transition-all">
                     @else
                         <div class="flex flex-col">
-                            <span class="text-2xl font-black text-slate-800 leading-none group-hover:text-emerald-600 transition duration-300">
+                            <span class="text-xl md:text-2xl font-black text-slate-800 leading-none group-hover:text-emerald-600 transition duration-300">
                                 {{ $settings['site_name'] ?? 'نتيجتي' }}
                             </span>
-                            <span class="text-xs text-slate-500 font-bold tracking-widest mt-1">
+                            <span class="text-[10px] md:text-xs text-slate-500 font-bold tracking-widest mt-1">
                                 المنصة الرسمية للنتائج
                             </span>
                         </div>
                     @endif
                 </a>
+
+                <!-- Mobile Navigation Bar (Scrollable Flags) -->
+                <nav class="flex lg:hidden items-center gap-3 overflow-x-auto no-scrollbar py-2 max-w-[50%] md:max-w-none">
+                    <a href="{{ route('egypt.preparatory') }}" class="flex-shrink-0 flex flex-col items-center gap-1">
+                        <img src="https://flagcdn.com/w40/eg.png" class="w-6 h-4 shadow-sm rounded-sm" alt="Egypt">
+                        <span class="text-[9px] font-bold text-slate-600">مصر</span>
+                    </a>
+                    <a href="{{ route('country.exam', ['country' => 'iraq', 'slug' => 'prep']) }}" class="flex-shrink-0 flex flex-col items-center gap-1">
+                        <img src="https://flagcdn.com/w40/iq.png" class="w-6 h-4 shadow-sm rounded-sm" alt="Iraq">
+                        <span class="text-[9px] font-bold text-slate-600">العراق</span>
+                    </a>
+                    <a href="{{ route('country.exam', ['country' => 'libya', 'slug' => 'prep']) }}" class="flex-shrink-0 flex flex-col items-center gap-1">
+                        <img src="https://flagcdn.com/w40/ly.png" class="w-6 h-4 shadow-sm rounded-sm" alt="ليبيا">
+                        <span class="text-[9px] font-bold text-slate-600">ليبيا</span>
+                    </a>
+                    <a href="{{ route('country.exam', ['country' => 'palestine', 'slug' => 'secondary']) }}" class="flex-shrink-0 flex flex-col items-center gap-1">
+                        <img src="https://flagcdn.com/w40/ps.png" class="w-6 h-4 shadow-sm rounded-sm" alt="فلسطين">
+                        <span class="text-[9px] font-bold text-slate-600">فلسطين</span>
+                    </a>
+                    <a href="{{ route('country.exam', ['country' => 'jordan', 'slug' => 'secondary']) }}" class="flex-shrink-0 flex flex-col items-center gap-1">
+                        <img src="https://flagcdn.com/w40/jo.png" class="w-6 h-4 shadow-sm rounded-sm" alt="الأردن">
+                        <span class="text-[9px] font-bold text-slate-600">الأردن</span>
+                    </a>
+                </nav>
                 
                 <!-- Desktop Navigation -->
                 <nav class="hidden lg:flex items-center gap-8">
@@ -655,7 +689,7 @@
     @endphp
 
     @if($socialLinks->isNotEmpty())
-    <div class="fixed bottom-6 left-6 z-50 no-print" x-data="{ expanded: false }">
+    <div class="fixed bottom-6 right-6 z-50 no-print" x-data="{ expanded: false }">
         @if($socialLinks->count() > 1)
             <button @click="expanded = !expanded" 
                     class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 relative group"
@@ -663,7 +697,7 @@
                 <span class="absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75 animate-ping" x-show="!expanded"></span>
                 <i class="fa-solid fa-plus text-2xl md:text-3xl relative transition-transform duration-300"></i>
             </button>
-            <div x-show="expanded" x-transition class="absolute bottom-full left-0 mb-3 flex flex-col-reverse gap-2">
+            <div x-show="expanded" x-transition class="absolute bottom-full right-0 mb-3 flex flex-col-reverse gap-2">
                 @foreach($socialLinks as $link)
                     @php $info = $link->getPlatformInfo(); @endphp
                     <a href="{{ $link->url }}" target="_blank" class="w-12 h-12 {{ $info['color'] }} text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110" title="{{ $link->getDisplayLabel() }}">
@@ -686,9 +720,10 @@
         if(isset($country) && !empty($country->telegram_url)) { $telegramUrl = $country->telegram_url; }
         elseif(isset($egypt) && !empty($egypt->telegram_url)) { $telegramUrl = $egypt->telegram_url; }
     @endphp
-    <a href="{{ $telegramUrl }}" target="_blank" class="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 bg-sky-500 hover:bg-sky-600 text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300 md:w-16 md:h-16 group no-print animate-bounce-slow" title="اشترك في قناة التيليجرام">
+    <a href="{{ $telegramUrl }}" target="_blank" class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-sky-500 hover:bg-sky-600 text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300 md:w-16 md:h-16 group no-print animate-bounce-slow" title="اشترك في قناة التيليجرام">
         <span class="absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75 animate-ping"></span>
         <i class="fa-brands fa-telegram text-2xl md:text-3xl relative"></i>
+        <span class="absolute right-full mr-3 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">قناة التيليجرام</span>
     </a>
     @endif
 
