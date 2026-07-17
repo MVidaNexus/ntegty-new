@@ -69,6 +69,10 @@ $output .= run_cmd("git pull origin main") . "\n\n";
 $output .= "php artisan optimize:clear:\n";
 $output .= run_cmd("php artisan optimize:clear") . "\n\n";
 
+// Run database migrations
+$output .= "php artisan migrate --force:\n";
+$output .= run_cmd("php artisan migrate --force") . "\n\n";
+
 $output .= "---\n";
 $output .= "Deploy completed.\n";
 $output .= "=========================\n";

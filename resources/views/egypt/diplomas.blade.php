@@ -380,17 +380,99 @@ function searchDiplomas() {
                     prose-p:mb-4 prose-p:text-base prose-p:md:text-lg
                     prose-ul:my-4 prose-ul:pr-6 prose-li:mb-2 prose-li:text-base prose-li:md:text-lg
                     prose-a:text-emerald-600 prose-a:hover:text-emerald-700">
-            {!! $diplomaExamType?->content_body !!}
+            {!! $diplomaExamType->getFormattedContentBody() !!}
         </div>
         @endif
     </div>
 </div>
 @endif
 
-<!-- كلمات البحث الشائعة -->
-<div class="container mx-auto px-4 pb-8">
-    <div class="max-w-4xl mx-auto">
+        <!-- Rich SEO Article — Technical Diplomas 800+ words — Updated July 2026 -->
+        <div class="max-w-4xl mx-auto mt-12 mb-6">
+            <article class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-12">
+                <h2 class="text-2xl md:text-3xl font-black text-gray-800 mb-5 border-r-4 border-emerald-500 pr-4">
+                    نتيجة الدبلومات الفنية 2026 — بوابتك للمستقبل المهني والأكاديمي
+                </h2>
+
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 mb-6">
+                    <p class="text-emerald-800 font-bold text-sm mb-1">📢 يوليو 2026 — بدء إعلان النتائج</p>
+                    <p class="text-gray-700 text-sm leading-relaxed">أعلنت وزارة التربية والتعليم والتعليم الفني عن بدء إعلان نتائج الدبلومات الفنية (تجاري، صناعي، زراعي، فندقي) للدور الأول. ابحث عن نتيجتك الآن بالاسم ورقم الجلوس.</p>
+                </div>
+
+                <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
+                    التعليم الفني هو عصب التنمية الاقتصادية في مصر، ومن هنا تكمن أهمية الدبلومات الفنية التي تستقطب سنوياً ما يقرب من <strong>60% من إجمالي طلاب المرحلة الثانوية</strong>. في عام 2026، ومع التوجه الاستراتيجي للدولة نحو دعم التنافسية الصناعية والتكنولوجية، حظي طلاب الدبلومات الفنية باهتمام غير مسبوق عبر تحديث المناهج وربط التخصصات بالاحتياجات الحقيقية للمصانع والشركات.
+                </p>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">ما الجديد في دبلومات مصر 2026؟</h3>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    شهدت امتحانات هذا العام تطبيق <strong>منظومة الجدارات المهنية</strong> في أكثر من 80% من المدارس الفنية، وهي المنظومة التي تركز على تقييم المهارات العملية للطالب بشكل مستمر طوال العام الدراسي بدلاً من الاعتماد الكلي على الامتحان النظري النهائي. كما شملت التطويرات إدخال تخصصات جديدة مثل صيانة السيارات الكهربائية، الطاقة الشمسية، البرمجة وتطبيقات الويب، وخدمات اللوجستيات.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    تُسهل نتيجتي للطلاب الاستعلام الفوري عن النتيجة فور اعتمادها من وزير التربية والتعليم، حيث نوفر روابط فحص سريعة تدعم البحث بالاسم أو رقم الجلوس أو اسم الشعبة لضمان راحة البال لجميع الأهالي.
+                </p>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">تخصصات وشعب الدبلومات الفنية المتاحة</h3>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-emerald-50 rounded-2xl p-5 border border-emerald-100">
+                        <div class="text-3xl mb-2">🏭</div>
+                        <h4 class="font-bold text-gray-800 mb-1 text-sm">الدبلوم الصناعي</h4>
+                        <p class="text-gray-600 text-xs leading-relaxed">يشمل التخصصات الهندسية كالميكانيكا، الكهرباء، التبريد والتكييف، الكترونيات السيارات، والطاقة المتجددة.</p>
+                    </div>
+                    <div class="bg-blue-50 rounded-2xl p-5 border border-blue-100">
+                        <div class="text-3xl mb-2">📊</div>
+                        <h4 class="font-bold text-gray-800 mb-1 text-sm">الدبلوم التجاري</h4>
+                        <p class="text-gray-600 text-xs leading-relaxed">يغطي مجالات التسويق، السكرتارية الطبية والقانونية، الإدارة المالية، وتكنولوجيا المعلومات المكتبية.</p>
+                    </div>
+                    <div class="bg-green-50 rounded-2xl p-5 border border-green-100">
+                        <div class="text-3xl mb-2">🌾</div>
+                        <h4 class="font-bold text-gray-800 mb-1 text-sm">الدبلوم الزراعي</h4>
+                        <p class="text-gray-600 text-xs leading-relaxed">يركز على الإنتاج الحيواني والداجني، الصناعات الغذائية، تكنولوجيا الري، واستصلاح الأراضي الزراعية.</p>
+                    </div>
+                    <div class="bg-orange-50 rounded-2xl p-5 border border-orange-100">
+                        <div class="text-3xl mb-2">🏨</div>
+                        <h4 class="font-bold text-gray-800 mb-1 text-sm">الدبلوم الفندقي</h4>
+                        <p class="text-gray-600 text-xs leading-relaxed">يؤهل للعمل في قطاع الفنادق والضيافة، ويشمل فنون الطهي، الإرشاد السياحي، وإدارة المكاتب الفندقية.</p>
+                    </div>
+                    <div class="bg-pink-50 rounded-2xl p-5 border border-pink-100">
+                        <div class="text-3xl mb-2">❤️</div>
+                        <h4 class="font-bold text-gray-800 mb-1 text-sm">التمريض والدبلوم الصحي</h4>
+                        <p class="text-gray-600 text-xs leading-relaxed">يختص بتأهيل الكوادر المساعدة في المستشفيات والمراكز العلاجية تحت إشراف وزارة الصحة والسكان.</p>
+                    </div>
+                    <div class="bg-purple-50 rounded-2xl p-5 border border-purple-100">
+                        <div class="text-3xl mb-2">🎨</div>
+                        <h4 class="font-bold text-gray-800 mb-1 text-sm">المدارس الفنية للبنات</h4>
+                        <p class="text-gray-600 text-xs leading-relaxed">تخصصات تصميم الأزياء، الملابس الجاهزة، الحرف اليدوية، والتربية المنزلية المتكاملة.</p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">مواعيد ظهور النتائج ونسب النجاح المتوقعة</h3>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    وفق الجدول الزمني المحدد من قطاع التعليم الفني بالوزارة، انتهت الامتحانات التحريرية والعملية في منتصف يونيو 2026. وتجري حالياً عمليات تصحيح كراسات الإجابة بدقة بالغة في الكنترولات الرئيسية لجميع القطاعات (القاهرة، طنطا، دمنهور، قنا، المنيا). ومن المتوقع إعلان النتائج رسمياً خلال النصف الثاني من يوليو 2026. وتشير المؤشرات الأولية للعينات العشوائية المصححة إلى ارتفاع ملحوظ في نسب النجاح مقارنة بالعام الماضي.
+                </p>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">فرص التعليم العالي لخريجي الدبلومات</h3>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    يعتقد البعض خطأً أن خريج الدبلوم الفني لا يمكنه دخول الجامعة، ولكن الواقع في 2026 يثبت العكس تماماً. يحق لطلاب الدبلومات الفنية التقديم لـ <strong>التنسيق المخصص للجامعات والمعاهد</strong> بنسبة 10% من المقاعد الشاغرة. ومن أبرز الوجهات الأكاديمية المتاحة لهم:
+                </p>
+                <ul class="space-y-2 text-gray-600 mb-6 pr-4">
+                    <li>• <strong class="text-gray-800">الجامعات التكنولوجية الحديثة:</strong> مثل جامعة القاهرة الجديدة التكنولوجية وجامعة بني سويف التكنولوجية، وتوفر تخصصات متطورة في الأوتوترونكس والميكاترونكس.</li>
+                    <li>• <strong class="text-gray-800">كليات الهندسة والزراعة والتجارة:</strong> للطلاب الحاصلين على مجاميع مرتفعة بعد اجتياز امتحان المعادلة.</li>
+                    <li>• <strong class="text-gray-800">المعاهد الفنية الصحية:</strong> وهي من أكثر المعاهد طلباً لتوفيرها فرص عمل حكومية فور التخرج.</li>
+                </ul>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">الاعتراضات وإعادة رصد الدرجات</h3>
+                <p class="text-gray-600 leading-relaxed mb-5">
+                    تُتيح الوزارة باب التظلمات لطلاب الدبلومات الفنية بعد الإعلان الرسمي عن النتيجة بـ 24 ساعة فقط، ويستمر استقبال الطلبات لمدة 15 يوماً. يمكن للطالب التوجه لمديرية التربية والتعليم التابع لها، وسداد الرسوم المقررة لكل مادة يرغب في مراجعتها، حيث يتم تحديد موعد للاطلاع على صورة من ورقة إجابته للتأكد من دقة عملية جمع ورصد الدرجات.
+                </p>
+
+                <div class="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-5 text-white text-center">
+                    <p class="font-black text-base mb-1">⚙️ ابحث عن نتيجتك في الدبلومات الفنية الآن</p>
+                    <p class="text-emerald-100 text-sm">نتيجتي — دقة، سرعة، شمولية | جميع الشعب والتخصصات 2026</p>
+                </div>
+            </article>
+        </div>
         @include('partials.popular-keywords')
     </div>
 </div>
+
 @endsection

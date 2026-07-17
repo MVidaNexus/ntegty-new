@@ -77,7 +77,7 @@
             
             <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl sm:rounded-3xl shadow-2xl p-5 sm:p-8 md:p-10 border border-blue-100 print:shadow-none print:border-0 print:p-0 print:bg-white">
                 <h1 class="text-lg sm:text-xl md:text-2xl font-black text-center text-gray-800 mb-2 leading-tight px-2 no-print">
-                    {{ $examType->seo_title ?? $examType->content_title ?? ('نتيجة ' . ($certName ?? 'الشهادة الإعدادية')) }}
+                    {{ $title ?? $examType->content_title ?? $examType->seo_title ?? ('نتيجة ' . ($certName ?? 'الشهادة الإعدادية')) }}
                 </h1>
                 
                 @if(isset($governorate))
@@ -1463,8 +1463,8 @@ function searchComponent() {
         @include('partials.governorates-internal-links', ['currentGovernorateSlug' => $governorate->slug ?? null])
     @endif
     
-    {{-- Content Section for SEO (Second) - Hidden for Preparatory certificate --}}
-    @if(isset($examType) && $examType->show_content_section && ($examType->content_title || $examType->content_body) && !str_contains($examType->code ?? '', 'preparatory'))
+    {{-- Content Section for SEO (Second) - Hidden for Preparatory & Secondary certificate --}}
+    @if(isset($examType) && $examType->show_content_section && ($examType->content_title || $examType->content_body) && !str_contains($examType->code ?? '', 'preparatory') && ($examType->code ?? '') !== 'eg_secondary')
     <div class="w-full max-w-6xl mx-auto mt-8 px-3">
         <div class="bg-white rounded-2xl shadow-lg p-6 md:p-10 border border-gray-100">
             @if($examType->content_title)
@@ -1485,6 +1485,181 @@ function searchComponent() {
             </div>
             @endif
         </div>
+    </div>
+    @endif
+
+    {{-- Secondary Custom Rich SEO Article — Updated July 2026 (1000+ words) --}}
+    @if(isset($examType) && $examType->code === 'eg_secondary')
+    <div class="max-w-4xl mx-auto mt-14 px-3 no-print">
+        <article class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-black text-gray-800 mb-5 border-r-4 border-blue-600 pr-4">
+                دليل نتيجة الثانوية العامة 2026 — استعلم عن نتيجتك فوراً برقم الجلوس والاسم
+            </h2>
+
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-5 mb-8">
+                <p class="text-blue-800 font-bold text-base mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-bullhorn text-blue-600"></i>
+                    تحديث هام — تموز/يوليو 2026
+                </p>
+                <p class="text-blue-700 text-sm leading-relaxed">
+                    منصة نتيجتي تتيح لك الحصول على نتيجة الشهادة الثانوية العامة للعام الدراسي 2025/2026 فور اعتمادها رسمياً من وزير التربية والتعليم والتعليم الفني. سنقوم بتوفير قواعد البيانات والروابط المباشرة للاستعلام بالاسم ورقم الجلوس بدقة متناهية وسرعة فائقة.
+                </p>
+            </div>
+
+            <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
+                تُعتبر امتحانات الثانوية العامة في مصر بمثابة محطة مصيرية هامة ترسم ملامح المستقبل الأكاديمي والمهني لعشرات الآلاف من الطلاب وأسرهم. ولهذا، يزداد البحث بشكل مكثف عن <strong>نتيجة الثانوية العامة</strong> مع انتهاء امتحانات العام الدراسي الحالي. في بوابة نتيجتي، نسعى جاهدين لتبسيط عملية الاستعلام وتقليل الضغط النفسي على الطلاب، من خلال تقديم نتائج رسمية ومطابقة 100% لوزارة التربية والتعليم والتعليم الفني، مجاناً وبدون أي تعقيدات.
+            </p>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-circle-info text-blue-500"></i>
+                خطوات الاستعلام عن نتيجة الثانوية العامة 2026 عبر نتيجتي
+            </h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                نوفر لك نظام بحث مرن يتيح الوصول للنتيجة بعدة طرق لضمان راحتك. اتبع الخطوات البسيطة التالية:
+            </p>
+            <ol class="list-decimal pr-6 text-gray-600 leading-relaxed mb-8 space-y-2">
+                <li>قم بالصعود إلى أعلى هذه الصفحة حيث توجد أداة الاستعلام المخصصة لجمهورية مصر العربية.</li>
+                <li>اختر نظام الدراسة الخاص بك (سواء كنت طالباً في <strong>النظام الحديث</strong> أو <strong>النظام القديم</strong>).</li>
+                <li>اختر الشعبة الدراسية المناسبة لك (<strong>علمي علوم</strong>، <strong>علمي رياضة</strong>، أو <strong>أدبي</strong>) لتسهيل الفرز.</li>
+                <li>أدخل <strong>رقم الجلوس</strong> الخاص بك في حقل البحث بشكل صحيح، أو اكتب <strong>اسم الطالب كاملاً</strong> للبحث بالاسم.</li>
+                <li>اضغط على زر <strong class="text-blue-600">"بحث عن النتيجة"</strong> لتظهر لك بطاقة درجاتك مفصلة بمجموعك الكلي ونسبتك المئوية وترتيبك.</li>
+            </ol>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2 flex-wrap">
+                <i class="fa-solid fa-list-check text-blue-500"></i>
+                توزيع درجات مواد الثانوية العامة 2026 (الدرجات الصغرى والكبرى)
+            </h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                تتوزع درجات الشهادة الثانوية العامة بإجمالي <strong>410 درجات</strong> للمواد الأساسية التي تضاف للمجموع. وفيما يلي جدول مفصل يوضح الدرجات الكبرى وحد النجاح (الدرجة الصغرى) لكل مادة دراسية للشعبتين العلمية والأدبية:
+            </p>
+
+            <div class="overflow-x-auto mb-8">
+                <table class="w-full text-sm text-gray-600 border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                    <thead class="bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold">
+                        <tr>
+                            <th class="p-3 text-right">المادة</th>
+                            <th class="p-3 text-center">الدرجة الكبرى</th>
+                            <th class="p-3 text-center">الدرجة الصغرى (النجاح)</th>
+                            <th class="p-3 text-right">ملاحظة</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="bg-blue-50/50 font-bold"><td colspan="4" class="p-2 text-blue-800">أولاً: المواد المشتركة (لكافة الشعب)</td></tr>
+                        <tr><td class="p-3">اللغة العربية</td><td class="p-3 text-center font-semibold">80</td><td class="p-3 text-center">40</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        <tr class="bg-gray-50"><td class="p-3">اللغة الأجنبية الأولى (الإنجليزية)</td><td class="p-3 text-center font-semibold">50</td><td class="p-3 text-center">25</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        <tr><td class="p-3">اللغة الأجنبية الثانية (فرنسي، ألماني، إلخ)</td><td class="p-3 text-center font-semibold">40</td><td class="p-3 text-center">20</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        
+                        <tr class="bg-emerald-50/50 font-bold"><td colspan="4" class="p-2 text-emerald-800">ثانياً: مواد الشعبة العلمية (علوم)</td></tr>
+                        <tr><td class="p-3">الأحياء</td><td class="p-3 text-center font-semibold">60</td><td class="p-3 text-center">30</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        <tr class="bg-gray-50"><td class="p-3">الجيولوجيا والعلوم البيئية</td><td class="p-3 text-center font-semibold">60</td><td class="p-3 text-center">30</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        <tr><td class="p-3">الفيزياء</td><td class="p-3 text-center font-semibold">60</td><td class="p-3 text-center">30</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع لشعبتي العلوم والرياضة</td></tr>
+                        <tr class="bg-gray-50"><td class="p-3">الكيمياء</td><td class="p-3 text-center font-semibold">60</td><td class="p-3 text-center">30</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع لشعبتي العلوم والرياضة</td></tr>
+                        
+                        <tr class="bg-amber-50/50 font-bold"><td colspan="4" class="p-2 text-amber-800">ثالثاً: مواد الشعبة العلمية (رياضيات)</td></tr>
+                        <tr><td class="p-3">الرياضيات البحتة (جبر وهندسة فراغية + تفاضل وتكامل)</td><td class="p-3 text-center font-semibold">60</td><td class="p-3 text-center">30</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        <tr class="bg-gray-50"><td class="p-3">الرياضيات التطبيقية (استاتيكا + ديناميكا)</td><td class="p-3 text-center font-semibold">60</td><td class="p-3 text-center">30</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        
+                        <tr class="bg-purple-50/50 font-bold"><td colspan="4" class="p-2 text-purple-800">رابعاً: مواد الشعبة الأدبية</td></tr>
+                        <tr><td class="p-3">التاريخ</td><td class="p-3 text-center font-semibold">60</td><td class="p-3 text-center">30</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        <tr class="bg-gray-50"><td class="p-3">الجغرافيا</td><td class="p-3 text-center font-semibold">60</td><td class="p-3 text-center">30</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        <tr><td class="p-3">الفلسفة والمنطق</td><td class="p-3 text-center font-semibold">60</td><td class="p-3 text-center">20</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        <tr class="bg-gray-50"><td class="p-3">علم النفس والاجتماع</td><td class="p-3 text-center font-semibold">60</td><td class="p-3 text-center">30</td><td class="p-3 text-xs text-gray-500">تضاف للمجموع</td></tr>
+                        
+                        <tr class="bg-red-50/50 font-bold"><td colspan="4" class="p-2 text-red-800">خامساً: مواد لا تضاف للمجموع (مواد النجاح والرسوب)</td></tr>
+                        <tr><td class="p-3">التربية الدينية</td><td class="p-3 text-center font-semibold">25</td><td class="p-3 text-center">12.5</td><td class="p-3 text-xs text-gray-500">لا تضاف للمجموع الكلي</td></tr>
+                        <tr class="bg-gray-50"><td class="p-3">التربية الوطنية</td><td class="p-3 text-center font-semibold">25</td><td class="p-3 text-center">12.5</td><td class="p-3 text-xs text-gray-500">لا تضاف للمجموع الكلي</td></tr>
+                        <tr><td class="p-3">الاقتصاد والإحصاء</td><td class="p-3 text-center font-semibold">50</td><td class="p-3 text-center">25</td><td class="p-3 text-xs text-gray-500">لا تضاف للمجموع الكلي</td></tr>
+                        
+                        <tr class="bg-blue-600 text-white font-bold">
+                            <td class="p-3">المجموع الكلي</td>
+                            <td class="p-3 text-center">410</td>
+                            <td class="p-3 text-center">205</td>
+                            <td class="p-3 text-xs">نسبة النجاح الدنيا هي 50%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-calculator text-blue-500"></i>
+                كيفية حساب النسبة المئوية لمجموعك الكلي
+            </h3>
+            <p class="text-gray-600 leading-relaxed mb-6">
+                يعتمد نظام التنسيق والقبول بالجامعات على النسبة المئوية لمجموع الطالب بدلاً من الدرجات الخام فقط. يمكنك حساب النسبة المئوية لدرجاتك بسهولة فائقة باستخدام المعادلة الرياضية التالية:
+            </p>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200 text-center mb-6">
+                <div class="font-mono text-xl sm:text-2xl font-bold text-blue-700 mb-2">
+                    النسبة المئوية = (المجموع الذي حصلت عليه ÷ 410) × 100
+                </div>
+                <div class="text-sm text-gray-500">
+                    مثال: إذا كان مجموع درجاتك هو 369 درجة: (369 ÷ 410) = 0.9. ثم تضرب في 100 ليكون الناتج 90%.
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-blue-500"></i>
+                تظلمات نتيجة الثانوية العامة 2026
+            </h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                تتيح وزارة التربية والتعليم والتعليم الفني خدمة تقديم التظلمات إلكترونياً للطلاب الذين يشعرون أن درجاتهم لا تعكس مستواهم الحقيقي. تبدأ مرحلة التظلمات عادةً خلال <strong>48 ساعة</strong> من تاريخ إعلان النتيجة رسمياً، وتستمر لمدة <strong>15 يوماً</strong>.
+            </p>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                يقوم الطالب بسداد الرسوم المقررة لكل مادة (والتي يتم تحديدها من قبل الوزارة) عبر منافذ الدفع الإلكترونية المعتمدة مثل فوري أو البريد المصري. بعد السداد، يقوم الطالب بحجز موعد إلكتروني للذهاب إلى مقر الكنترول الرئيسي التابع لمحافظته لمراجعة صورة من كراسة الإجابة (البابل شيت) وورقة الأسئلة، ومقارنة إجاباته مع نموذج الإجابة الرسمي لكتابة أي ملاحظات واستعادة حقه في حال وجود أي خطأ في رصد أو تجميع الدرجات.
+            </p>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2 flex-wrap">
+                <i class="fa-solid fa-graduation-cap text-blue-500"></i>
+                مرحلة تنسيق الكليات والمعاهد للقبول بالجامعات 2026
+            </h3>
+            <p class="text-gray-600 leading-relaxed mb-6">
+                بمجرد إعلان النتائج والحصول على درجاتك، تبدأ مرحلة التنسيق الإلكتروني عبر موقع التنسيق الرسمي التابع لوزارة التعليم العالي. ينقسم التنسيق لطلاب الثانوية العامة إلى <strong>ثلاث مراحل رئيسية</strong> بحسب المجموع:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div class="bg-blue-50 rounded-2xl p-5 border border-blue-100 text-center">
+                    <span class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold mx-auto mb-3 flex-shrink-0">1</span>
+                    <h4 class="font-bold text-gray-800 mb-2">المرحلة الأولى</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">تضم الحاصلين على المجاميع المرتفعة، وتؤهل للالتحاق بكليات القمة مثل الطب، الهندسة، الصيدلة، والإعلام.</p>
+                </div>
+                <div class="bg-emerald-50 rounded-2xl p-5 border border-emerald-100 text-center">
+                    <span class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold mx-auto mb-3 flex-shrink-0">2</span>
+                    <h4 class="font-bold text-gray-800 mb-2">المرحلة الثانية</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">تضم شريحة متوسطي المجموع، وتستهدف كليات العلوم، الحاسبات، الآداب، التجارة، والتربية.</p>
+                </div>
+                <div class="bg-purple-50 rounded-2xl p-5 border border-purple-100 text-center">
+                    <span class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold mx-auto mb-3 flex-shrink-0">3</span>
+                    <h4 class="font-bold text-gray-800 mb-2">المرحلة الثالثة</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">تشمل بقية الطلاب الناجحين وطلاب الدور الثاني، وتستهدف بقية الكليات والمعاهد العليا والمتوسطة.</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-5 border-b-2 border-gray-100 pb-2">
+                <i class="fa-solid fa-comments text-blue-500 ml-1"></i>
+                الأسئلة الشائعة حول نتيجة الثانوية العامة 2026
+            </h3>
+            
+            <div class="space-y-4">
+                <div class="border-b border-gray-100 pb-4">
+                    <h4 class="font-bold text-gray-800 mb-2">متى تظهر نتيجة الثانوية العامة 2026 في مصر؟</h4>
+                    <p class="text-sm text-gray-600 leading-relaxed">تظهر نتيجة الثانوية العامة 2026 بعد انتهاء أعمال التصحيح ورصد درجات الطلاب إلكترونياً واعتمادها رسمياً من وزير التربية والتعليم والتعليم الفني في المؤتمر الصحفي، ومن المتوقع إعلان النتيجة في أواخر شهر يوليو أو مطلع أغسطس 2026.</p>
+                </div>
+                <div class="border-b border-gray-100 pb-4">
+                    <h4 class="font-bold text-gray-800 mb-2">كيف يمكنني الحصول على نتيجة الثانوية العامة 2026 برقم الجلوس والاسم؟</h4>
+                    <p class="text-sm text-gray-600 leading-relaxed">يمكنك الاستعلام الفوري عن النتيجة عبر منصة نتيجتي بالخطوات التالية: 1. الدخول على صفحة نتيجة الثانوية العامة في مصر. 2. كتابة رقم الجلوس الخاص بك في خانة البحث. 3. الضغط على زر "بحث عن النتيجة" لتظهر لك الدرجات بالتفصيل مع النسبة المئوية والمجموع الكلي.</p>
+                </div>
+                <div class="border-b border-gray-100 pb-4">
+                    <h4 class="font-bold text-gray-800 mb-2">ما هو المجموع الكلي لدرجات الثانوية العامة 2026؟</h4>
+                    <p class="text-sm text-gray-600 leading-relaxed">المجموع الكلي لدرجات الثانوية العامة المصرية هو 410 درجات موزعة على المواد الأساسية للشعبتين العلمية والأدبية، وحد النجاح (درجة المرور) هو 50% من درجة كل مادة بشرط حضور الطالب للامتحان.</p>
+                </div>
+                <div class="border-b border-gray-100 pb-4">
+                    <h4 class="font-bold text-gray-800 mb-2">كيف يتم حساب النسبة المئوية للثانوية العامة؟</h4>
+                    <p class="text-sm text-gray-600 leading-relaxed">يتم حساب النسبة المئوية عن طريق قسمة المجموع الذي حصل عليه الطالب على المجموع الكلي (410) ثم ضرب الناتج في 100. على سبيل المثال، إذا حصل الطالب على مجموع 369 درجة، تكون النسبة المئوية: (369 / 410) * 100 = 90%.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-2">ما هي خطوات تقديم تظلم على نتيجة الثانوية العامة؟</h4>
+                    <p class="text-sm text-gray-600 leading-relaxed">بعد إعلان النتيجة، تفتح وزارة التربية والتعليم باب التظلمات إلكترونياً لمدة 15 يوماً. يقوم الطالب بدفع الرسوم المقررة لكل مادة عبر منافذ الدفع المعتمدة، ثم يحدد موعداً للاطلاع على صورة من ورقة الإجابة (البابل شيت) وكتابة ملاحظاته في مقر الكنترول الرئيسي.</p>
+                </div>
+            </div>
+        </article>
     </div>
     @endif
 

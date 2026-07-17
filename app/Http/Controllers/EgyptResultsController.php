@@ -29,7 +29,9 @@ class EgyptResultsController extends Controller
         );
 
         $title = $egypt->getDynamicTitle();
-        return view('egypt.index', compact('title', 'meta', 'examTypes', 'egypt'));
+        $structuredData = SchemaService::countryPage($egypt, $examTypes->all());
+
+        return view('egypt.index', compact('title', 'meta', 'examTypes', 'egypt', 'structuredData'));
     }
 
     /**
@@ -672,19 +674,30 @@ class EgyptResultsController extends Controller
         $egypt = Country::where('code', 'EG')->firstOrFail();
         $examType = ExamType::where('code', 'eg_secondary')->with('branches')->firstOrFail();
 
-        // استخدام العنوان من لوحة التحكم أولاً
-        $title = $examType->content_title ?? $examType->seo_title ?? ('نتيجة الثانوية العامة في ' . $egypt->getDynamicTitle(false, false));
+        // استخدام العنوان من لوحة التحكم أولاً أو استخدام العنوان المحسّن للسيو
+        $title = $examType->content_title ?? "نتيجة الثانوية العامة 2026 برقم الجلوس والاسم";
         $certName = $examType->name_ar ?? 'الثانوية العامة';
 
+        // تحسين العنوان والوصف للميتا تاج لزيادة نسبة النقر والظهور (CTR)
+        $seoTitle = $examType->seo_title;
+        if (empty($seoTitle) || $seoTitle === 'نتيجة الثانوية العامة 2026 - نتيجتي') {
+            $seoTitle = "نتيجة الثانوية العامة 2026 برقم الجلوس والاسم";
+        }
+
+        $seoDescription = $examType->seo_description;
+        if (empty($seoDescription) || str_contains($seoDescription, 'رابط سريع ومباشر للحصول على نتيجتك')) {
+            $seoDescription = "رابط نتيجة الثانوية العامة 2026 في مصر فور صدورها. استعلم عن نتيجتك برقم الجلوس والاسم مجاناً، وتعرف على درجات المواد، النسبة المئوية، وترتيب الأوائل.";
+        }
+
         $meta = $this->seoService->generateMetaTags(
-            $examType->seo_title ?? $title,
-            $examType->seo_description ?? ('نتيجة الثانوية العامة في مصر - ابحث برقم الجلوس أو الاسم ' . $egypt->academic_year)
+            $seoTitle,
+            $seoDescription
         );
         
         // Get secondary branches from database (علمي علوم - علمي رياضة - أدبي)
         $branches = $examType->branches()->where('is_active', true)->orderBy('sort_order')->get();
 
-        $structuredData = SchemaService::examTypePage($examType, []);
+        $structuredData = SchemaService::secondaryExamPage($examType);
 
         $breadcrumbs = [
             ['name' => 'الرئيسية', 'url' => route('home')],

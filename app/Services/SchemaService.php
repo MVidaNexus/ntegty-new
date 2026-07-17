@@ -69,7 +69,7 @@ class SchemaService
     /**
      * WebPage schema
      */
-    public static function webPage(string $title, string $description, ?string $url = null): array
+    public static function webPage(string $title, string $description, ?string $url = null, ?string $datePublished = null, ?string $dateModified = null): array
     {
         $siteUrl = config('app.url');
         
@@ -83,8 +83,8 @@ class SchemaService
                 '@id' => $siteUrl . '/#website',
             ],
             'inLanguage' => 'ar',
-            'datePublished' => now()->toIso8601String(),
-            'dateModified' => now()->toIso8601String(),
+            'datePublished' => $datePublished ?? now()->toIso8601String(),
+            'dateModified' => $dateModified ?? now()->toIso8601String(),
         ];
     }
 
@@ -166,7 +166,7 @@ class SchemaService
     /**
      * CollectionPage schema for listing pages
      */
-    public static function collectionPage(string $title, string $description, array $items = []): array
+    public static function collectionPage(string $title, string $description, array $items = [], ?string $datePublished = null, ?string $dateModified = null): array
     {
         $schema = [
             '@type' => 'CollectionPage',
@@ -175,6 +175,8 @@ class SchemaService
             'name' => $title,
             'description' => $description,
             'inLanguage' => 'ar',
+            'datePublished' => $datePublished ?? now()->toIso8601String(),
+            'dateModified' => $dateModified ?? now()->toIso8601String(),
         ];
         
         if (!empty($items)) {
@@ -206,6 +208,39 @@ class SchemaService
         $siteName = SiteSetting::get('site_name', 'نتيجتي');
         $siteDescription = SiteSetting::get('seo_description', 'بوابة النتائج التعليمية');
         
+        $faqs = [
+            [
+                'question' => 'كيف يمكنني الاستعلام عن نتيجة الامتحانات برقم الجلوس أو الاسم؟',
+                'answer' => 'يمكنك الاستعلام عن نتيجتك بكل سهولة عبر منصة نتيجتي بالخطوات التالية: 1. اختر علم الدولة الخاصة بك من الصفحة الرئيسية (مثل مصر، العراق، ليبيا، إلخ). 2. اختر نوع الشهادة التعليمية (مثل الشهادة الإعدادية أو الثانوية). 3. أدخل رقم جلوسك أو اسمك الرباعي في خانة البحث، ثم اضغط على زر "عرض النتيجة" لتظهر لك درجاتك كاملة مع المجموع الكلي والنسبة المئوية فوراً وبشكل مجاني تماماً.'
+            ],
+            [
+                'question' => 'ما هي الدول والشهادات التعليمية التي تغطيها بوابة نتيجتي؟',
+                'answer' => 'تغطي بوابة نتيجتي نتائج الامتحانات الرسمية للعديد من الدول العربية والشهادات العامة والأزهرية، بما في ذلك: نتائج الامتحانات في مصر (الشهادة الإعدادية، الثانوية العامة، الدبلومات الفنية، الشهادة الثانوية الأزهرية)، نتائج الامتحانات في العراق (الصف الثالث المتوسط، السادس الاعدادي)، ونتائج الشهادات العامة في ليبيا، السودان، فلسطين، اليمن، الأردن، وسوريا.'
+            ],
+            [
+                'question' => 'هل النتائج المعروضة على المنصة رسمية ومطابقة للوزارة؟',
+                'answer' => 'نعم، جميع النتائج المعروضة على منصة نتيجتي هي نتائج رسمية ومطابقة 100% للنتائج المعتمدة من وزارة التربية والتعليم والتعليم الفني في مصر، ووزارة التربية العراقية، وكافة الهيئات التعليمية الرسمية في الدول العربية. يتم تحديث ورفع قواعد البيانات ولينكات الاستعلام مباشرة بالتنسيق مع الجهات المعنية فور اعتمادها رسمياً.'
+            ],
+            [
+                'question' => 'كيف يمكنني استخدام خدمة "صمم شهادتك" المجانية؟',
+                'answer' => 'نوفر خدمة حصرية ومجانية تتيح للطلاب وأولياء الأمور تصميم شهادة تقدير للمتفوقين بشكل فوري. بعد الحصول على نتيجتك، يمكنك الانتقال إلى قسم "شهادة تقدير"، وإدخال اسم الطالب، المدرسة، المجموع الكلي، وحفظ الشهادة أو طباعتها بتصميم فائق الجودة والجمال لمشاركتها مع الأهل والأصدقاء احتفالاً بالنجاح.'
+            ]
+        ];
+
+        $faqSchema = [
+            '@type' => 'FAQPage',
+            'mainEntity' => array_map(function($faq) {
+                return [
+                    '@type' => 'Question',
+                    'name' => $faq['question'],
+                    'acceptedAnswer' => [
+                        '@type' => 'Answer',
+                        'text' => $faq['answer']
+                    ]
+                ];
+            }, $faqs)
+        ];
+
         $schema = [
             '@context' => 'https://schema.org',
             '@graph' => [
@@ -215,6 +250,7 @@ class SchemaService
                 self::breadcrumb([
                     ['name' => 'الرئيسية', 'url' => $siteUrl],
                 ]),
+                $faqSchema
             ],
         ];
         
@@ -241,7 +277,7 @@ class SchemaService
             '@context' => 'https://schema.org',
             '@graph' => [
                 self::organization(),
-                self::collectionPage($title, $description, $items),
+                self::collectionPage($title, $description, $items, $country->created_at?->toIso8601String(), $country->updated_at?->toIso8601String()),
                 self::breadcrumb([
                     ['name' => 'الرئيسية', 'url' => $siteUrl],
                     ['name' => $country->name_ar],
@@ -276,7 +312,9 @@ class SchemaService
                 self::collectionPage(
                     "نتائج {$examType->name_ar} - {$country->name_ar}",
                     $examType->seo_description ?: "نتائج {$examType->name_ar} في جميع محافظات {$country->name_ar}",
-                    $items
+                    $items,
+                    $examType->created_at?->toIso8601String(),
+                    $examType->updated_at?->toIso8601String()
                 ),
                 self::breadcrumb([
                     ['name' => 'الرئيسية', 'url' => $siteUrl],
@@ -286,6 +324,78 @@ class SchemaService
             ],
         ];
         
+        return json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    }
+
+    /**
+     * Full optimized schema for secondary exam page (Thanaweya Amma) with FAQPage and WebPage
+     */
+    public static function secondaryExamPage(ExamType $examType): string
+    {
+        $siteUrl = config('app.url');
+        $country = $examType->country;
+        
+        $seoTitle = $examType->seo_title ?: "نتيجة الثانوية العامة 2026 برقم الجلوس والاسم - نتيجتي";
+        $seoDesc = $examType->seo_description ?: "رابط نتيجة الثانوية العامة 2026 في مصر فور صدورها. استعلم عن نتيجتك برقم الجلوس والاسم مجاناً، وتعرف على درجات المواد، النسبة المئوية، وترتيب الأوائل.";
+        
+        $faqs = [
+            [
+                'question' => 'متى تظهر نتيجة الثانوية العامة 2026 في مصر؟',
+                'answer' => 'تظهر نتيجة الثانوية العامة 2026 بعد انتهاء أعمال التصحيح ورصد درجات الطلاب إلكترونياً واعتمادها رسمياً من وزير التربية والتعليم والتعليم الفني في المؤتمر الصحفي، ومن المتوقع إعلان النتيجة في أواخر شهر يوليو أو مطلع أغسطس 2026.'
+            ],
+            [
+                'question' => 'كيف يمكنني الحصول على نتيجة الثانوية العامة 2026 برقم الجلوس والاسم؟',
+                'answer' => 'يمكنك الاستعلام الفوري عن النتيجة عبر منصة نتيجتي بالخطوات التالية: 1. الدخول على صفحة نتيجة الثانوية العامة في مصر. 2. كتابة رقم الجلوس الخاص بك في خانة البحث. 3. الضغط على زر "بحث عن النتيجة" لتظهر لك الدرجات بالتفصيل مع النسبة المئوية والمجموع الكلي.'
+            ],
+            [
+                'question' => 'ما هو المجموع الكلي لدرجات الثانوية العامة 2026؟',
+                'answer' => 'المجموع الكلي لدرجات الثانوية العامة المصرية هو 410 درجات موزعة على المواد الأساسية للشعبتين العلمية والأدبية، وحد النجاح (درجة المرور) هو 50% من درجة كل مادة بشرط حضور الطالب للامتحان.'
+            ],
+            [
+                'question' => 'كيف يتم حساب النسبة المئوية للثانوية العامة؟',
+                'answer' => 'يتم حساب النسبة المئوية عن طريق قسمة المجموع الذي حصل عليه الطالب على المجموع الكلي (410) ثم ضرب الناتج في 100. على سبيل المثال، إذا حصل الطالب على مجموع 369 درجة، تكون النسبة المئوية: (369 / 410) * 100 = 90%.'
+            ],
+            [
+                'question' => 'ما هي خطوات تقديم تظلم على نتيجة الثانوية العامة؟',
+                'answer' => 'بعد إعلان النتيجة، تفتح وزارة التربية والتعليم باب التظلمات إلكترونياً لمدة 15 يوماً. يقوم الطالب بدفع الرسوم المقررة لكل مادة عبر منافذ الدفع المعتمدة، ثم يحدد موعداً للاطلاع على صورة من ورقة الإجابة (البابل شيت) وكتابة ملاحظاته في مقر الكنترول الرئيسي.'
+            ]
+        ];
+
+        $faqSchema = [
+            '@type' => 'FAQPage',
+            'mainEntity' => array_map(function($faq) {
+                return [
+                    '@type' => 'Question',
+                    'name' => $faq['question'],
+                    'acceptedAnswer' => [
+                        '@type' => 'Answer',
+                        'text' => $faq['answer']
+                    ]
+                ];
+            }, $faqs)
+        ];
+
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@graph' => [
+                self::organization(),
+                self::educationalCredential($examType),
+                self::webPage(
+                    $seoTitle,
+                    $seoDesc,
+                    request()->url(),
+                    $examType->created_at?->toIso8601String(),
+                    $examType->updated_at?->toIso8601String()
+                ),
+                self::breadcrumb([
+                    ['name' => 'الرئيسية', 'url' => $siteUrl],
+                    ['name' => $country->name_ar, 'url' => url('/egypt')],
+                    ['name' => $examType->name_ar],
+                ]),
+                $faqSchema
+            ],
+        ];
+
         return json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     }
 
@@ -342,7 +452,7 @@ class SchemaService
             '@context' => 'https://schema.org',
             '@graph' => [
                 self::organization(),
-                self::webPage($title, $description),
+                self::webPage($title, $description, null, $governorate->created_at?->toIso8601String(), $governorate->updated_at?->toIso8601String()),
                 self::breadcrumb([
                     ['name' => 'الرئيسية', 'url' => $siteUrl],
                     ['name' => $country->name_ar],
@@ -368,7 +478,7 @@ class SchemaService
             '@context' => 'https://schema.org',
             '@graph' => [
                 self::organization(),
-                self::webPage($title, "نتائج طلاب {$examTypeName} في محافظة {$governorate->name_ar}"),
+                self::webPage($title, "نتائج طلاب {$examTypeName} في محافظة {$governorate->name_ar}", null, $governorate->created_at?->toIso8601String(), $governorate->updated_at?->toIso8601String()),
                 self::breadcrumb([
                     ['name' => 'الرئيسية', 'url' => $siteUrl],
                     ['name' => $country->name_ar, 'url' => url("/{$country->code}")],
@@ -396,7 +506,7 @@ class SchemaService
             '@context' => 'https://schema.org',
             '@graph' => [
                 self::organization(),
-                self::webPage($title, "نتيجة الطالب {$result->student_name} في {$examType->name_ar} - رقم الجلوس: {$result->seat_number}"),
+                self::webPage($title, "نتيجة الطالب {$result->student_name} في {$examType->name_ar} - رقم الجلوس: {$result->seat_number}", null, $result->created_at?->toIso8601String(), $result->updated_at?->toIso8601String()),
                 self::breadcrumb([
                     ['name' => 'الرئيسية', 'url' => $siteUrl],
                     ['name' => $country->name_ar],
@@ -421,11 +531,63 @@ class SchemaService
             '@context' => 'https://schema.org',
             '@graph' => [
                 self::organization(),
-                self::webPage('شهادة تقدير', 'إنشاء شهادة تقدير مخصصة للطلاب المتفوقين'),
+                self::webPage(
+                    'تصميم شهادة تقدير للمتفوقين مجاناً 2026',
+                    'أداة مجانية لتصميم شهادة تقدير احترافية للطلاب المتفوقين في مصر والعراق وليبيا وجميع الدول العربية 2026'
+                ),
                 self::breadcrumb([
                     ['name' => 'الرئيسية', 'url' => $siteUrl],
                     ['name' => 'شهادة تقدير', 'url' => $siteUrl . '/certificate'],
                 ]),
+                [
+                    '@type'            => 'SoftwareApplication',
+                    '@id'              => $siteUrl . '/certificate#app',
+                    'name'             => 'مصمم شهادة التقدير - نتيجتي',
+                    'applicationCategory' => 'EducationalApplication',
+                    'operatingSystem'  => 'Web',
+                    'url'              => $siteUrl . '/certificate',
+                    'offers'           => [
+                        '@type'        => 'Offer',
+                        'price'        => '0',
+                        'priceCurrency' => 'EGP',
+                    ],
+                    'description'      => 'أداة مجانية لتصميم وطباعة شهادة تقدير احترافية للطلاب المتفوقين في جميع الدول العربية',
+                    'inLanguage'       => 'ar',
+                    'publisher'        => self::organization(),
+                ],
+                [
+                    '@type'  => 'HowTo',
+                    '@id'    => $siteUrl . '/certificate#howto',
+                    'name'   => 'كيفية تصميم شهادة تقدير مجانية للطالب المتفوق',
+                    'description' => 'اتبع هذه الخطوات البسيطة لتصميم شهادة تقدير احترافية في ثوانٍ معدودة',
+                    'totalTime'  => 'PT2M',
+                    'step' => [
+                        [
+                            '@type'  => 'HowToStep',
+                            'name'   => 'أدخل اسم الطالب',
+                            'text'   => 'اكتب اسم الطالب كاملاً في الخانة المخصصة',
+                            'position' => 1,
+                        ],
+                        [
+                            '@type'  => 'HowToStep',
+                            'name'   => 'أضف اسم المدرسة ونوع الامتحان',
+                            'text'   => 'اكتب اسم المدرسة ونوع الشهادة مثل الشهادة الإعدادية 2026',
+                            'position' => 2,
+                        ],
+                        [
+                            '@type'  => 'HowToStep',
+                            'name'   => 'أدخل المجموع والنسبة',
+                            'text'   => 'أضف المجموع الكلي والنسبة المئوية للطالب',
+                            'position' => 3,
+                        ],
+                        [
+                            '@type'  => 'HowToStep',
+                            'name'   => 'حمّل أو اطبع الشهادة',
+                            'text'   => 'اضغط تحميل الشهادة لحفظها أو اطبعها مباشرة',
+                            'position' => 4,
+                        ],
+                    ],
+                ],
             ],
         ];
         
@@ -450,6 +612,8 @@ class SchemaService
                     'name' => 'اتصل بنا',
                     'description' => 'تواصل معنا لأي استفسارات أو ملاحظات',
                     'mainEntity' => self::organization(),
+                    'datePublished' => now()->toIso8601String(),
+                    'dateModified' => now()->toIso8601String(),
                 ],
                 self::breadcrumb([
                     ['name' => 'الرئيسية', 'url' => $siteUrl],
