@@ -624,4 +624,78 @@ class SchemaService
         
         return json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     }
+
+    /**
+     * Generate NewsArticle/BlogPosting schema for a blog article
+     */
+    public static function blogPostPage(\App\Models\Post $post): string
+    {
+        $siteUrl = config('app.url');
+        $siteName = \App\Models\SiteSetting::get('site_name', 'نتيجتي');
+        $imageUrl = $post->image_path ? asset($post->image_path) : url('/images/og-default.png');
+
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@graph' => [
+                [
+                    '@type' => 'NewsArticle',
+                    '@id' => url()->current() . '#article',
+                    'isPartOf' => [
+                        '@type' => 'WebPage',
+                        '@id' => url()->current(),
+                        'url' => url()->current(),
+                        'name' => $post->seo_title ?? $post->title,
+                    ],
+                    'headline' => $post->title,
+                    'description' => $post->seo_description ?? $post->summary,
+                    'image' => [
+                        '@type' => 'ImageObject',
+                        'url' => $imageUrl,
+                    ],
+                    'datePublished' => $post->published_at?->toIso8601String() ?? $post->created_at->toIso8601String(),
+                    'dateModified' => $post->updated_at->toIso8601String(),
+                    'author' => [
+                        '@type' => 'Organization',
+                        'name' => $siteName,
+                        'url' => $siteUrl,
+                    ],
+                    'publisher' => [
+                        '@type' => 'Organization',
+                        'name' => $siteName,
+                        'url' => $siteUrl,
+                        'logo' => [
+                            '@type' => 'ImageObject',
+                            'url' => url(\App\Models\SiteSetting::get('logo', 'uploads/settings/01KP46W4HWEWPQCRSK6ZE68C6G.png')),
+                        ]
+                    ],
+                    'mainEntityOfPage' => url()->current(),
+                ],
+                [
+                    '@type' => 'BreadcrumbList',
+                    'itemListElement' => [
+                        [
+                            '@type' => 'ListItem',
+                            'position' => 1,
+                            'name' => 'الرئيسية',
+                            'item' => $siteUrl,
+                        ],
+                        [
+                            '@type' => 'ListItem',
+                            'position' => 2,
+                            'name' => 'المدونة',
+                            'item' => route('blog.index'),
+                        ],
+                        [
+                            '@type' => 'ListItem',
+                            'position' => 3,
+                            'name' => $post->title,
+                            'item' => url()->current(),
+                        ],
+                    ],
+                ]
+            ],
+        ];
+
+        return json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    }
 }

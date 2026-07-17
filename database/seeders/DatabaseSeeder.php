@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             GovernorateSeeder::class,
             ExamTypeSeeder::class,
             AcademicYearSeeder::class,
+            BlogSeeder::class,
         ]);
     }
 }

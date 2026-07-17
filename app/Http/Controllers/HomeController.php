@@ -23,6 +23,11 @@ class HomeController extends Controller
 
         $structuredData = $this->seoService->generateOrganizationSchema();
 
-        return view('home', compact('meta', 'countries', 'structuredData'));
+        $latestPosts = \App\Models\Post::published()
+            ->orderBy('published_at', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('home', compact('meta', 'countries', 'structuredData', 'latestPosts'));
     }
 }

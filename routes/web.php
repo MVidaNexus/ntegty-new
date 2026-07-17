@@ -57,6 +57,10 @@ Route::get('/certificate', function () {
     return view('certificate.index', compact('settings', 'previewData'));
 })->name('certificate.index');
 
+// Blog Routes
+Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index'])->name('blog.index')->middleware(['cache.response']);
+Route::get('/blog/{post:slug}', [\App\Http\Controllers\BlogController::class, 'show'])->name('blog.show')->middleware(['cache.response']);
+
 // Static Pages
 Route::view('/contact', 'contact')->name('contact');
 Route::view('/privacy', 'privacy')->name('privacy');
