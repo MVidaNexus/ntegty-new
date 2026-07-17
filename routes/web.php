@@ -134,6 +134,9 @@ Route::get('/sitemap', [SitemapController::class, 'htmlIndex'])->name('sitemap.h
 // 3. الصفحات الثابتة
 Route::get('/sitemap-pages.xml', [SitemapController::class, 'pages'])->name('sitemap.pages');
 
+// 3.1. المقالات والمدونة
+Route::get('/sitemap-posts.xml', [SitemapController::class, 'posts'])->name('sitemap.posts');
+
 // 4. الدول
 Route::get('/sitemap-countries.xml', [SitemapController::class, 'countries'])->name('sitemap.countries');
 

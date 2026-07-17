@@ -71,6 +71,7 @@ class SitemapController extends Controller
         // ===== 1. الخرائط الأساسية =====
         if (!$settings || $settings->include_pages) {
             $sitemaps[] = ['loc' => "{$baseUrl}/sitemap-pages.xml", 'lastmod' => $lastmod];
+            $sitemaps[] = ['loc' => "{$baseUrl}/sitemap-posts.xml", 'lastmod' => $lastmod];
         }
         if (!$settings || $settings->include_countries) {
             $sitemaps[] = ['loc' => "{$baseUrl}/sitemap-countries.xml", 'lastmod' => $lastmod];
@@ -232,6 +233,40 @@ class SitemapController extends Controller
                 ['loc' => "{$baseUrl}/privacy", 'lastmod' => $lastmod, 'changefreq' => 'yearly', 'priority' => '0.2'],
                 ['loc' => "{$baseUrl}/terms", 'lastmod' => $lastmod, 'changefreq' => 'yearly', 'priority' => '0.2'],
             ];
+        });
+
+        return response($this->buildUrlsetXml($urls), 200)->header('Content-Type', 'application/xml');
+    }
+
+    /**
+     * 2.1. خريطة المقالات والمدونة
+     */
+    public function posts()
+    {
+        $urls = Cache::remember('sitemap:posts', $this->getCacheTtl(), function () {
+            $baseUrl = config('app.url');
+            $urls = [];
+
+            // 1. الصفحة الرئيسية للمدونة
+            $urls[] = [
+                'loc' => "{$baseUrl}/blog",
+                'lastmod' => now()->toW3cString(),
+                'changefreq' => 'daily',
+                'priority' => '0.9'
+            ];
+
+            // 2. المقالات الفردية
+            $posts = \App\Models\Post::published()->get();
+            foreach ($posts as $post) {
+                $urls[] = [
+                    'loc' => route('blog.show', $post),
+                    'lastmod' => $post->updated_at->toW3cString(),
+                    'changefreq' => 'weekly',
+                    'priority' => '0.8'
+                ];
+            }
+
+            return $urls;
         });
 
         return response($this->buildUrlsetXml($urls), 200)->header('Content-Type', 'application/xml');
@@ -644,6 +679,14 @@ class SitemapController extends Controller
             'url' => "{$baseUrl}/sitemap-pages.xml",
             'icon' => 'fa-file-alt',
             'count' => 6,
+        ];
+        
+        // 1.1. المقالات والمدونة
+        $sitemaps[] = [
+            'name' => 'المدونة والأخبار التعليمية',
+            'url' => "{$baseUrl}/sitemap-posts.xml",
+            'icon' => 'fa-newspaper',
+            'count' => \App\Models\Post::published()->count() + 1,
         ];
         
         // 2. الدول
