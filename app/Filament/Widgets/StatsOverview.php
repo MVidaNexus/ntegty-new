@@ -24,8 +24,8 @@ class StatsOverview extends BaseWidget
         $declaredGovernorates = Governorate::where('is_declared', true)->count();
         $totalGovernorates = Governorate::count();
         
-        // Count results
-        $totalResults = Result::count();
+        // Count results (Cached for 10 minutes to prevent database bottleneck, uses stats: prefix to clear on new uploads)
+        $totalResults = \Illuminate\Support\Facades\Cache::remember('stats:dashboard_total_results', 600, fn () => Result::count());
         
         // Count successful uploads today
         $todayUploads = UploadLog::whereDate('created_at', today())
@@ -37,8 +37,8 @@ class StatsOverview extends BaseWidget
             ->where('expected_date', '>', now())
             ->count();
         
-        // Calculate success rate using pre-calculated status field
-        $passedCount = Result::where('status', 'ناجح')->count();
+        // Calculate success rate using pre-calculated status field (Cached for 10 minutes)
+        $passedCount = \Illuminate\Support\Facades\Cache::remember('stats:dashboard_passed_results', 600, fn () => Result::where('status', 'ناجح')->count());
         
         $successRate = $totalResults > 0 ? round(($passedCount / $totalResults) * 100, 1) : 0;
 

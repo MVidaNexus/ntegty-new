@@ -168,7 +168,7 @@ class PostResource extends Resource
                         'capabilities' => 'اختبارات القدرات',
                         'grades' => 'توزيع الدرجات',
                     ]),
-                Tables\Filters\ToggledFilter::make('is_published')
+                Tables\Filters\TernaryFilter::make('is_published')
                     ->label('المنشورة فقط')
             ])
             ->actions([

@@ -84,6 +84,7 @@ class ResultScheduleResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['country', 'examType', 'governorate']))
             ->columns([
                 Tables\Columns\TextColumn::make('country.name_ar')
                     ->label('الدولة')

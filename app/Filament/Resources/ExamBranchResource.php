@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ExamBranchResource extends Resource
 {
@@ -124,6 +125,7 @@ class ExamBranchResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['examType']))
             ->columns([
                 Tables\Columns\TextColumn::make('examType.name_ar')
                     ->label('نوع الشهادة')

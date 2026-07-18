@@ -555,6 +555,7 @@ class ExamTypeResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['country']))
             ->columns([
                 Tables\Columns\TextColumn::make('country.name_ar')
                     ->label('الدولة')

@@ -129,6 +129,7 @@ class ResultResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['examType', 'branch', 'governorate', 'academicYear']))
             ->defaultPaginationPageOption(10)
             ->paginationPageOptions([10, 25, 50, 100])
             ->columns([

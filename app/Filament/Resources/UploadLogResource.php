@@ -16,6 +16,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\HtmlString;
+use Illuminate\Database\Eloquent\Builder;
 
 class UploadLogResource extends Resource
 {
@@ -508,6 +509,7 @@ class UploadLogResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['examType', 'governorate', 'branch', 'user']))
             ->columns([
                 Tables\Columns\TextColumn::make('upload_type')
                     ->label('النوع')
