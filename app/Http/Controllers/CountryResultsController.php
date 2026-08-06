@@ -55,7 +55,9 @@ class CountryResultsController extends Controller
             ['name' => $country->name_ar, 'url' => route('country.index', $country)],
         ];
 
-        return view('country.index', compact('title', 'meta', 'examTypes', 'country', 'breadcrumbs', 'fullYear'));
+        $structuredData = SchemaService::countryPage($country, $examTypes->all());
+
+        return view('country.index', compact('title', 'meta', 'examTypes', 'country', 'breadcrumbs', 'fullYear', 'structuredData'));
     }
 
     /**

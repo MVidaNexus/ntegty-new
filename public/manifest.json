@@ -1,0 +1,22 @@
+{
+  "name": "نتيجتي - بوابة النتائج",
+  "short_name": "نتيجتي",
+  "description": "المنصة العربية الأولى المتخصصة في عرض نتائج الامتحانات والشهادات لجميع الدول العربية",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

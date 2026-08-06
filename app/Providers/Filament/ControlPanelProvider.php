@@ -29,7 +29,7 @@ class ControlPanelProvider extends PanelProvider
             ->login()
             ->brandName('نتيجتي')
             ->brandLogo(fn () => view('filament.brand-logo'))
-            ->favicon(asset('favicon.ico'))
+            ->favicon('/favicon.ico')
             ->colors([
                 'primary' => \Filament\Support\Colors\Color::Emerald,
                 'danger' => \Filament\Support\Colors\Color::Rose,

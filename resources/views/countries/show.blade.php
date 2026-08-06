@@ -24,14 +24,14 @@
             @php
                 // Dynamic Emoji Mapping
                 $emoji = match(true) {
-                    str_contains($examType->name_ar, 'إعدادي') => '📚',
-                    str_contains($examType->name_ar, 'ثانوي') => '🎓',
-                    str_contains($examType->name_ar, 'تجاري') => '💼',
-                    str_contains($examType->name_ar, 'صناعي') => '⚙️',
-                    str_contains($examType->name_ar, 'زراعي') => '🌾',
-                    str_contains($examType->name_ar, 'فندقي') => '🏨',
-                    str_contains($examType->name_ar, 'ابتدائي') => '🎒',
-                    str_contains($examType->name_ar, 'جامع') => '🏛️',
+                    str_contains($examType->name_ar, 'إعدادي') => '<i class="fa-solid fa-book-open text-emerald-600"></i>',
+                    str_contains($examType->name_ar, 'ثانوي') => '<i class="fa-solid fa-graduation-cap text-blue-600"></i>',
+                    str_contains($examType->name_ar, 'تجاري') => '<i class="fa-solid fa-briefcase text-slate-600"></i>',
+                    str_contains($examType->name_ar, 'صناعي') => '<i class="fa-solid fa-gear text-slate-600"></i>️',
+                    str_contains($examType->name_ar, 'زراعي') => '<i class="fa-solid fa-wheat-awn text-amber-500"></i>',
+                    str_contains($examType->name_ar, 'فندقي') => '<i class="fa-solid fa-hotel text-emerald-600"></i>',
+                    str_contains($examType->name_ar, 'ابتدائي') => '<i class="fa-solid fa-backpack text-blue-500"></i>',
+                    str_contains($examType->name_ar, 'جامع') => '<i class="fa-solid fa-building-columns text-slate-600"></i>️',
                     default => '<i class="fa-solid fa-pen-to-square"></i>',
                 };
                 

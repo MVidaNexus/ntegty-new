@@ -219,7 +219,7 @@
                             <i class="fa-solid" :class="showSubjects ? 'fa-eye-slash' : 'fa-eye'"></i>
                             <span x-text="showSubjects ? 'إخفاء المواد' : 'عرض تفاصيل المواد'"></span>
                         </button>
-                        <a href="/egypt/preparatory/{{ $governorate->slug }}/{{ $academicYear->year ?? '2024-2025' }}/{{ isset($semester) && $semester == 2 ? 'term2' : 'term1' }}/{{ $result->seat_number }}" 
+                        <a href="/egypt/preparatory/{{ $governorate->slug }}/{{ $academicYear->year ?? '2025-2026' }}/{{ isset($semester) && $semester == 2 ? 'term2' : 'term1' }}/{{ $result->seat_number }}" 
                            class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 font-bold rounded-lg transition text-sm">
                             <i class="fa-solid fa-user"></i>
                             صفحة النتيجة - {{ $result->student_name }}

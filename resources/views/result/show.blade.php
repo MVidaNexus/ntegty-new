@@ -2,10 +2,12 @@
 
 @php
     $meta = [
-        'title' => "نتيجة {$result->student_name} - {$result->examType->name_ar} | نتيجتي",
+        'title'       => "نتيجة {$result->student_name} - {$result->examType->name_ar} | نتيجتي",
         'description' => "نتيجة الطالب {$result->student_name} في {$result->examType->name_ar} - رقم الجلوس: {$result->seat_number}",
-        'og_title' => "نتيجة {$result->student_name} - {$result->examType->name_ar}",
+        'og_title'    => "نتيجة {$result->student_name} - {$result->examType->name_ar}",
         'og_description' => "نتيجة الطالب {$result->student_name} في {$result->examType->name_ar}",
+        'robots'      => 'noindex, nofollow',  // نتائج الطلاب الفردية لا تُفهرس - خصوصية الطالب
+        'canonical'   => url('/'),
     ];
 @endphp
 
@@ -241,6 +243,27 @@
                     <i class="fa-solid fa-arrow-right"></i> رجوع
                 </button>
             </div>
+
+            <!-- Certificate CTA -->
+            @if($result->status === 'ناجح' || str_contains($result->status ?? '', 'نجح'))
+            <div class="mt-8 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl p-6 text-white text-center no-print">
+                <div class="text-3xl mb-3"><i class="fa-solid fa-trophy text-yellow-500"></i></div>
+                <h3 class="text-xl font-black mb-2">مبروك النجاح! صمّم شهادة تقدير مجاناً</h3>
+                <p class="text-purple-200 text-sm mb-4">احصل على شهادة تقدير احترافية بتصميم أنيق تحمل اسمك ومجموعك — مجانية 100%</p>
+                <a href="{{ route('certificate.index', [
+                    'name'   => $result->student_name,
+                    'score'  => $result->total_score ?? '',
+                    'max'    => $result->max_score ?? '',
+                    'type'   => $result->examType->name_ar ?? '',
+                    'seat'   => $result->seat_number ?? '',
+                    'status' => $result->status ?? 'ناجح',
+                ]) }}" 
+                   class="inline-flex items-center gap-2 bg-white text-purple-700 font-black px-8 py-3 rounded-xl hover:bg-purple-50 transition-all hover:scale-105 shadow-lg">
+                    <i class="fa-solid fa-certificate"></i>
+                    صمّم شهادتك الآن
+                </a>
+            </div>
+            @endif
         </div>
     </div>
 

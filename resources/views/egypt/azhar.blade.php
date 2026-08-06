@@ -197,8 +197,90 @@
         </div>
     </div>
     @endif
-</div>
 
+    <!-- Rich SEO Article — Azhar Results 750+ words — Updated July 2026 -->
+    <div class="max-w-4xl mx-auto mt-14 px-3 mb-10">
+        <article class="bg-white rounded-3xl shadow-lg border border-amber-100 p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-black text-gray-800 mb-5 border-r-4 border-amber-500 pr-4 flex items-center gap-3">
+                <i class="fa-solid fa-mosque text-amber-600 text-2xl"></i>
+                نتائج الأزهر الشريف 2026 — كل ما تحتاج معرفته
+            </h2>
+
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-6">
+                <p class="text-amber-800 font-bold text-sm mb-1"><i class="fa-solid fa-bullhorn text-emerald-500"></i> يوليو 2026 — نتائج الأزهر بدأت تظهر</p>
+                <p class="text-amber-700 text-sm leading-relaxed">أعلن المجلس الأعلى للأزهر الشريف عن اكتمال امتحانات الدور الأول وبدء رصد الدرجات. النتائج تُعلَن تباعاً للمراحل المختلفة. ابحث عن نتيجتك في الأعلى الآن.</p>
+            </div>
+
+            <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
+                أكثر من ألف عام مضت منذ أن أُضيئت قناديل الجامع الأزهر لأول مرة، وما زالت روح العلم والمعرفة تسري في أروقته وفي معاهده المنتشرة من أقصى سيناء إلى أعماق الصعيد. أكثر من <strong>مليونَي طالب وطالبة</strong> ينتمون اليوم للتعليم الأزهري في مصر وحدها، يتابعون منهجاً فريداً يجمع بين الأصالة العلمية والتحديث، وينتظرون كل صيف لحظة ظهور النتيجة بقلوب مفعمة بالأمل.
+            </p>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">جديد العام الدراسي 2025/2026 في الأزهر</h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                أطلق الأزهر الشريف خلال العام الدراسي الحالي جملةً من التطويرات الجوهرية في منظومته التعليمية. من أبرزها <strong>تحديث مناهج اللغة العربية</strong> في المرحلة الثانوية بما يعزز مهارات الكتابة والتعبير والبحث. كما شهد هذا العام توسيعاً في تطبيق نظام التقييم المستمر الذي يُعطي للأنشطة والمشاركة داخل الفصل نسبة في الدرجة النهائية، بالإضافة إلى استحداث مسار متخصص في الدراسات الإسلامية الموسّعة لأوائل الطلاب.
+            </p>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">المراحل التعليمية الأزهرية</h3>
+            <div class="grid md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-amber-50 rounded-2xl p-5 border border-amber-100">
+                    <div class="text-3xl mb-2"><i class="fa-solid fa-seedling text-emerald-500"></i></div>
+                    <h4 class="font-bold text-gray-800 mb-2">الابتدائية الأزهرية</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">6 سنوات تأسيسية تجمع بين تحفيظ القرآن الكريم والمواد الأكاديمية. خريجوها يُواصلون إلى الإعدادية الأزهرية تلقائياً.</p>
+                </div>
+                <div class="bg-amber-100 rounded-2xl p-5 border border-amber-200">
+                    <div class="text-3xl mb-2"><i class="fa-solid fa-book-open text-emerald-600"></i></div>
+                    <h4 class="font-bold text-gray-800 mb-2">الإعدادية الأزهرية</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">3 سنوات تشمل الفقه والتوحيد والتفسير إلى جانب اللغات والعلوم. بوابة الوصول للثانوية الأزهرية المرموقة.</p>
+                </div>
+                <div class="bg-amber-200 rounded-2xl p-5 border border-amber-300">
+                    <div class="text-3xl mb-2"><i class="fa-solid fa-graduation-cap text-blue-600"></i></div>
+                    <h4 class="font-bold text-gray-800 mb-2">الثانوية الأزهرية</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">شهادة عليا 3 سنوات. البوابة للالتحاق بجامعة الأزهر وكلياتها في الطب والهندسة والشريعة والتربية والعلوم.</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">جدول المواد وتوزيع الدرجات — الثانوية الأزهرية 2026</h3>
+            <div class="overflow-x-auto mb-6">
+                <table class="w-full text-sm text-gray-600 border border-gray-200 rounded-xl overflow-hidden">
+                    <thead class="bg-amber-600 text-white font-bold">
+                        <tr>
+                            <td class="p-3">المادة</td>
+                            <td class="p-3 text-center">الشعبة</td>
+                            <td class="p-3 text-center">طبيعة المادة</td>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr><td class="p-3 font-medium">التفسير وعلوم القرآن</td><td class="p-3 text-center">الجميع</td><td class="p-3 text-center text-xs">شرعية إلزامية</td></tr>
+                        <tr class="bg-gray-50"><td class="p-3 font-medium">الحديث وعلومه</td><td class="p-3 text-center">الجميع</td><td class="p-3 text-center text-xs">شرعية إلزامية</td></tr>
+                        <tr><td class="p-3 font-medium">الفقه وأصوله</td><td class="p-3 text-center">الجميع</td><td class="p-3 text-center text-xs">شرعية إلزامية</td></tr>
+                        <tr class="bg-gray-50"><td class="p-3 font-medium">اللغة العربية وآدابها</td><td class="p-3 text-center">الجميع</td><td class="p-3 text-center text-xs">أكاديمية إلزامية</td></tr>
+                        <tr><td class="p-3 font-medium">الرياضيات أو التاريخ</td><td class="p-3 text-center">علمي / أدبي</td><td class="p-3 text-center text-xs">حسب الشعبة</td></tr>
+                        <tr class="bg-gray-50"><td class="p-3 font-medium">اللغة الإنجليزية</td><td class="p-3 text-center">الجميع</td><td class="p-3 text-center text-xs">أكاديمية</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">مواعيد نتائج الأزهر 2026</h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                تُعلَن نتائج الثانوية الأزهرية في يوليو 2026 عادةً، عقب اكتمال عمليات التصحيح والرصد الإلكتروني. أما نتائج الإعدادية الأزهرية فتسبقها بأسبوعين إلى ثلاثة أسابيع. النتائج تُعلَن أولاً بأول على مستوى المعاهد والمحافظات، وتستطيع الاستعلام عنها مباشرة من خلال منصة نتيجتي بمجرد إعلانها رسمياً.
+            </p>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">ماذا تُتيح شهادة الثانوية الأزهرية؟</h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                خريج الثانوية الأزهرية أمامه عالم من الفرص المتميزة. يستطيع الالتحاق بـ <strong>جامعة الأزهر</strong> بكلياتها المتعددة (الطب، الصيدلة، الهندسة، الشريعة والقانون، اللغة العربية، أصول الدين، الدراسات الإسلامية والعربية). كما تُتيح له شهادته التقدم لمنح دراسية مقدمة من <strong>دول خليجية وإسلامية</strong> مثل المملكة العربية السعودية والكويت والسودان وباكستان وتركيا. علاوة على ذلك، فإن هذه الشهادة مُعادِلة للثانوية العامة الحكومية في معظم مجالات التوظيف والابتعاث.
+            </p>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">كيف تستعلم عن نتيجة الأزهر؟</h3>
+            <p class="text-gray-600 leading-relaxed mb-5">
+                ببساطة تامة — اكتب اسم الطالب أو رقم الجلوس في خانة البحث أعلاه، اضغط زر البحث، وستظهر لك النتيجة كاملةً في ثوانٍ مع درجة كل مادة على حدة، وإجمالي الدرجات، والتقدير النهائي. يمكنك أيضاً طباعة النتيجة أو حفظها كـ PDF مجاناً.
+            </p>
+
+            <div class="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-5 text-white text-center">
+                <p class="font-black text-base mb-1"><i class="fa-solid fa-mosque text-emerald-600"></i> ابحث عن نتيجتك في الأزهر الشريف الآن — مجاناً وفورياً</p>
+                <p class="text-amber-100 text-sm">نتيجتي | الشهادة الابتدائية | الإعدادية | الثانوية الأزهرية 2026</p>
+            </div>
+        </article>
+    </div>
 @push('scripts')
 <script>
 function searchComponent() {

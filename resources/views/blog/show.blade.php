@@ -45,6 +45,11 @@
 
                     <div class="flex flex-wrap items-center gap-4 text-xs text-slate-400 font-semibold pt-2 border-t border-slate-50">
                         <span class="flex items-center gap-1.5">
+                            <i class="fa-regular fa-user text-blue-500"></i>
+                            <span>كتب بواسطة: {{ $post->user ? $post->user->name : 'إدارة نتيجتي' }}</span>
+                        </span>
+                        <span class="hidden md:inline text-slate-200">|</span>
+                        <span class="flex items-center gap-1.5">
                             <i class="fa-regular fa-calendar-check text-blue-500"></i>
                             <span>تاريخ النشر: {{ $post->published_at ? $post->published_at->format('Y-m-d') : $post->created_at->format('Y-m-d') }}</span>
                         </span>
@@ -59,7 +64,7 @@
                 <!-- Featured Image -->
                 @if($post->image_path)
                     <div class="rounded-2xl overflow-hidden mb-8 shadow-sm border border-slate-50 aspect-[21/9] bg-slate-100">
-                        <img src="{{ asset($post->image_path) }}" alt="{{ $post->title }}" class="w-full h-full object-cover">
+                        <img src="{{ asset('storage/' . $post->image_path) }}" alt="{{ $post->title }}" class="w-full h-full object-cover">
                     </div>
                 @endif
 
@@ -118,6 +123,164 @@
                     </div>
                 </div>
 
+                <!-- Related Exam Pages Widget -->
+                @php
+                    $relatedPages = [];
+                    $title = $post->title;
+                    $content = $post->content;
+                    $text = $title . ' ' . $content;
+
+                    // Egypt Secondary
+                    if (preg_match('/(الثانوية العامة|ثانوية عامة|تنسيق الثانوية|الصف الثالث الثانوي|ثانوية مصر)/u', $text)) {
+                        $relatedPages[] = [
+                            'name' => 'الثانوية العامة بمصر',
+                            'desc' => 'بوابة الاستعلام الرسمية عن نتيجة الثانوية العامة وتنسيق الجامعات.',
+                            'url' => route('egypt.secondary'),
+                            'flag' => 'https://flagcdn.com/w80/eg.png',
+                            'color' => 'from-emerald-500 to-teal-600',
+                            'badge' => 'نشط الآن',
+                        ];
+                    }
+
+                    // Egypt Preparatory
+                    if (preg_match('/(الشهادة الإعدادية|الصف الثالث الإعدادي|إعدادية|نتيجة الإعدادية)/u', $text) && preg_match('/(مصر|القاهرة|الجيزة|المحافظات)/u', $text)) {
+                        $relatedPages[] = [
+                            'name' => 'الشهادة الإعدادية بمصر',
+                            'desc' => 'الاستعلام عن نتائج الشهادة الإعدادية لكافة المحافظات المصرية.',
+                            'url' => route('egypt.preparatory'),
+                            'flag' => 'https://flagcdn.com/w80/eg.png',
+                            'color' => 'from-blue-500 to-indigo-600',
+                            'badge' => 'نشط الآن',
+                        ];
+                    }
+
+                    // Egypt Diplomas
+                    if (preg_match('/(الدبلومات الفنية|دبلوم|صنايع|تجارة|زراعة|فندقي)/u', $text)) {
+                        $relatedPages[] = [
+                            'name' => 'الدبلومات الفنية بمصر',
+                            'desc' => 'استعلم عن نتائج الدبلومات الفنية (صناعي، تجاري، زراعي، فندقي).',
+                            'url' => route('egypt.diplomas.index'),
+                            'flag' => 'https://flagcdn.com/w80/eg.png',
+                            'color' => 'from-purple-500 to-pink-600',
+                            'badge' => 'نشط الآن',
+                        ];
+                    }
+
+                    // Iraq Sixth Prep
+                    if (preg_match('/(العراق|عراقي|السادس|البكالوريا في العراق|وزاري)/u', $text)) {
+                        $relatedPages[] = [
+                            'name' => 'السادس الإعدادي بالعراق',
+                            'desc' => 'نتائج السادس الإعدادي لجميع الفروع والمديريات العراقية.',
+                            'url' => route('country.exam', ['country' => 'iraq', 'slug' => 'prep']),
+                            'flag' => 'https://flagcdn.com/w80/iq.png',
+                            'color' => 'from-red-500 to-orange-600',
+                            'badge' => 'متاح قريباً',
+                        ];
+                    }
+
+                    // Libya
+                    if (preg_match('/(ليبيا|ليبي|الشهادة الإعدادية في ليبيا)/u', $text)) {
+                        $relatedPages[] = [
+                            'name' => 'الشهادة الإعدادية بليبيا',
+                            'desc' => 'استعلم عن نتائج امتحانات الشهادة الإعدادية في دولة ليبيا.',
+                            'url' => route('country.exam', ['country' => 'libya', 'slug' => 'prep']),
+                            'flag' => 'https://flagcdn.com/w80/ly.png',
+                            'color' => 'from-slate-700 to-slate-900',
+                            'badge' => 'متاح الآن',
+                        ];
+                    }
+
+                    // Palestine
+                    if (preg_match('/(فلسطين|توجيهي فلسطين|التوجيهي)/u', $text)) {
+                        $relatedPages[] = [
+                            'name' => 'توجيهي دولة فلسطين',
+                            'desc' => 'بوابة نتائج الثانوية العامة (التوجيهي) لدولة فلسطين.',
+                            'url' => route('country.exam', ['country' => 'palestine', 'slug' => 'secondary']),
+                            'flag' => 'https://flagcdn.com/w80/ps.png',
+                            'color' => 'from-emerald-600 to-red-600',
+                            'badge' => 'نشط الآن',
+                        ];
+                    }
+
+                    // Jordan
+                    if (preg_match('/(الأردن|أردني|توجيهي الأردن|التوجيهي)/u', $text)) {
+                        $relatedPages[] = [
+                            'name' => 'توجيهي المملكة الأردنية',
+                            'desc' => 'نتائج امتحان شهادة الدراسة الثانوية العامة بالأردن.',
+                            'url' => route('country.exam', ['country' => 'jordan', 'slug' => 'secondary']),
+                            'flag' => 'https://flagcdn.com/w80/jo.png',
+                            'color' => 'from-rose-500 to-red-700',
+                            'badge' => 'متاح الآن',
+                        ];
+                    }
+
+                    // Default fallback for retention
+                    if (empty($relatedPages)) {
+                        $relatedPages = [
+                            [
+                                'name' => 'الثانوية العامة بمصر',
+                                'desc' => 'بوابة الاستعلام الرسمية عن نتيجة الثانوية العامة وتنسيق الجامعات.',
+                                'url' => route('egypt.secondary'),
+                                'flag' => 'https://flagcdn.com/w80/eg.png',
+                                'color' => 'from-emerald-500 to-teal-600',
+                                'badge' => 'رائج',
+                            ],
+                            [
+                                'name' => 'الشهادة الإعدادية بمصر',
+                                'desc' => 'الاستعلام عن نتائج الشهادة الإعدادية لكافة المحافظات المصرية.',
+                                'url' => route('egypt.preparatory'),
+                                'flag' => 'https://flagcdn.com/w80/eg.png',
+                                'color' => 'from-blue-500 to-indigo-600',
+                                'badge' => 'رائج',
+                            ],
+                            [
+                                'name' => 'السادس الإعدادي بالعراق',
+                                'desc' => 'نتائج السادس الإعدادي لجميع الفروع والمديريات العراقية.',
+                                'url' => route('country.exam', ['country' => 'iraq', 'slug' => 'prep']),
+                                'flag' => 'https://flagcdn.com/w80/iq.png',
+                                'color' => 'from-red-500 to-orange-600',
+                                'badge' => 'رائج',
+                            ]
+                        ];
+                    }
+                @endphp
+
+                <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-lg shadow-slate-200/40 space-y-6">
+                    <h3 class="text-lg font-black text-slate-800 flex items-center gap-2.5 pb-3 border-b border-slate-50">
+                        <span class="w-1.5 h-6 bg-emerald-600 rounded-full"></span>
+                        بوابة الاستعلام عن النتائج
+                    </h3>
+                    <div class="space-y-4">
+                        @foreach($relatedPages as $page)
+                            <a href="{{ $page['url'] }}" class="group block relative overflow-hidden rounded-2xl border border-slate-100 hover:border-emerald-500/20 hover:shadow-md transition-all duration-300">
+                                <div class="h-1.5 w-full bg-gradient-to-r {{ $page['color'] }}"></div>
+                                <div class="p-4 flex gap-4 items-start">
+                                    <div class="w-12 h-9 rounded-lg overflow-hidden shrink-0 border border-slate-100 shadow-sm bg-slate-50">
+                                        <img src="{{ $page['flag'] }}" alt="{{ $page['name'] }}" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="space-y-1.5 flex-1 min-w-0">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <h4 class="text-sm font-black text-slate-800 group-hover:text-emerald-600 transition-colors duration-200 truncate">
+                                                {{ $page['name'] }}
+                                            </h4>
+                                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 shrink-0">
+                                                {{ $page['badge'] }}
+                                            </span>
+                                        </div>
+                                        <p class="text-xs text-slate-400 font-semibold leading-relaxed line-clamp-2">
+                                            {{ $page['desc'] }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50 px-4 py-2 flex items-center justify-between text-xs font-bold text-slate-500 group-hover:text-emerald-600 border-t border-slate-50 transition-colors duration-200">
+                                    <span>اضغط للاستعلام عن النتيجة</span>
+                                    <i class="fa-solid fa-arrow-left transition-transform duration-300 group-hover:-translate-x-1"></i>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
                 <!-- Recent News Widget -->
                 @if($recentPosts->count() > 0)
                     <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-lg shadow-slate-200/40">
@@ -130,7 +293,7 @@
                                 <a href="{{ route('blog.show', $recent) }}" class="flex gap-4 group">
                                     @if($recent->image_path)
                                         <div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 border border-slate-50 bg-slate-100 aspect-square">
-                                            <img src="{{ asset($recent->image_path) }}" alt="{{ $recent->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                            <img src="{{ asset('storage/' . $recent->image_path) }}" alt="{{ $recent->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                         </div>
                                     @else
                                         <div class="w-20 h-20 rounded-xl bg-blue-50 text-blue-500 shrink-0 flex items-center justify-center text-xl aspect-square">

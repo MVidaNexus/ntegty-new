@@ -4,6 +4,8 @@ Disallow: /admin
 Disallow: /api
 Disallow: /search
 Disallow: /result/*
+Disallow: */student/*
+Disallow: /egypt/preparatory/*/*/*/*
 
 # AI Crawlers - Explicitly allowed for GEO optimization
 User-agent: GPTBot

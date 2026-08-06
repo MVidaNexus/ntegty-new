@@ -2,17 +2,17 @@
     <!-- Instructions -->
     <div class="p-3 mb-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
         <p class="text-sm text-blue-800 dark:text-blue-300">
-            <span class="font-bold">📐 أداة القص:</span>
+            <span class="font-bold"><i class="fa-solid fa-ruler-combined text-slate-500"></i> أداة القص:</span>
             استخدم أزرار الضبط أو أدخل القيم يدوياً في الحقول أدناه. القيم بالبكسل.
         </p>
     </div>
     
     <!-- Quick Crop Presets -->
     <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">⚡ ضبط سريع:</label>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"><i class="fa-solid fa-bolt text-yellow-500"></i> ضبط سريع:</label>
         <div class="flex flex-wrap gap-2">
             <button type="button" onclick="setCropPreset(0, 0, 0, 0)" class="px-3 py-1.5 text-xs bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors">
-                🔄 بدون قص
+                <i class="fa-solid fa-rotate text-blue-500"></i> بدون قص
             </button>
             <button type="button" onclick="setCropPreset(100, 0, 0, 0)" class="px-3 py-1.5 text-xs bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 rounded-lg transition-colors">
                 ⬆️ هيدر 100px
@@ -30,7 +30,7 @@
                 ↕️ هيدر + فوتر
             </button>
             <button type="button" onclick="setCropPreset(150, 50, 100, 50)" class="px-3 py-1.5 text-xs bg-amber-100 dark:bg-amber-900/30 hover:bg-amber-200 rounded-lg transition-colors">
-                📦 كل الجوانب
+                <i class="fa-solid fa-box text-slate-500"></i> كل الجوانب
             </button>
         </div>
     </div>
@@ -38,9 +38,9 @@
     <!-- Live Preview -->
     <div class="mb-4">
         <div class="flex items-center justify-between mb-2">
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">👁️ معاينة مباشرة:</label>
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300"><i class="fa-solid fa-eye text-emerald-500"></i>️ معاينة مباشرة:</label>
             <button type="button" onclick="loadPreview()" class="px-3 py-1 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700">
-                🔄 تحميل/تحديث
+                <i class="fa-solid fa-rotate text-blue-500"></i> تحميل/تحديث
             </button>
         </div>
         <div id="cropPreviewContainer" class="relative bg-gray-900 rounded-lg overflow-hidden shadow-inner" style="height: 350px;">
@@ -65,7 +65,7 @@
             <div id="cropIndicatorRight" class="absolute top-0 bottom-0 right-0 bg-red-500/30 border-l-2 border-red-500 hidden z-10"></div>
         </div>
         <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-            💡 المنطقة الحمراء ستُقص من العرض النهائي
+            <i class="fa-solid fa-lightbulb text-yellow-500"></i> المنطقة الحمراء ستُقص من العرض النهائي
         </p>
     </div>
     
@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center">
-            <label class="block text-xs text-gray-500 dark:text-gray-400 mb-2">➡️ من اليمين</label>
+            <label class="block text-xs text-gray-500 dark:text-gray-400 mb-2"><i class="fa-solid fa-arrow-right text-emerald-500"></i>️ من اليمين</label>
             <div class="flex items-center justify-center gap-1">
                 <button type="button" onclick="adjustCrop('right', -50)" class="w-8 h-8 bg-red-100 dark:bg-red-900/30 hover:bg-red-200 rounded text-sm font-bold">-50</button>
                 <button type="button" onclick="adjustCrop('right', -10)" class="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 hover:bg-orange-200 rounded text-sm">-10</button>
@@ -117,11 +117,11 @@
     <div class="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
         <div class="flex items-center justify-between">
             <span class="text-sm text-gray-600 dark:text-gray-400">
-                📊 ملخص القص:
+                <i class="fa-solid fa-chart-column text-blue-500"></i> ملخص القص:
                 <span id="cropSummary" class="font-mono text-blue-600 dark:text-blue-400">أعلى: 0 | يمين: 0 | أسفل: 0 | يسار: 0</span>
             </span>
             <button type="button" onclick="resetAllCrops()" class="px-3 py-1 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 rounded text-xs">
-                🔄 إعادة تعيين الكل
+                <i class="fa-solid fa-rotate text-blue-500"></i> إعادة تعيين الكل
             </button>
         </div>
     </div>

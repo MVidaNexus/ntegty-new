@@ -2,17 +2,20 @@
 
 @php
     // استخدام الإعدادات من قاعدة البيانات أو القيم الافتراضية
-    $s = $settings ?? null;
+    $s = $certificateSettings ?? null;
     $fontFamily = $s?->font_family ?? 'Cairo';
     
-    // Meta & Schema
-    $pageTitle = $s?->page_title ?? 'تصميم شهادة تقدير للمتفوقين';
-    $pageDesc = $s?->page_description ?? 'اصنع ذكرى جميلة لنجاحك واحتفظ بشهادة تقدير بتصميم احترافي';
+    // Meta & Schema — محسّن للـ SEO
+    $pageTitle = $s?->page_title ?? 'تصميم شهادة تقدير للمتفوقين مجاناً 2026';
+    $pageDesc = $s?->page_description ?? 'صمم شهادة تقدير احترافية للطالب المتفوق مجاناً في ثوانٍ — أدخل الاسم والمجموع واحصل على شهادة جاهزة للطباعة. تدعم جميع شهادات مصر والعراق وليبيا وجميع الدول العربية 2026.';
     $meta = [
-        'title' => $pageTitle . ' | نتيجتي',
-        'description' => $pageDesc,
-        'og_title' => $pageTitle,
+        'title'          => $pageTitle . ' | نتيجتي',
+        'description'    => $pageDesc,
+        'keywords'       => 'شهادة تقدير مجانية, تصميم شهادة, شهادة تقدير للطلاب, شهادة متفوق, صمم شهادتك, certificate of appreciation arabic, شهادة تقدير اونلاين 2026',
+        'og_title'       => $pageTitle,
         'og_description' => $pageDesc,
+        'og_type'        => 'website',
+        'og_image'       => asset('images/og-default.png'),
     ];
     $structuredData = \App\Services\SchemaService::certificatePage();
 @endphp
@@ -45,67 +48,63 @@
             
             <!-- Description -->
             <p class="text-base md:text-xl text-slate-600 font-medium max-w-3xl mx-auto leading-relaxed">
-                {{ $s?->page_description ?? 'اصنع ذكرى جميلة لنجاحك واحتفظ بشهادة تقدير بتصميم احترافي في ثوانٍ ✨' }}
+                @if($s?->page_description)
+                    {{ $s->page_description }}
+                @else
+                    اصنع ذكرى جميلة لنجاحك واحتفظ بشهادة تقدير بتصميم احترافي في ثوانٍ <i class="fa-solid fa-star text-amber-500"></i>
+                @endif
             </p>
             
             <!-- Decorative Line -->
-            <div class="flex items-center justify-center gap-3 mt-6">
-                <div class="h-1 w-16 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full"></div>
-                <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
-                <div class="h-1 w-16 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container mx-auto px-4">
+            <div class="flex items-center justify-cente    <div class="container mx-auto px-4">
         <div class="flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto">
             <!-- Sidebar -->
             <div class="w-full lg:w-1/3 space-y-4">
-                <div class="bg-white rounded-2xl shadow-xl p-5 border-2 border-blue-100">
-                    <h3 class="text-lg font-black text-slate-800 mb-4 flex items-center gap-2 border-b-2 border-blue-100 pb-3">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-5 border-2 border-blue-100 dark:border-slate-700 transition-colors duration-300">
+                    <h3 class="text-lg font-black text-slate-800 dark:text-white mb-4 flex items-center gap-2 border-b-2 border-blue-100 dark:border-slate-700 pb-3">
                         <span><i class="fa-solid fa-pen-to-square"></i></span><span>بيانات الشهادة</span>
                     </h3>
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-bold mb-2"><i class="fa-solid fa-user"></i> اسم الطالب</label>
-                            <input type="text" x-model="studentName" @input="drawCertificate" class="w-full px-4 py-3 border-2 rounded-xl text-center font-bold" placeholder="علي محمود حسين">
+                            <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-350"><i class="fa-solid fa-user"></i> اسم الطالب</label>
+                            <input type="text" x-model="studentName" @input="drawCertificate" class="w-full px-4 py-3 border-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 rounded-xl text-center font-bold" placeholder="علي محمود حسين">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold mb-2"><i class="fa-solid fa-school"></i> المدرسة / المحافظة</label>
-                            <input type="text" x-model="schoolName" @input="drawCertificate" class="w-full px-4 py-3 border-2 rounded-xl text-center" placeholder="مدرسة النصر - القاهرة">
+                            <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-350"><i class="fa-solid fa-school"></i> المدرسة / المحافظة</label>
+                            <input type="text" x-model="schoolName" @input="drawCertificate" class="w-full px-4 py-3 border-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 rounded-xl text-center" placeholder="مدرسة النصر - القاهرة">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold mb-2"><i class="fa-solid fa-book"></i> نوع النتيجة</label>
-                            <input type="text" x-model="examType" @input="drawCertificate" class="w-full px-4 py-3 border-2 rounded-xl text-center" placeholder="الصف الثالث الإعدادي">
+                            <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-350"><i class="fa-solid fa-book"></i> نوع النتيجة</label>
+                            <input type="text" x-model="examType" @input="drawCertificate" class="w-full px-4 py-3 border-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 rounded-xl text-center" placeholder="الصف الثالث الإعدادي">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold mb-2"><i class="fa-solid fa-star"></i> المجموع</label>
-                            <input type="text" x-model="totalScore" @input="drawCertificate" class="w-full px-4 py-3 border-2 rounded-xl text-center font-bold" placeholder="280">
+                            <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-350"><i class="fa-solid fa-star"></i> المجموع</label>
+                            <input type="text" x-model="totalScore" @input="drawCertificate" class="w-full px-4 py-3 border-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 rounded-xl text-center font-bold" placeholder="280">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold mb-2"><i class="fa-solid fa-chart-pie"></i> من</label>
-                            <input type="text" x-model="maxScore" @input="drawCertificate" class="w-full px-4 py-3 border-2 rounded-xl text-center font-bold" placeholder="280">
+                            <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-350"><i class="fa-solid fa-chart-pie"></i> من</label>
+                            <input type="text" x-model="maxScore" @input="drawCertificate" class="w-full px-4 py-3 border-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 rounded-xl text-center font-bold" placeholder="280">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold mb-2"><i class="fa-solid fa-percent"></i> النسبة المئوية</label>
-                            <input type="text" x-model="percentage" @input="drawCertificate" class="w-full px-4 py-3 border-2 rounded-xl text-center font-bold" placeholder="95%">
+                            <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-350"><i class="fa-solid fa-percent"></i> النسبة المئوية</label>
+                            <input type="text" x-model="percentage" @input="drawCertificate" class="w-full px-4 py-3 border-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 rounded-xl text-center font-bold" placeholder="95%">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold mb-2"><i class="fa-solid fa-hashtag"></i> رقم الجلوس</label>
-                            <input type="text" x-model="seatNumber" @input="drawCertificate" class="w-full px-4 py-3 border-2 rounded-xl text-center font-bold" placeholder="12345">
+                            <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-350"><i class="fa-solid fa-hashtag"></i> رقم الجلوس</label>
+                            <input type="text" x-model="seatNumber" @input="drawCertificate" class="w-full px-4 py-3 border-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 rounded-xl text-center font-bold" placeholder="12345">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold mb-2"><i class="fa-solid fa-users"></i> الجنس</label>
+                            <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-350"><i class="fa-solid fa-users"></i> الجنس</label>
                             <div class="flex gap-3">
-                                <button @click="gender = 'male'; drawCertificate()" class="flex-1 py-3 rounded-xl font-bold transition-all" :class="gender === 'male' ? 'bg-blue-500 text-white scale-105' : 'bg-gray-100'">ذكر</button>
-                                <button @click="gender = 'female'; drawCertificate()" class="flex-1 py-3 rounded-xl font-bold transition-all" :class="gender === 'female' ? 'bg-pink-500 text-white scale-105' : 'bg-gray-100'">أنثى</button>
+                                <button @click="gender = 'male'; drawCertificate()" class="flex-1 py-3 rounded-xl font-bold transition-all" :class="gender === 'male' ? 'bg-blue-500 text-white scale-105' : 'bg-gray-100 dark:bg-slate-900 dark:text-slate-300'">ذكر</button>
+                                <button @click="gender = 'female'; drawCertificate()" class="flex-1 py-3 rounded-xl font-bold transition-all" :class="gender === 'female' ? 'bg-pink-500 text-white scale-105' : 'bg-gray-100 dark:bg-slate-900 dark:text-slate-300'">أنثى</button>
                             </div>
                         </div>
                     </div>
@@ -130,35 +129,172 @@
 
             <!-- Preview -->
             <div class="w-full lg:w-2/3">
-                <div class="bg-white rounded-3xl p-4 shadow-2xl">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-4 shadow-2xl border dark:border-slate-700 transition-colors duration-300">
                     <canvas id="certificateCanvas" class="w-full rounded-xl shadow-lg"></canvas>
-                    <p class="text-center text-sm text-gray-500 mt-3">
+                    <p class="text-center text-sm text-gray-500 dark:text-slate-400 mt-3">
                         <span class="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
                         المعاينة المباشرة - يتم التحديث تلقائياً
                     </p>
                 </div>
                 
                 <!-- Share Buttons -->
-                <div class="mt-6 bg-white rounded-2xl p-6 shadow-xl border-2 border-purple-100/50">
-                    <h3 class="text-lg font-black text-slate-800 mb-4 text-center flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-share-nodes text-purple-600"></i>
+                <div class="mt-6 bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-xl border-2 border-purple-100/50 dark:border-slate-700 transition-colors duration-300">
+                    <h3 class="text-lg font-black text-slate-800 dark:text-white mb-4 text-center flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-share-nodes text-purple-600 dark:text-purple-400"></i>
                         شارك فرحة النجاح مع أصدقائك
                     </h3>
                     <div class="flex flex-wrap justify-center gap-3 md:gap-4">
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" class="flex items-center gap-2 bg-[#1877F2] text-white px-5 py-3 rounded-xl hover:opacity-90 hover:-translate-y-1 transition-all font-bold shadow-md hover:shadow-[#1877F2]/30">
                             <i class="fa-brands fa-facebook-f"></i> <span class="hidden md:inline">فيسبوك</span>
                         </a>
-                        <a href="https://twitter.com/intent/tweet?url={{ url()->current() }}&text=حصلت على شهادة تقدير احترافية من موقع نتيجتي! 🎓%0Aجربها الآن مجاناً 👇" target="_blank" class="flex items-center gap-2 bg-black text-white px-5 py-3 rounded-xl hover:bg-gray-800 hover:-translate-y-1 transition-all font-bold shadow-md hover:shadow-black/30">
+                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode('حصلت على شهادة تقدير احترافية من موقع نتيجتي! جربها الآن مجاناً 🎓') }}" target="_blank" class="flex items-center gap-2 bg-black text-white px-5 py-3 rounded-xl hover:bg-gray-800 hover:-translate-y-1 transition-all font-bold shadow-md hover:shadow-black/30">
                             <i class="fa-brands fa-x-twitter"></i> <span class="hidden md:inline">تويتر</span>
                         </a>
-                        <a href="https://wa.me/?text=موقع نتيجتي بيعمل شهادات تقدير احترافية مجاناً! 🎓%0Aجربه من هنا: {{ url()->current() }}" target="_blank" class="flex items-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-xl hover:opacity-90 hover:-translate-y-1 transition-all font-bold shadow-md hover:shadow-[#25D366]/30">
+                        <a href="https://api.whatsapp.com/send?text={{ urlencode('موقع نتيجتي لتصميم شهادات التقدير الاحترافية مجاناً! جربه من هنا: ' . url()->current()) }}" target="_blank" class="flex items-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-xl hover:opacity-90 hover:-translate-y-1 transition-all font-bold shadow-md hover:shadow-[#25D366]/30">
                             <i class="fa-brands fa-whatsapp text-lg"></i> <span class="hidden md:inline">واتساب</span>
                         </a>
-                        <button @click="navigator.clipboard.writeText(window.location.href); $el.innerHTML = '<i class=\'fa-solid fa-check\'></i> تم النسخ';" class="flex items-center gap-2 bg-slate-100 text-slate-600 px-5 py-3 rounded-xl hover:bg-slate-200 hover:-translate-y-1 transition-all font-bold shadow-sm border border-slate-200">
+                        <button @click="navigator.clipboard.writeText(window.location.href); $el.innerHTML = '<i class=\'fa-solid fa-check\'></i> تم النسخ';" class="flex items-center gap-2 bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-350 px-5 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 hover:-translate-y-1 transition-all font-bold shadow-sm border border-slate-200 dark:border-slate-700">
                             <i class="fa-solid fa-link"></i> <span class="hidden md:inline">نسخ الرابط</span>
                         </button>
                     </div>
                 </div>
+            </div>
+        </div><!-- END flex lg:flex-row -->
+        <!-- Educational Article & Printing Guide (GEO/SEO 500+ words) -->
+        <div class="mt-12 bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-10 border border-slate-200/80 dark:border-slate-700 shadow-2xl max-w-5xl mx-auto transition-colors duration-300">
+            <h2 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white mb-6 pb-3 border-b border-slate-100 dark:border-slate-700 flex items-center gap-3">
+                <i class="fa-solid fa-file-invoice text-purple-600 dark:text-purple-400"></i>
+                دليل تصميم شهادات التقدير للمتفوقين وطباعتها
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed">
+                <!-- Col 1 -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-slate-800 dark:text-white mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                            مقدمة عن قيمة التقدير التربوي للطلاب
+                        </h3>
+                        <p class="font-medium text-slate-500 dark:text-slate-400">
+                            التقدير المعنوي هو الوقود الحقيقي للتحصيل الدراسي. عندما يحصل الطالب على مكافأة رمزية أو شهادة تقدير تحمل اسمه ومعدله، يزداد شغفه بالتعليم. نهدف في منصة نتيجتي لتشجيع الطلاب في جميع الدول العربية (مصر، العراق، ليبيا، السودان، الأردن وغيرها) من خلال توفير أداة تصميم شهادات متكاملة ومجانية بالكامل تتيح تحويل بيان الدرجات الرقمي الجاف إلى ذكرى فخر تدوم للأبد في قلوب الطلاب وذويهم.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-800 dark:text-white mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                            خطوات تصميم شهادة تقدير احترافية
+                        </h3>
+                        <div class="font-medium text-slate-500 dark:text-slate-400 space-y-2">
+                            <p>أولاً، <strong>كتابة اسم الطالب بدقة</strong>: يفضل كتابة الاسم كاملاً (الاسم الرباعي) وبشكل متناسق مع حجم خط الشهادة لضمان القراءة الأنيقة.</p>
+                            <p>ثانياً، <strong>تحديد المدرسة والامتحان</strong>: اذكر المدرسة أو الإدارة التعليمية ونوع الشهادة (مثل امتحانات الشهادة الإعدادية أو الثانوية العامة لعام 2026).</p>
+                            <p>ثالثاً، <strong>المجموع والنسبة المئوية</strong>: أضف الدرجة والنسبة المئوية التي حصل عليها الطالب لتوثيق هذا الإنجاز الدراسي المشرف.</p>
+                            <p>رابعاً، <strong>المعاينة والتحميل</strong>: يتيح لك النظام معاينة فورية للتغييرات، وعند اكتمال البيانات اضغط "تحميل الشهادة" لحفظها كملف صورة عالي الدقة.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-slate-800 dark:text-white mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                            نصائح هامة لطباعة الشهادات بجودة ممتازة
+                        </h3>
+                        <div class="font-medium text-slate-500 dark:text-slate-400 space-y-2">
+                            <p><strong>نوع الورق المستخدم</strong>: نوصي باستخدام ورق مقوى مصقول (مات أو كوشيه) بوزن يتراوح بين 200 إلى 300 جرام ليعطي ملمساً فاخراً ومقاومة عالية للتلف يدوم معها لسنوات طويلة.</p>
+                            <p><strong>إعدادات الطابعة والصفحة</strong>: تأكد من اختيار اتجاه الصفحة الأفقي (Landscape) عند الطباعة، وضبط الهوامش على خيار "بلا هوامش" (No margins) ليتم ملء الورقة بالشهادة بالكامل دون أطراف بيضاء مشوه للتصميم.</p>
+                            <p><strong>جودة الألوان ودقة الحبر</strong>: استخدم طابعة ملونة ذات دقة ممتازة (Inject أو Laser) وتأكد من ضبط مستويات الحبر لضمان ظهور تفاصيل الإطار الذهبي والخطوط الزخرفية بدقة فائقة الجمال.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-800 dark:text-white mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                            دور الأهل والمعلمين في التحفيز المعنوي
+                        </h3>
+                        <p class="font-medium text-slate-500 dark:text-slate-400">
+                            الشهادة ليست مجرد ورقة ملونة، بل هي توثيق للحظة الفخر والنجاح المشترك بين الطالب وأسرته ومدرسته. ندعو المعلمين والآباء لاستخدام هذه الأداة المجانية بانتظام لتكريم الطلبة المتميزين، سواء في الامتحانات الشهرية أو الفصلية أو الأنشطة المدرسية المختلفة، لما لها من أثر نفسي عميق يولد الرغبة في مواصلة النجاح والتفوق وتصدر المراتب العلمية الرفيعة.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium">
+                <span class="flex items-center gap-1.5 text-purple-600 dark:text-purple-400">
+                    <i class="fa-solid fa-circle-check"></i>
+                    أداة صمم شهادتك هي خدمة حصرية ومجانية تماماً مقدمة من بوابة نتيجتي لعام 2026.
+                </span>
+                <span>تاريخ التحديث: {{ date('Y-m-d') }}</span>
+            </div>
+        </div>
+    </div>�ي (Landscape) عند الطباعة، وضبط الهوامش على خيار "بلا هوامش" (No margins) ليتم ملء الورقة بالشهادة بالكامل دون أطراف بيضاء مشوهة للتصميم.</p>
+                            <p><strong>جودة الألوان ودقة الحبر</strong>: استخدم طابعة ملونة ذات دقة ممتازة (Inject أو Laser) وتأكد من ضبط مستويات الحبر لضمان ظهور تفاصيل الإطار الذهبي والخطوط الزخرفية بدقة فائقة الجمال.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                            دور الأهل والمعلمين في التحفيز المعنوي
+                        </h3>
+                        <p class="font-medium text-slate-500">
+                            الشهادة ليست مجرد ورقة ملونة، بل هي توثيق للحظة الفخر والنجاح المشترك بين الطالب وأسرته ومدرسته. ندعو المعلمين والآباء لاستخدام هذه الأداة المجانية بانتظام لتكريم الطلبة المتميزين، سواء في الامتحانات الشهرية أو الفصلية أو الأنشطة المدرسية المختلفة، لما لها من أثر نفسي عميق يولد الرغبة في مواصلة النجاح والتفوق وتصدر المراتب العلمية الرفيعة.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs md:text-sm text-slate-500 font-medium">
+                <span class="flex items-center gap-1.5 text-purple-600">
+                    <i class="fa-solid fa-circle-check"></i>
+                    أداة صمم شهادتك هي خدمة حصرية ومجانية تماماً مقدمة من بوابة نتيجتي لعام 2026.
+                </span>
+                <span>تاريخ التحديث: {{ date('Y-m-d') }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Internal Links Section — SEO Navigation -->
+    <div class="max-w-5xl mx-auto mt-8 mb-10 px-3">
+        <div class="bg-gradient-to-br from-slate-50 to-purple-50 rounded-3xl p-6 md:p-8 border border-purple-100">
+            <h2 class="text-lg font-black text-slate-800 mb-5 flex items-center gap-2">
+                <i class="fa-solid fa-link text-purple-600"></i>
+                صفحات ذات صلة — استعلم عن نتيجتك الآن
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                <a href="{{ route('egypt.preparatory') }}" class="flex items-center gap-2 bg-white rounded-xl p-3 border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 transition-all text-sm font-bold text-slate-700 hover:text-emerald-700">
+                    <span class="text-base">🇪🇬</span>
+                    <span>نتيجة الإعدادية</span>
+                </a>
+                <a href="{{ route('egypt.secondary') }}" class="flex items-center gap-2 bg-white rounded-xl p-3 border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 transition-all text-sm font-bold text-slate-700 hover:text-emerald-700">
+                    <span class="text-base">🇪🇬</span>
+                    <span>نتيجة الثانوية</span>
+                </a>
+                <a href="{{ route('egypt.azhar.secondary') }}" class="flex items-center gap-2 bg-white rounded-xl p-3 border border-slate-200 hover:border-amber-400 hover:bg-amber-50 transition-all text-sm font-bold text-slate-700 hover:text-amber-700">
+                    <span class="text-base"><i class="fa-solid fa-mosque text-emerald-600"></i></span>
+                    <span>نتائج الأزهر</span>
+                </a>
+                <a href="{{ route('egypt.diplomas.index') }}" class="flex items-center gap-2 bg-white rounded-xl p-3 border border-slate-200 hover:border-blue-400 hover:bg-blue-50 transition-all text-sm font-bold text-slate-700 hover:text-blue-700">
+                    <span class="text-base"><i class="fa-solid fa-graduation-cap text-blue-600"></i></span>
+                    <span>الدبلومات الفنية</span>
+                </a>
+                <a href="/iraq" class="flex items-center gap-2 bg-white rounded-xl p-3 border border-slate-200 hover:border-red-400 hover:bg-red-50 transition-all text-sm font-bold text-slate-700 hover:text-red-700">
+                    <span class="text-base">🇮🇶</span>
+                    <span>نتائج العراق</span>
+                </a>
+                <a href="/libya" class="flex items-center gap-2 bg-white rounded-xl p-3 border border-slate-200 hover:border-green-400 hover:bg-green-50 transition-all text-sm font-bold text-slate-700 hover:text-green-700">
+                    <span class="text-base">🇱🇾</span>
+                    <span>نتائج ليبيا</span>
+                </a>
+                <a href="{{ route('home') }}" class="flex items-center gap-2 bg-white rounded-xl p-3 border border-slate-200 hover:border-purple-400 hover:bg-purple-50 transition-all text-sm font-bold text-slate-700 hover:text-purple-700">
+                    <span class="text-base"><i class="fa-solid fa-house text-emerald-600"></i></span>
+                    <span>الصفحة الرئيسية</span>
+                </a>
+                <a href="{{ route('contact') }}" class="flex items-center gap-2 bg-white rounded-xl p-3 border border-slate-200 hover:border-slate-400 hover:bg-slate-100 transition-all text-sm font-bold text-slate-700">
+                    <span class="text-base"><i class="fa-solid fa-envelope-open-text text-blue-500"></i></span>
+                    <span>تواصل معنا</span>
+                </a>
             </div>
         </div>
     </div>
@@ -320,9 +456,9 @@ document.addEventListener('alpine:init', () => {
             
             // استخدام الصورة من الإعدادات أو الصورة الافتراضية
             @if($s?->background_image)
-            this.bgImage.src = '{{ url("public/storage/" . $s->background_image) }}';
+            this.bgImage.src = '{{ asset("storage/" . $s->background_image) }}';
             @else
-            this.bgImage.src = '{{ url("public/images/certificate_template_v2.png") }}';
+            this.bgImage.src = '{{ asset("images/certificate_template_v2.png") }}';
             @endif
             
             this.bgImage.onload = () => {

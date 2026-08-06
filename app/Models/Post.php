@@ -13,6 +13,7 @@ class Post extends Model
         'title',
         'slug',
         'category',
+        'user_id',
         'content',
         'image_path',
         'summary',
@@ -22,6 +23,14 @@ class Post extends Model
         'seo_description',
         'seo_keywords',
     ];
+
+    /**
+     * Get the author of the post.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     protected $casts = [
         'is_published' => 'boolean',

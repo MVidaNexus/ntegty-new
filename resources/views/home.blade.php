@@ -12,12 +12,12 @@
         $heroSubtitle = $settings['hero_subtitle'] ?? 'المنصة الأولى لنتائج الشهادات العامة والأزهرية 2026 في الوطن العربي';
     @endphp
     <div class="text-center mb-12 mt-4">
-        <h1 class="text-2xl md:text-4xl font-black text-slate-800 mb-6 leading-relaxed flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3">
+        <h1 class="text-2xl md:text-4xl font-black text-slate-800 dark:text-slate-100 mb-6 leading-relaxed flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3">
             <span class="text-emerald-600">{{ $heroTitle }}</span>
-            <span class="hidden md:inline text-slate-300">|</span>
-            <span class="text-xl md:text-3xl text-slate-700">{{ $heroSubtitle }}</span>
+            <span class="hidden md:inline text-slate-300 dark:text-slate-700">|</span>
+            <span class="text-xl md:text-3xl text-slate-700 dark:text-slate-200">{{ $heroSubtitle }}</span>
         </h1>
-        <p class="max-w-2xl mx-auto text-slate-500 font-medium text-sm md:text-base px-4">
+        <p class="max-w-2xl mx-auto text-slate-500 dark:text-slate-400 font-medium text-sm md:text-base px-4">
             تابع نتائج الشهادة الإعدادية، الثانوية العامة، والدبلومات الفنية لعام 2026 لحظة بلحظة. استعلام سريع برقم الجلوس والاسم مع تقارير تحليلية شاملة.
         </p>
     </div>
@@ -114,20 +114,20 @@
                 $flagCode = $flagCodes[$country->slug] ?? 'un';
             @endphp
             <a href="{{ route('country.index', ['country' => $country->slug]) }}" 
-               class="group relative bg-slate-50/80 rounded-2xl p-5 md:p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden">
+               class="group relative bg-slate-50/80 dark:bg-slate-800/80 rounded-2xl p-5 md:p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden border border-transparent dark:border-slate-700">
                 
                 <!-- Background Flag Watermark -->
                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
                     <img 
                         src="https://flagcdn.com/w320/{{ $flagCode }}.png"
                         alt=""
-                        class="w-full h-full object-cover opacity-[0.08] scale-150"
+                        class="w-full h-full object-cover opacity-[0.08] dark:opacity-[0.04] scale-150"
                     >
                 </div>
                 
                 <!-- Flag Circle - Real Flag Image -->
                 <div class="relative z-10 flex justify-center mb-4">
-                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full shadow-lg border-4 border-white overflow-hidden group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full shadow-lg border-4 border-white dark:border-slate-700 overflow-hidden group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
                         <img 
                             src="https://flagcdn.com/w160/{{ $flagCode }}.png" 
                             srcset="https://flagcdn.com/w320/{{ $flagCode }}.png 2x"
@@ -139,12 +139,12 @@
                 </div>
                 
                 <!-- Country Name -->
-                <h2 class="relative z-10 text-lg md:text-xl font-bold text-slate-800 text-center mb-2 group-hover:text-emerald-600 transition-colors">
+                <h2 class="relative z-10 text-lg md:text-xl font-bold text-slate-800 dark:text-slate-100 text-center mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-450 transition-colors">
                     {{ $country->name_ar }}
                 </h2>
                 
                 <!-- Certificates Count -->
-                <div class="relative z-10 flex items-center justify-center gap-1.5 text-sm text-slate-500">
+                <div class="relative z-10 flex items-center justify-center gap-1.5 text-sm text-slate-500 dark:text-slate-400">
                     <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                     <span>{{ $country->examTypes->count() }} شهادات متاحة</span>
                 </div>
@@ -159,42 +159,42 @@
     <div class="mt-16">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto px-4">
             <!-- Search Card -->
-            <div class="group relative bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-100 overflow-hidden text-center">
-                <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-6 -mt-6 transition-transform group-hover:scale-110"></div>
+            <div class="group relative bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 overflow-hidden text-center">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 dark:bg-blue-900/10 rounded-bl-full -mr-6 -mt-6 transition-transform group-hover:scale-110"></div>
                 <div class="relative z-10">
-                    <div class="mb-4 text-blue-600 group-hover:scale-110 transition-transform duration-300">
+                    <div class="mb-4 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300">
                         <i class="fa-solid fa-magnifying-glass text-5xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">بحث ذكي 2026</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">بحث ذكي 2026</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                         تقنيات بحث متطورة تتيح لك الوصول لنتيجتك برقم الجلوس أو الاسم الرباعي في ثوانٍ معدودة.
                     </p>
                 </div>
             </div>
 
             <!-- Mobile Card -->
-            <div class="group relative bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-100 overflow-hidden text-center">
-                <div class="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-bl-full -mr-6 -mt-6 transition-transform group-hover:scale-110"></div>
+            <div class="group relative bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 overflow-hidden text-center">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-purple-50 dark:bg-purple-900/10 rounded-bl-full -mr-6 -mt-6 transition-transform group-hover:scale-110"></div>
                 <div class="relative z-10">
-                    <div class="mb-4 text-purple-600 group-hover:scale-110 transition-transform duration-300">
+                    <div class="mb-4 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300">
                         <i class="fa-solid fa-mobile-screen text-5xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">متوافق مع الجوال</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">متوافق مع الجوال</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                         استعرض النتائج بسلاسة من أي جهاز محمول
                     </p>
                 </div>
             </div>
 
             <!-- Printing Card -->
-            <div class="group relative bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-100 overflow-hidden text-center">
-                <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -mr-6 -mt-6 transition-transform group-hover:scale-110"></div>
+            <div class="group relative bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 overflow-hidden text-center">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-50 dark:bg-emerald-900/10 rounded-bl-full -mr-6 -mt-6 transition-transform group-hover:scale-110"></div>
                 <div class="relative z-10">
-                    <div class="mb-4 text-emerald-600 group-hover:scale-110 transition-transform duration-300">
+                    <div class="mb-4 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300">
                         <i class="fa-solid fa-print text-5xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">طباعة احترافية</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">طباعة احترافية</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                         اطبع كشف درجاتك بتصميم أنيق واحترافي
                     </p>
                 </div>
@@ -236,12 +236,12 @@
     <div class="mt-16 max-w-7xl mx-auto px-4 font-tajawal">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 pb-4 border-b border-slate-100">
             <div class="text-center sm:text-right space-y-1">
-                <h2 class="text-2xl md:text-3xl font-black text-slate-800">
-                    آخر الأخبار و <span class="text-blue-600">المستجدات التعليمية</span>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-800 dark:text-slate-100">
+                    آخر الأخبار و <span class="text-blue-600 dark:text-blue-400">المستجدات التعليمية</span>
                 </h2>
-                <p class="text-sm text-slate-400 font-semibold">تغطية حصرية لحظة بلحظة لأهم القرارات والنتائج</p>
+                <p class="text-sm text-slate-400 dark:text-slate-500 font-semibold">تغطية حصرية لحظة بلحظة لأهم القرارات والنتائج</p>
             </div>
-            <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 hover:bg-blue-100 font-black text-sm px-6 py-3 rounded-2xl transition-all shadow-sm">
+            <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/40 font-black text-sm px-6 py-3 rounded-2xl transition-all shadow-sm">
                 <span>تصفح المدونة بالكامل</span>
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
@@ -249,10 +249,10 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($latestPosts as $post)
-                <article class="group bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full">
-                    <div class="relative aspect-[16/10] overflow-hidden bg-slate-100">
+                <article class="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full">
+                    <div class="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-900">
                         @if($post->image_path)
-                            <img src="{{ asset($post->image_path) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <img src="{{ asset('storage/' . $post->image_path) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                         @else
                             <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 text-white">
                                 <i class="fa-solid fa-graduation-cap text-4xl opacity-30"></i>
@@ -273,19 +273,19 @@
 
                     <div class="p-6 flex-1 flex flex-col justify-between">
                         <div class="space-y-2">
-                            <div class="text-[10px] text-slate-400 font-bold flex items-center gap-1.5">
-                                <i class="fa-regular fa-calendar-check text-blue-500"></i>
+                            <div class="text-[10px] text-slate-400 dark:text-slate-500 font-bold flex items-center gap-1.5">
+                                <i class="fa-regular fa-calendar-check text-blue-500 dark:text-blue-400"></i>
                                 <span>{{ $post->published_at ? $post->published_at->format('Y-m-d') : $post->created_at->format('Y-m-d') }}</span>
                             </div>
-                            <h3 class="text-base font-extrabold text-slate-800 leading-snug group-hover:text-blue-600 transition-colors duration-200">
+                            <h3 class="text-base font-extrabold text-slate-800 dark:text-slate-100 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
                                 <a href="{{ route('blog.show', $post) }}">{{ $post->title }}</a>
                             </h3>
-                            <p class="text-xs text-slate-500 font-medium leading-relaxed line-clamp-3">
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-3">
                                 {{ $post->summary }}
                             </p>
                         </div>
-                        <div class="pt-4 mt-4 border-t border-slate-50">
-                            <a href="{{ route('blog.show', $post) }}" class="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-800 font-black text-xs group/btn transition-colors">
+                        <div class="pt-4 mt-4 border-t border-slate-50 dark:border-slate-700">
+                            <a href="{{ route('blog.show', $post) }}" class="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-black text-xs group/btn transition-colors">
                                 <span>اقرأ المزيد</span>
                                 <i class="fa-solid fa-arrow-left text-[10px] group-hover/btn:-translate-x-1 transition-transform"></i>
                             </a>
@@ -306,12 +306,12 @@
     
     @if($aboutActive && $aboutContent)
     <div class="mt-16 mb-12">
-        <div class="max-w-4xl mx-auto bg-gradient-to-br from-slate-50 to-emerald-50 rounded-3xl p-6 md:p-10 border border-emerald-100 shadow-sm relative overflow-hidden">
+        <div class="max-w-4xl mx-auto bg-gradient-to-br from-slate-50 to-emerald-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-6 md:p-10 border border-emerald-100 dark:border-slate-700 shadow-sm relative overflow-hidden">
             <div class="relative z-10">
                 <div class="flex items-center justify-center gap-3 mb-6">
-                    <h2 class="text-xl md:text-2xl font-black text-emerald-800">{{ $aboutTitle }}</h2>
+                    <h2 class="text-xl md:text-2xl font-black text-emerald-800 dark:text-emerald-400">{{ $aboutTitle }}</h2>
                 </div>
-                <p class="text-base md:text-lg text-slate-700 leading-loose text-center font-medium">
+                <p class="text-base md:text-lg text-slate-700 dark:text-slate-300 leading-loose text-center font-medium">
                     {!! nl2br(e($aboutContent)) !!}
                 </p>
             </div>
@@ -321,78 +321,78 @@
 
     <!-- Regional Coverage Section -->
     <div class="mt-16 max-w-7xl mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-black text-slate-800 text-center mb-4 flex items-center justify-center gap-3">
-            <i class="fa-solid fa-earth-americas text-emerald-600"></i>
+        <h2 class="text-2xl md:text-3xl font-black text-slate-800 dark:text-slate-100 text-center mb-4 flex items-center justify-center gap-3">
+            <i class="fa-solid fa-earth-americas text-emerald-600 dark:text-emerald-400"></i>
             تغطية نتائج الامتحانات في الوطن العربي لعام 2026
         </h2>
-        <p class="text-slate-500 font-semibold text-center mb-10 max-w-2xl mx-auto text-sm md:text-base">
+        <p class="text-slate-500 dark:text-slate-400 font-semibold text-center mb-10 max-w-2xl mx-auto text-sm md:text-base">
             نغطي كبرى بوابات نتائج الطلاب في الشرق الأوسط ونقدم روابط مباشرة للاستعلام فور إقرارها من الهيئات الرسمية.
         </p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Card 1: Egypt -->
-            <div class="bg-gradient-to-br from-white to-slate-50 rounded-3xl p-6 border border-slate-200/60 shadow-md relative overflow-hidden group">
+            <div class="bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-850 rounded-3xl p-6 border border-slate-200/60 dark:border-slate-700 shadow-md relative overflow-hidden group">
                 <div class="flex items-center gap-3 mb-4">
-                    <span class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-lg shadow-sm">
+                    <span class="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 flex items-center justify-center text-lg shadow-sm">
                         <i class="fa-solid fa-flag"></i>
                     </span>
-                    <h3 class="text-lg font-black text-slate-800">جمهورية مصر العربية</h3>
+                    <h3 class="text-lg font-black text-slate-800 dark:text-slate-100">جمهورية مصر العربية</h3>
                 </div>
-                <p class="text-slate-600 text-sm leading-relaxed mb-4 font-medium">
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4 font-medium">
                     تابع نتائج الامتحانات في مصر أولاً بأول. نوفر وصولاً مباشراً للاستعلام عن نتيجة الشهادة الإعدادية لجميع المحافظات (مثل القاهرة، الجيزة، الإسكندرية، الدقهلية، الشرقية، الغربية)، بالإضافة إلى نتيجة الثانوية العامة، والشهادة الثانوية الأزهرية، ونتائج الدبلومات الفنية (التجارية، الصناعية، الزراعية، الفندقية) فور اعتمادها رسمياً.
                 </p>
-                <a href="{{ route('egypt.index') }}" class="text-emerald-600 font-bold text-xs flex items-center gap-1 hover:text-emerald-700">
+                <a href="{{ route('egypt.index') }}" class="text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center gap-1 hover:text-emerald-700 dark:hover:text-emerald-300">
                     <span>تصفح نتائج مصر</span>
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
             </div>
 
             <!-- Card 2: Iraq -->
-            <div class="bg-gradient-to-br from-white to-slate-50 rounded-3xl p-6 border border-slate-200/60 shadow-md relative overflow-hidden group">
+            <div class="bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-850 rounded-3xl p-6 border border-slate-200/60 dark:border-slate-700 shadow-md relative overflow-hidden group">
                 <div class="flex items-center gap-3 mb-4">
-                    <span class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shadow-sm">
+                    <span class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg shadow-sm">
                         <i class="fa-solid fa-flag"></i>
                     </span>
-                    <h3 class="text-lg font-black text-slate-800">جمهورية العراق</h3>
+                    <h3 class="text-lg font-black text-slate-800 dark:text-slate-100">جمهورية العراق</h3>
                 </div>
-                <p class="text-slate-600 text-sm leading-relaxed mb-4 font-medium">
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4 font-medium">
                     المنصة الموثوقة لعرض نتائج الامتحانات الوزارية في العراق. تابع إعلان نتائج الصف الثالث المتوسط ونتائج السادس الإعدادي بجميع فروعه (العلمي والأدبي والمهني) لكافة المحافظات العراقية (مثل بغداد، نينوى، البصرة، أربيل، ذي قار، كربلاء، النجف) فور صدورها من وزارة التربية العراقية.
                 </p>
-                <a href="{{ route('country.index', ['country' => 'iraq']) }}" class="text-emerald-600 font-bold text-xs flex items-center gap-1 hover:text-emerald-700">
+                <a href="{{ route('country.index', ['country' => 'iraq']) }}" class="text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center gap-1 hover:text-emerald-700 dark:hover:text-emerald-300">
                     <span>تصفح نتائج العراق</span>
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
             </div>
 
             <!-- Card 3: Libya -->
-            <div class="bg-gradient-to-br from-white to-slate-50 rounded-3xl p-6 border border-slate-200/60 shadow-md relative overflow-hidden group">
+            <div class="bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-850 rounded-3xl p-6 border border-slate-200/60 dark:border-slate-700 shadow-md relative overflow-hidden group">
                 <div class="flex items-center gap-3 mb-4">
-                    <span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg shadow-sm">
+                    <span class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg shadow-sm">
                         <i class="fa-solid fa-flag"></i>
                     </span>
-                    <h3 class="text-lg font-black text-slate-800">دولة ليبيا</h3>
+                    <h3 class="text-lg font-black text-slate-800 dark:text-slate-100">دولة ليبيا</h3>
                 </div>
-                <p class="text-slate-600 text-sm leading-relaxed mb-4 font-medium">
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4 font-medium">
                     بوابة منظومة الامتحانات الوطنية في ليبيا للاستعلام الفوري عن النتائج الدراسية. استعلم مباشرة بالاسم ورقم الجلوس عن نتائج شهادة إتمام مرحلة التعليم الأساسي (الإعدادية) ونتائج الشهادة الثانوية لجميع مراقبات التربية والتعليم والبلديات الليبية.
                 </p>
-                <a href="{{ route('country.index', ['country' => 'libya']) }}" class="text-emerald-600 font-bold text-xs flex items-center gap-1 hover:text-emerald-700">
+                <a href="{{ route('country.index', ['country' => 'libya']) }}" class="text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center gap-1 hover:text-emerald-700 dark:hover:text-emerald-300">
                     <span>تصفح نتائج ليبيا</span>
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
             </div>
 
             <!-- Card 4: Other Countries -->
-            <div class="bg-gradient-to-br from-white to-slate-50 rounded-3xl p-6 border border-slate-200/60 shadow-md relative overflow-hidden group">
+            <div class="bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-850 rounded-3xl p-6 border border-slate-200/60 dark:border-slate-700 shadow-md relative overflow-hidden group">
                 <div class="flex items-center gap-3 mb-4">
-                    <span class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg shadow-sm">
+                    <span class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg shadow-sm">
                         <i class="fa-solid fa-flag"></i>
                     </span>
-                    <h3 class="text-lg font-black text-slate-800">الشام واليمن والسودان</h3>
+                    <h3 class="text-lg font-black text-slate-800 dark:text-slate-100">الشام واليمن والسودان</h3>
                 </div>
-                <p class="text-slate-600 text-sm leading-relaxed mb-4 font-medium">
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4 font-medium">
                     تغطية متكاملة لنتائج الطلاب والشهادات العامة في مختلف الدول العربية. استعلم فوراً عن نتائج الشهادة السودانية، والشهادة الثانوية العامة والأساسية في اليمن، ونتائج امتحانات التوجيهي في الأردن، والشهادات التعليمية في سوريا وفلسطين.
                 </p>
-                <a href="/" class="text-emerald-600 font-bold text-xs flex items-center gap-1 hover:text-emerald-700">
+                <a href="/" class="text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center gap-1 hover:text-emerald-700 dark:hover:text-emerald-300">
                     <span>تصفح باقي الدول</span>
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
@@ -485,136 +485,136 @@
 
     <!-- Comprehensive Homepage SEO Article -->
     <div class="max-w-5xl mx-auto mt-16 px-3 pb-8">
-        <article class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-12">
-            <h2 class="text-2xl md:text-3xl font-black text-gray-800 mb-6 border-r-4 border-emerald-500 pr-4">
+        <article class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-700 p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-black text-gray-800 dark:text-slate-100 mb-6 border-r-4 border-emerald-500 pr-4">
                 منصة نتيجتي — المرجع الأشمل لنتائج الامتحانات العربية 2026
             </h2>
-            <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
+            <p class="text-gray-600 dark:text-slate-350 text-base md:text-lg leading-relaxed mb-6">
                 في كل عام، يتطلع ملايين الطلاب وأولياء الأمور في أرجاء الوطن العربي إلى لحظة إعلان نتائج الامتحانات الرسمية بترقب وقلق. تُدرك منصة <strong>نتيجتي (Ntegty.com)</strong> أهمية هذه اللحظة، وتُتيح الاستعلام عن النتائج فوراً وبدون أي رسوم أو حواجز مدفوعة. تُقدّم المنصة خدماتها منذ سنوات متواصلة وأصبحت اليوم من أوسع المنصات تغطيةً لنتائج الامتحانات في المنطقة العربية.
             </p>
 
-            <h3 class="text-xl font-bold text-gray-800 mb-4">الدول والمراحل التي تغطيها المنصة</h3>
+            <h3 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-4">الدول والمراحل التي تغطيها المنصة</h3>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 border border-emerald-100">
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-2xl p-5 border border-emerald-100 dark:border-emerald-900/40">
                     <div class="text-2xl mb-2">🇪🇬</div>
-                    <h4 class="font-black text-gray-800 mb-2">مصر</h4>
-                    <ul class="text-gray-600 text-sm space-y-1">
-                        <li>✔ الشهادة الإعدادية (27 محافظة)</li>
-                        <li>✔ الثانوية العامة</li>
-                        <li>✔ الثانوية والإعدادية الأزهرية</li>
-                        <li>✔ الابتدائية الأزهرية</li>
-                        <li>✔ الدبلومات الفنية (5 شعب)</li>
+                    <h4 class="font-black text-gray-800 dark:text-slate-100 mb-2">مصر</h4>
+                    <ul class="text-gray-600 dark:text-slate-400 text-sm space-y-1">
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الشهادة الإعدادية (27 محافظة)</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الثانوية العامة</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الثانوية والإعدادية الأزهرية</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الابتدائية الأزهرية</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الدبلومات الفنية (5 شعب)</li>
                     </ul>
                 </div>
-                <div class="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-5 border border-orange-100">
+                <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-950/20 dark:to-orange-950/20 rounded-2xl p-5 border border-orange-100 dark:border-orange-900/40">
                     <div class="text-2xl mb-2">🇮🇶</div>
-                    <h4 class="font-black text-gray-800 mb-2">العراق</h4>
-                    <ul class="text-gray-600 text-sm space-y-1">
-                        <li>✔ نتائج السادس الابتدائي</li>
-                        <li>✔ نتائج الثالث المتوسط</li>
-                        <li>✔ نتائج السادس الإعدادي</li>
-                        <li>✔ الشعبة العلمية والأدبية</li>
-                        <li>✔ جميع المحافظات العراقية</li>
+                    <h4 class="font-black text-gray-800 dark:text-slate-100 mb-2">العراق</h4>
+                    <ul class="text-gray-600 dark:text-slate-400 text-sm space-y-1">
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> نتائج السادس الابتدائي</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> نتائج الثالث المتوسط</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> نتائج السادس الإعدادي</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الشعبة العلمية والأدبية</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> جميع المحافظات العراقية</li>
                     </ul>
                 </div>
-                <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl p-5 border border-teal-100">
+                <div class="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-950/20 dark:to-teal-950/20 rounded-2xl p-5 border border-teal-100 dark:border-teal-900/40">
                     <div class="text-2xl mb-2">🇱🇾</div>
-                    <h4 class="font-black text-gray-800 mb-2">ليبيا</h4>
-                    <ul class="text-gray-600 text-sm space-y-1">
-                        <li>✔ الشهادة الإعدادية</li>
-                        <li>✔ الشهادة الثانوية</li>
-                        <li>✔ الشعبة العلمية والأدبية والزراعية</li>
-                        <li>✔ جميع المناطق والبلديات</li>
+                    <h4 class="font-black text-gray-800 dark:text-slate-100 mb-2">ليبيا</h4>
+                    <ul class="text-gray-600 dark:text-slate-400 text-sm space-y-1">
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الشهادة الإعدادية</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الشهادة الثانوية</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الشعبة العلمية والأدبية والزراعية</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> جميع المناطق والبلديات</li>
                     </ul>
                 </div>
-                <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-5 border border-indigo-100">
+                <div class="bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-950/20 dark:to-indigo-950/20 rounded-2xl p-5 border border-indigo-100 dark:border-indigo-900/40">
                     <div class="text-2xl mb-2">🇸🇩</div>
-                    <h4 class="font-black text-gray-800 mb-2">السودان</h4>
-                    <ul class="text-gray-600 text-sm space-y-1">
-                        <li>✔ نتائج الشهادة السودانية</li>
-                        <li>✔ الأساس والثانوي</li>
+                    <h4 class="font-black text-gray-800 dark:text-slate-100 mb-2">السودان</h4>
+                    <ul class="text-gray-600 dark:text-slate-400 text-sm space-y-1">
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> نتائج الشهادة السودانية</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الأساس والثانوي</li>
                     </ul>
                 </div>
-                <div class="bg-gradient-to-br from-blue-50 to-sky-50 rounded-2xl p-5 border border-sky-100">
+                <div class="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-950/20 dark:to-sky-950/20 rounded-2xl p-5 border border-sky-100 dark:border-sky-900/40">
                     <div class="text-2xl mb-2">🇾🇪</div>
-                    <h4 class="font-black text-gray-800 mb-2">اليمن</h4>
-                    <ul class="text-gray-600 text-sm space-y-1">
-                        <li>✔ نتائج الثانوية اليمنية</li>
-                        <li>✔ الشعب العلمية والأدبية</li>
+                    <h4 class="font-black text-gray-800 dark:text-slate-100 mb-2">اليمن</h4>
+                    <ul class="text-gray-600 dark:text-slate-400 text-sm space-y-1">
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> نتائج الثانوية اليمنية</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> الشعب العلمية والأدبية</li>
                     </ul>
                 </div>
-                <div class="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl p-5 border border-amber-100">
-                    <div class="text-2xl mb-2">🌍</div>
-                    <h4 class="font-black text-gray-800 mb-2">دول أخرى</h4>
-                    <ul class="text-gray-600 text-sm space-y-1">
-                        <li>✔ فلسطين، الأردن</li>
-                        <li>✔ موريتانيا</li>
-                        <li>✔ تحديثات مستمرة</li>
+                <div class="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-950/20 dark:to-amber-950/20 rounded-2xl p-5 border border-amber-100 dark:border-amber-900/40">
+                    <div class="text-2xl mb-2"><i class="fa-solid fa-earth-africa text-emerald-600 dark:text-emerald-400"></i></div>
+                    <h4 class="font-black text-gray-800 dark:text-slate-100 mb-2">دول أخرى</h4>
+                    <ul class="text-gray-600 dark:text-slate-400 text-sm space-y-1">
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> فلسطين، الأردن</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> موريتانيا</li>
+                        <li><i class="fa-solid fa-check text-emerald-500"></i> تحديثات مستمرة</li>
                     </ul>
                 </div>
             </div>
 
-            <h3 class="text-xl font-bold text-gray-800 mb-3">كيف تعمل منصة نتيجتي؟</h3>
-            <p class="text-gray-600 leading-relaxed mb-4">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-3">كيف تعمل منصة نتيجتي؟</h3>
+            <p class="text-gray-600 dark:text-slate-350 leading-relaxed mb-4">
                 تعمل منصة نتيجتي من خلال ربط مباشر بقواعد البيانات الرسمية والمصادر المعتمدة لإعلان النتائج. حالما يُعلَن عن النتائج رسمياً من وزارة التربية والتعليم في كل دولة، يتم تحميلها وإتاحتها للبحث في غضون دقائق. النظام يعتمد خوارزميات بحث متطورة تُتيح الإيجاد بالاسم الثلاثي أو الرباعي بدقة عالية حتى في حالة وجود أخطاء إملائية بسيطة، كما يدعم البحث برقم الجلوس لنتائج فورية.
             </p>
 
-            <h3 class="text-xl font-bold text-gray-800 mb-3">مميزات منصة نتيجتي الحصرية</h3>
+            <h3 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-3">مميزات منصة نتيجتي الحصرية</h3>
             <div class="grid sm:grid-cols-2 gap-4 mb-6">
                 <div class="flex items-start gap-3">
-                    <span class="text-emerald-600 font-black text-lg mt-0.5">✓</span>
+                    <span class="text-emerald-600 font-black text-lg mt-0.5"><i class="fa-solid fa-check text-emerald-500"></i></span>
                     <div>
-                        <strong class="text-gray-800 text-sm">بحث بالاسم أو الرقم:</strong>
-                        <p class="text-gray-600 text-sm">ادخل اسم الطالب كاملاً أو رقم الجلوس للحصول على النتيجة فوراً</p>
+                        <strong class="text-gray-800 dark:text-slate-200 text-sm">بحث بالاسم أو الرقم:</strong>
+                        <p class="text-gray-600 dark:text-slate-400 text-sm">ادخل اسم الطالب كاملاً أو رقم الجلوس للحصول على النتيجة فوراً</p>
                     </div>
                 </div>
                 <div class="flex items-start gap-3">
-                    <span class="text-emerald-600 font-black text-lg mt-0.5">✓</span>
+                    <span class="text-emerald-600 font-black text-lg mt-0.5"><i class="fa-solid fa-check text-emerald-500"></i></span>
                     <div>
-                        <strong class="text-gray-800 text-sm">طباعة كشف الدرجات:</strong>
-                        <p class="text-gray-600 text-sm">طباعة النتيجة بتنسيق احترافي أو حفظها كـ PDF مجاناً</p>
+                        <strong class="text-gray-800 dark:text-slate-200 text-sm">طباعة كشف الدرجات:</strong>
+                        <p class="text-gray-600 dark:text-slate-400 text-sm">طباعة النتيجة بتنسيق احترافي أو حفظها كـ PDF مجاناً</p>
                     </div>
                 </div>
                 <div class="flex items-start gap-3">
-                    <span class="text-emerald-600 font-black text-lg mt-0.5">✓</span>
+                    <span class="text-emerald-600 font-black text-lg mt-0.5"><i class="fa-solid fa-check text-emerald-500"></i></span>
                     <div>
-                        <strong class="text-gray-800 text-sm">شهادة تقدير مجانية:</strong>
-                        <p class="text-gray-600 text-sm">توليد شهادة تقدير احترافية للناجحين بكبسة زر واحدة</p>
+                        <strong class="text-gray-800 dark:text-slate-200 text-sm">شهادة تقدير مجانية:</strong>
+                        <p class="text-gray-600 dark:text-slate-400 text-sm">توليد شهادة تقدير احترافية للناجحين بكبسة زر واحدة</p>
                     </div>
                 </div>
                 <div class="flex items-start gap-3">
-                    <span class="text-emerald-600 font-black text-lg mt-0.5">✓</span>
+                    <span class="text-emerald-600 font-black text-lg mt-0.5"><i class="fa-solid fa-check text-emerald-500"></i></span>
                     <div>
-                        <strong class="text-gray-800 text-sm">متاح 24/7 بلا انقطاع:</strong>
-                        <p class="text-gray-600 text-sm">بنية تحتية قوية تتحمل الملايين من عمليات البحث المتزامنة</p>
+                        <strong class="text-gray-800 dark:text-slate-200 text-sm">متاح 24/7 بلا انقطاع:</strong>
+                        <p class="text-gray-600 dark:text-slate-400 text-sm">بنية تحتية قوية تتحمل الملايين من عمليات البحث المتزامنة</p>
                     </div>
                 </div>
                 <div class="flex items-start gap-3">
-                    <span class="text-emerald-600 font-black text-lg mt-0.5">✓</span>
+                    <span class="text-emerald-600 font-black text-lg mt-0.5"><i class="fa-solid fa-check text-emerald-500"></i></span>
                     <div>
-                        <strong class="text-gray-800 text-sm">أوائل المحافظات:</strong>
-                        <p class="text-gray-600 text-sm">متابعة أوائل الطلاب على مستوى المحافظة والمرحلة</p>
+                        <strong class="text-gray-800 dark:text-slate-200 text-sm">أوائل المحافظات:</strong>
+                        <p class="text-gray-600 dark:text-slate-400 text-sm">متابعة أوائل الطلاب على مستوى المحافظة والمرحلة</p>
                     </div>
                 </div>
                 <div class="flex items-start gap-3">
-                    <span class="text-emerald-600 font-black text-lg mt-0.5">✓</span>
+                    <span class="text-emerald-600 font-black text-lg mt-0.5"><i class="fa-solid fa-check text-emerald-500"></i></span>
                     <div>
-                        <strong class="text-gray-800 text-sm">مجاني تماماً:</strong>
-                        <p class="text-gray-600 text-sm">لا رسوم، لا تسجيل، لا إعلانات مزعجة — خدمة نظيفة ومجانية</p>
+                        <strong class="text-gray-800 dark:text-slate-200 text-sm">مجاني تماماً:</strong>
+                        <p class="text-gray-600 dark:text-slate-400 text-sm">لا رسوم، لا تسجيل، لا إعلانات مزعجة — خدمة نظيفة ومجانية</p>
                     </div>
                 </div>
             </div>
 
-            <h3 class="text-xl font-bold text-gray-800 mb-3">أكثر الأسئلة شيوعاً عن موعد ظهور النتائج</h3>
-            <p class="text-gray-600 leading-relaxed mb-3">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-3">أكثر الأسئلة شيوعاً عن موعد ظهور النتائج</h3>
+            <p class="text-gray-600 dark:text-slate-350 leading-relaxed mb-3">
                 يطرح كثير من الطلاب وأولياء الأمور سؤال "متى تظهر نتيجة الإعدادية 2026؟" — والإجابة تعتمد على إتمام عمليات التصحيح في لجان الكنترول التابعة للوزارة. الإعلان عادةً يكون في يوليو لنتائج مصر، وفي مواعيد متفاوتة لبقية الدول العربية. تتيح منصة نتيجتي رسائل تنبيه فور الإعلان عبر قنواتها على واتساب وتيليجرام وفيسبوك.
             </p>
-            <p class="text-gray-600 leading-relaxed mb-4">
+            <p class="text-gray-600 dark:text-slate-350 leading-relaxed mb-4">
                 يُقدّر عدد مستخدمي المنصة خلال موسم إعلان النتائج بالملايين من كل الدول العربية. لذلك، تستعد المنصة كل عام برفع طاقتها الاستيعابية لضمان تجربة سلسة وسريعة لجميع الزوار حتى في ذروة الاستعلام.
             </p>
 
             <div class="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-6 mt-6 text-white text-center">
-                <p class="font-black text-lg mb-2">🎓 ابدأ الاستعلام الآن — اختر دولتك من القائمة أعلاه</p>
+                <p class="font-black text-lg mb-2"><i class="fa-solid fa-graduation-cap text-blue-600"></i> ابدأ الاستعلام الآن — اختر دولتك من القائمة أعلاه</p>
                 <p class="text-emerald-100 text-sm">نتيجتي | المنصة العربية الأولى لنتائج الامتحانات الرسمية — مجاني ودقيق وسريع</p>
             </div>
         </article>

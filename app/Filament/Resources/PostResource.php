@@ -84,6 +84,13 @@ class PostResource extends Resource
                                         ->imageEditor()
                                         ->columnSpanFull(),
 
+                                    Forms\Components\Select::make('user_id')
+                                        ->relationship('user', 'name')
+                                        ->label('كاتب المقال')
+                                        ->default(fn () => auth()->id())
+                                        ->required()
+                                        ->columnSpanFull(),
+
                                     Forms\Components\Toggle::make('is_published')
                                         ->label('حالة النشر')
                                         ->default(true),
@@ -130,6 +137,10 @@ class PostResource extends Resource
                     ->searchable()
                     ->wrap()
                     ->limit(50),
+
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('الكاتب')
+                    ->sortable(),
                 
                 Tables\Columns\TextColumn::make('category')
                     ->label('التصنيف')

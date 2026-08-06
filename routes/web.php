@@ -5,6 +5,7 @@ use App\Http\Controllers\EgyptResultsController;
 use App\Http\Controllers\CountryResultsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\PreRegistrationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,7 +39,7 @@ Route::get('/ads.txt', function () {
 
 // Certificate Generator
 Route::get('/certificate', function () {
-    $settings = \App\Models\CertificateSetting::getActive();
+    $certificateSettings = \App\Models\CertificateSetting::getActive();
     
     // دعم المعاينة من لوحة التحكم
     $previewData = [];
@@ -54,7 +55,7 @@ Route::get('/certificate', function () {
         ];
     }
     
-    return view('certificate.index', compact('settings', 'previewData'));
+    return view('certificate.index', compact('certificateSettings', 'previewData'));
 })->name('certificate.index');
 
 // Blog Routes
@@ -76,6 +77,7 @@ Route::prefix('egypt')->name('egypt.')->middleware(['cache.response'])->group(fu
     
     // New URL format with academic year and term: /egypt/preparatory/{gov}/{year}/{term}/{seat}
     Route::get('/preparatory/{governorate}/{academic_year}/{term}/{seat_number}', [EgyptResultsController::class, 'governorateResultDetail'])
+        ->middleware(['throttle:60,1'])
         ->name('governorate.result.detail')
         ->where([
             'academic_year' => '[0-9]{4}-[0-9]{4}',
@@ -108,7 +110,9 @@ Route::prefix('egypt')->name('egypt.')->middleware(['cache.response'])->group(fu
     Route::get('/secondary/all', [EgyptResultsController::class, 'secondaryAllResults'])->name('secondary.all-results');
     Route::get('/secondary/{branch}', [EgyptResultsController::class, 'secondaryBranch'])->name('secondary.branch');
     Route::get('/secondary/{branch}/all', [EgyptResultsController::class, 'secondaryBranchAllResults'])->name('secondary.branch.all-results');
-    Route::get('/secondary/student/{seat_number}', [EgyptResultsController::class, 'secondaryStudentResult'])->name('secondary.student');
+    Route::get('/secondary/student/{seat_number}', [EgyptResultsController::class, 'secondaryStudentResult'])
+        ->middleware(['throttle:60,1'])
+        ->name('secondary.student');
     Route::get('/diplomas', [EgyptResultsController::class, 'diplomasIndex'])->name('diplomas.index');
     Route::get('/diplomas/{type}', [EgyptResultsController::class, 'diplomas'])->name('diplomas');
     
@@ -123,6 +127,9 @@ Route::prefix('egypt')->name('egypt.')->middleware(['cache.response'])->group(fu
 Route::post('/search', [SearchController::class, 'search'])->name('search')->middleware('throttle:30,1');
 Route::get('/result/{id}', [SearchController::class, 'show'])->name('result.show')->middleware(['cache.response']);
 Route::get('/result/{id}/print', [SearchController::class, 'print'])->name('result.print');
+
+// Pre-registration Route
+Route::post('/pre-register', [PreRegistrationController::class, 'store'])->name('pre-register.store')->middleware('throttle:10,1');
 
 // ===== Sitemap Routes =====
 // 1. الفهرس الرئيسي
@@ -189,7 +196,9 @@ Route::get('/sitemap/clear-cache', [SitemapController::class, 'clearCache'])->mi
 // Examples: /iraq/prep, /libya/prep, /palestine/secondary
 Route::prefix('{country:slug}')->name('country.')->middleware(['cache.response'])->group(function () {
     Route::get('/', [CountryResultsController::class, 'index'])->name('index');
-    Route::get('/{slug}/student/{seat_number}', [CountryResultsController::class, 'studentResult'])->name('student');
+    Route::get('/{slug}/student/{seat_number}', [CountryResultsController::class, 'studentResult'])
+        ->middleware(['throttle:60,1'])
+        ->name('student');
     Route::get('/{slug}', [CountryResultsController::class, 'examType'])->name('exam')
         ->where('slug', '[a-z0-9\-\/]+'); // Allows slugs like prep/6th, prep/9th, secondary
 });

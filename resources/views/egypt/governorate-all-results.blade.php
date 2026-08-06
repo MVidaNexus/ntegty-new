@@ -264,14 +264,14 @@
                         <tr class="hover:bg-emerald-50/50 transition-colors {{ $index % 2 == 0 ? 'bg-white' : 'bg-gray-50/50' }} {{ $isTopTen ? 'print:bg-yellow-50' : '' }} print:hover:bg-transparent">
                             <td class="px-2 py-2 text-gray-500 text-xs print:px-1 print:py-1 print:text-[8pt]">{{ $results->firstItem() + $index }}</td>
                             <td class="px-2 py-2 font-bold text-gray-800 text-sm print:px-1 print:py-1 print:text-[8pt]">
-                                <a href="/egypt/preparatory/{{ $governorate->slug }}/{{ $academicYear->year ?? '2024-2025' }}/{{ isset($semester) && $semester == 2 ? 'term2' : 'term1' }}/{{ $result->seat_number }}" 
+                                <a href="/egypt/preparatory/{{ $governorate->slug }}/{{ $academicYear->year ?? '2025-2026' }}/{{ isset($semester) && $semester == 2 ? 'term2' : 'term1' }}/{{ $result->seat_number }}" 
                                    class="hover:text-emerald-600 hover:underline no-print">
                                     {{ $result->seat_number }}
                                 </a>
                                 <span class="hidden print:inline">{{ $result->seat_number }}</span>
                             </td>
                             <td class="px-2 py-2 font-semibold text-gray-800 text-sm print:px-1 print:py-1 print:text-[8pt] print:max-w-[80px] print:truncate">
-                                <a href="/egypt/preparatory/{{ $governorate->slug }}/{{ $academicYear->year ?? '2024-2025' }}/{{ isset($semester) && $semester == 2 ? 'term2' : 'term1' }}/{{ $result->seat_number }}" 
+                                <a href="/egypt/preparatory/{{ $governorate->slug }}/{{ $academicYear->year ?? '2025-2026' }}/{{ isset($semester) && $semester == 2 ? 'term2' : 'term1' }}/{{ $result->seat_number }}" 
                                    class="hover:text-emerald-600 hover:underline no-print">
                                     {{ $result->student_name }}
                                 </a>

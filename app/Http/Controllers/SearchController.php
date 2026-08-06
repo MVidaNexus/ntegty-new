@@ -46,20 +46,48 @@ class SearchController extends Controller
         // NOTE: We don't use cache for results anymore to ensure ranks are always fresh
 
         // Build query
+        // Check if the requested exam_type_id is the unified technical diplomas (eg_diploma)
+        $examType = \App\Models\ExamType::find($examTypeId);
+        $isUnifiedDiploma = $examType && $examType->code === 'eg_diploma';
+
         $resultsQuery = Result::with(['governorate', 'examType', 'academicYear', 'branch'])
-            ->where('exam_type_id', $examTypeId)
             ->where('academic_year_id', $academicYear->id);
 
-        if ($governorateId) {
-            $resultsQuery->where('governorate_id', $governorateId);
-        }
+        if ($isUnifiedDiploma) {
+            // Map branch_id to corresponding individual exam_type_id as fallback
+            $fallbackExamTypeId = match ((int)$branchId) {
+                1 => 3, // Commercial
+                2 => 4, // Industrial
+                3 => 5, // Agricultural
+                4 => 6, // Hotel
+                default => null,
+            };
 
-        if ($systemType) {
-            $resultsQuery->where('system_type', $systemType);
-        }
+            $resultsQuery->where(function ($q) use ($examTypeId, $branchId, $fallbackExamTypeId) {
+                $q->where(function ($sq) use ($examTypeId, $branchId) {
+                    $sq->where('exam_type_id', $examTypeId);
+                    if ($branchId) {
+                        $sq->where('branch_id', $branchId);
+                    }
+                });
+                if ($fallbackExamTypeId) {
+                    $q->orWhere('exam_type_id', $fallbackExamTypeId);
+                }
+            });
+        } else {
+            $resultsQuery->where('exam_type_id', $examTypeId);
 
-        if ($branchId) {
-            $resultsQuery->where('branch_id', $branchId);
+            if ($governorateId) {
+                $resultsQuery->where('governorate_id', $governorateId);
+            }
+
+            if ($systemType) {
+                $resultsQuery->where('system_type', $systemType);
+            }
+
+            if ($branchId) {
+                $resultsQuery->where('branch_id', $branchId);
+            }
         }
 
         // Search by seat number or name

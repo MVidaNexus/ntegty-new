@@ -1,10 +1,19 @@
 #!/bin/bash
 
-# Configuration
-REMOTE_HOST="135.125.190.148"
-REMOTE_USER="ntegty"
-REMOTE_PASS='H3r&md"j_7Z?A/+)'
-DB_NAME="ntegty"
+# Parse configuration from .env if it exists
+if [ -f .env ]; then
+    # Read variables from .env
+    REMOTE_HOST=$(grep REMOTE_SSH_HOST .env | cut -d '=' -f2- | tr -d '"'\')
+    REMOTE_USER=$(grep REMOTE_SSH_USER .env | cut -d '=' -f2- | tr -d '"'\')
+    REMOTE_PASS=$(grep REMOTE_SSH_PASSWORD .env | cut -d '=' -f2- | tr -d '"'\')
+    DB_NAME=$(grep REMOTE_DB_DATABASE .env | cut -d '=' -f2- | tr -d '"'\')
+fi
+
+# Fallback defaults if not set in .env
+REMOTE_HOST=${REMOTE_HOST:-"135.125.190.148"}
+REMOTE_USER=${REMOTE_USER:-"ntegty"}
+REMOTE_PASS=${REMOTE_PASS:-")c6NXp44u@U1cdBz"}
+DB_NAME=${DB_NAME:-"ntegty_ntegty"}
 
 echo "------------------------------------------------"
 echo "🚀 Starting Live Content Sync via SSH..."

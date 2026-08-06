@@ -16,8 +16,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return true; // Allow all users for now, or restrict to specific emails
-        // return $this->email === 'admin@ntegty.com';
+        return $this->email === 'admin@ntegty.com' || str_ends_with($this->email, '@ntegty.com');
     }
 
     /**

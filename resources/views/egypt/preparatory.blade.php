@@ -60,6 +60,9 @@
                 $pendingGovernorates = $governorates->where('is_declared', false)->values();
             @endphp
 
+            {{-- Pre-Registration Form Component --}}
+            @include('partials.pre-registration', ['examTypeSlug' => 'egypt_preparatory'])
+
             {{-- Declared Governorates Section --}}
             @if($declaredGovernorates->count() > 0)
             <div class="mb-8">
@@ -251,6 +254,118 @@
             </div>
         </div>
         @endif
+
+        <!-- Rich SEO Article — Preparatory Results 800+ words — Updated July 2026 -->
+        <div class="max-w-4xl mx-auto mt-14 px-3">
+            <article class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-12">
+                <h2 class="text-2xl md:text-3xl font-black text-gray-800 mb-5 border-r-4 border-blue-500 pr-4">
+                    نتيجة الشهادة الإعدادية 2026 — كل شيء تحتاج معرفته الآن
+                </h2>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6">
+                    <p class="text-blue-800 font-bold text-sm mb-1"><i class="fa-solid fa-bullhorn text-emerald-500"></i> يوليو 2026 — النتائج تُعلَن تباعاً</p>
+                    <p class="text-blue-700 text-sm leading-relaxed">تُعلن نتائج الشهادة الإعدادية هذا العام على مستوى المحافظات تباعاً بعد اعتماد كل كنترول. ابحث عن محافظتك أعلاه للاطلاع على النتيجة فور إعلانها.</p>
+                </div>
+
+                <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
+                    هناك لحظات في حياة كل أسرة تتوقف عندها الأنفاس قليلاً — لحظة ظهور نتيجة الإعدادية واحدة منها. لأن هذه الشهادة ليست مجرد أرقام على ورقة، بل هي البوابة التي تحدد المسار القادم: ثانوية عامة، أم تعليم فني، أم معهد ديني. في منصة نتيجتي، نقف معك في هذه اللحظة ونقدم لك النتيجة في ثوانٍ معدودة، مجاناً وبدون إعلانات مزعجة.
+                </p>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">ما الجديد في امتحانات الإعدادية 2026؟</h3>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    شهد العام الدراسي 2025/2026 عدة تطورات ملحوظة في منظومة الإعدادية المصرية. أبرزها توسيع تطبيق <strong>نظام التقييم الإلكتروني</strong> ليشمل محافظات إضافية، وهو النظام الذي يعتمد على أجهزة التابلت في رصد الإجابات وتصحيحها آلياً بالنسبة لبعض المواد. كما تضمّن التطوير مراجعة شاملة لمناهج مادة العلوم بما يتوافق مع متطلبات الاقتصاد الرقمي، ودخول مادة التكنولوجيا بشكل أكثر عمقاً في المنهج المقرر.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    الجدير بالذكر أن <strong>نسبة نجاح الشهادة الإعدادية</strong> في مصر تتراوح عادةً بين 65% و75%، وقد حرصت الوزارة هذا العام على تيسير آليات الاعتراض لضمان عدالة أكبر في التقييم.
+                </p>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">مواعيد الإعلان عن النتائج 2026</h3>
+                <div class="overflow-x-auto mb-6">
+                    <table class="w-full text-sm text-gray-600 border border-gray-200 rounded-xl overflow-hidden">
+                        <thead class="bg-blue-600 text-white font-bold">
+                            <tr>
+                                <td class="p-3">المرحلة</td>
+                                <td class="p-3 text-center">موعد الامتحانات</td>
+                                <td class="p-3 text-center">موعد الإعلان المتوقع</td>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr><td class="p-3 font-medium">الشهادة الإعدادية (الحكومية)</td><td class="p-3 text-center">مايو–يونيو 2026</td><td class="p-3 text-center font-bold text-blue-700">يوليو 2026</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 font-medium">الدور الثاني (الرسوب)</td><td class="p-3 text-center">أغسطس–سبتمبر</td><td class="p-3 text-center font-bold text-orange-600">سبتمبر 2026</td></tr>
+                            <tr><td class="p-3 font-medium">الإعدادية الأزهرية</td><td class="p-3 text-center">مايو–يونيو 2026</td><td class="p-3 text-center font-bold text-amber-700">يوليو 2026</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">المحافظات المصرية الـ 27 وكيفية الاستعلام</h3>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    يمكنك الاستعلام عن نتيجة أبنائك في أي من محافظات مصر: <strong>القاهرة، الجيزة، الإسكندرية، القليوبية، الشرقية، الدقهلية، الغربية، المنوفية، كفر الشيخ، البحيرة، الإسماعيلية، بور سعيد، السويس، دمياط، الفيوم، بني سويف، المنيا، أسيوط، سوهاج، قنا، الأقصر، أسوان، البحر الأحمر، الوادي الجديد، مطروح، شمال سيناء، جنوب سيناء.</strong>
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    اختر محافظتك من القائمة أعلاه ثم أدخل رقم الجلوس أو اسم الطالب كاملاً. ستظهر نتيجة مفصّلة تشمل درجات كل مادة، وإجمالي الدرجات، والتقدير، ونسبة النجاح.
+                </p>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">المواد الدراسية وتوزيع الدرجات — الإعدادية 2026</h3>
+                <div class="overflow-x-auto mb-6">
+                    <table class="w-full text-sm text-gray-600 border border-gray-200 rounded-xl overflow-hidden">
+                        <thead class="bg-slate-700 text-white font-bold">
+                            <tr>
+                                <td class="p-3">المادة</td>
+                                <td class="p-3 text-center">الدرجة الكبرى</td>
+                                <td class="p-3 text-center">حد النجاح</td>
+                                <td class="p-3 text-center">ملاحظة</td>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr><td class="p-3 font-medium">اللغة العربية</td><td class="p-3 text-center">40</td><td class="p-3 text-center">20</td><td class="p-3 text-center text-xs text-gray-500">إلزامية</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 font-medium">اللغة الأجنبية الأولى (إنجليزية)</td><td class="p-3 text-center">40</td><td class="p-3 text-center">20</td><td class="p-3 text-center text-xs text-gray-500">إلزامية</td></tr>
+                            <tr><td class="p-3 font-medium">الرياضيات</td><td class="p-3 text-center">40</td><td class="p-3 text-center">20</td><td class="p-3 text-center text-xs text-gray-500">إلزامية</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 font-medium">العلوم والبيئة</td><td class="p-3 text-center">40</td><td class="p-3 text-center">20</td><td class="p-3 text-center text-xs text-gray-500">إلزامية</td></tr>
+                            <tr><td class="p-3 font-medium">الدراسات الاجتماعية</td><td class="p-3 text-center">40</td><td class="p-3 text-center">20</td><td class="p-3 text-center text-xs text-gray-500">إلزامية</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 font-medium">التربية الدينية</td><td class="p-3 text-center">40</td><td class="p-3 text-center">—</td><td class="p-3 text-center text-xs text-gray-500">لا تُرسّب</td></tr>
+                            <tr><td class="p-3 font-medium">التكنولوجيا</td><td class="p-3 text-center">20–40</td><td class="p-3 text-center">—</td><td class="p-3 text-center text-xs text-gray-500">حسب المحافظة</td></tr>
+                            <tr class="bg-blue-50 font-bold"><td class="p-3 text-blue-800">الإجمالي</td><td class="p-3 text-center text-blue-800">240–280+</td><td class="p-3 text-center text-blue-800">50%</td><td class="p-3 text-center text-xs">—</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">نظام التقديرات — من ممتاز إلى راسب</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                    <div class="bg-emerald-100 rounded-xl p-3 text-center border border-emerald-200">
+                        <div class="font-black text-emerald-800 text-lg">ممتاز</div>
+                        <div class="text-emerald-700 text-sm font-bold">85% فأكثر</div>
+                    </div>
+                    <div class="bg-blue-100 rounded-xl p-3 text-center border border-blue-200">
+                        <div class="font-black text-blue-800 text-lg">جيد جداً</div>
+                        <div class="text-blue-700 text-sm font-bold">75% – 84%</div>
+                    </div>
+                    <div class="bg-yellow-100 rounded-xl p-3 text-center border border-yellow-200">
+                        <div class="font-black text-yellow-800 text-lg">جيد</div>
+                        <div class="text-yellow-700 text-sm font-bold">65% – 74%</div>
+                    </div>
+                    <div class="bg-orange-100 rounded-xl p-3 text-center border border-orange-200">
+                        <div class="font-black text-orange-800 text-lg">مقبول</div>
+                        <div class="text-orange-700 text-sm font-bold">50% – 64%</div>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-3">ماذا بعد النتيجة؟ — دليل الخطوات التالية</h3>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    إذا أعلنت النتيجة ونجح ابنك أو ابنتك، فتهانينا أولاً! الخطوة الفورية هي <strong>التسجيل في بوابة التنسيق الإلكترونية</strong> التابعة للوزارة لاختيار نوع التعليم والمدرسة المناسبة. يُنصح بإدخال أكثر من رغبة ورتيب الأولويات بحكمة بناءً على المجموع والقدرات الشخصية.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    أما إذا لم تكن النتيجة كما هو مأمول، فاعلم أن <strong>الدور الثاني</strong> فرصة حقيقية وليست نهاية الطريق. كثير من الطلاب تفوقوا في الدور الثاني بعد استعداد جيد. يمكن التقدم للدور الثاني في الإدارة التعليمية خلال الفترة المحددة في أغسطس، والامتحانات تكون في سبتمبر.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-5">
+                    لا تنسَ أن <strong>الاعتراض على النتيجة</strong> حق مكفول قانوناً خلال 15 يوماً من تاريخ الإعلان. يُقدَّم الاعتراض عبر الإدارة التعليمية أو من خلال بوابة المواطن الإلكترونية بعد سداد رسوم رمزية.
+                </p>
+
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-5 text-white text-center">
+                    <p class="font-black text-base mb-1"><i class="fa-solid fa-thumbtack text-red-500"></i> اختر محافظتك من الأعلى وابحث عن نتيجتك فوراً</p>
+                    <p class="text-blue-100 text-sm">نتيجتي — مجانية، فورية، دقيقة | 24 ساعة يومياً</p>
+                </div>
+            </article>
+        </div>
 
         <!-- كلمات البحث الشائعة -->
         <div class="max-w-4xl mx-auto">

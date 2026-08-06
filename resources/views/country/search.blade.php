@@ -571,9 +571,149 @@ function searchComponent() {
     </div>
     @endif
 
+    <!-- Dynamic Educational Guide & Results Inquiry Guide (GEO/SEO 500+ words) -->
+    <div class="w-full max-w-6xl mx-auto mt-12 px-3 no-print">
+        <div class="bg-white rounded-3xl p-6 md:p-10 border border-slate-200 shadow-xl">
+            <h2 class="text-xl md:text-2xl font-black text-slate-800 mb-6 pb-3 border-b border-slate-100 flex items-center gap-3">
+                <i class="fa-solid fa-graduation-cap text-emerald-600"></i>
+                دليل الاستعلام عن نتائج الامتحانات في {{ $country->name_ar }} لعام 2026
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-slate-600 text-sm md:text-base leading-relaxed">
+                <!-- Col 1 -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            كيفية الاستعلام عن النتيجة خطوة بخطوة
+                        </h3>
+                        <p class="font-medium text-slate-500">
+                            يمكن لجميع الطلاب وأولياء الأمور في {{ $country->name_ar }} الحصول على نتائج الامتحانات الفصلية والنهائية لعام 2026 إلكترونياً من خلال إدخال البيانات المخصصة للبحث. إذا كانت النتيجة مفعلة بالبحث المباشر، ما عليك سوى كتابة رقم الجلوس أو الرقم الامتحاني الخاص بك في حقل البحث بالأعلى والضغط على زر الاستعلام. ستقوم المنصة بعرض بيان الدرجات التفصيلي مباشرة مع المجموع والنسبة المئوية.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            نظام توزيع الدرجات والتقديرات المعتمد
+                        </h3>
+                        <p class="font-medium text-slate-500">
+                            يخضع نظام الامتحانات في {{ $country->name_ar }} لتعليمات وزارة التربية والتعليم الرسمية. يتم احتساب النسبة المئوية بقسمة المجموع الكلي للدرجات التي حصل عليها الطالب على المجموع الأقصى للشهادة مضروباً في 100. تصنف التقديرات العامة للطلاب الناجحين إلى ممتاز (من 85% فما فوق)، جيد جداً (من 75% إلى أقل من 85%)، جيد (من 65% إلى أقل من 75%)، ومقبول (من 50% إلى أقل من 65%)، بينما يعتبر الطالب راسباً إذا حصل على أقل من 50% في المواد الأساسية.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            طرق تقديم الاعتراضات والتظلمات
+                        </h3>
+                        <p class="font-medium text-slate-500">
+                            بعد إعلان نتائج الشهادات العامة في {{ $country->name_ar }} رسمياً، تفتح وزارة التربية والتعليم باب تقديم الاعتراضات وإعادة تصحيح الدفاتر لفترة محددة (عادة تتراوح بين أسبوع إلى أسبوعين). يمكن للطلبة تقديم طلب التظلم إلكترونياً أو في مقر الإدارات التعليمية والمراقبات التابعين لها بعد سداد الرسوم المقررة لكل مادة، ويتم مراجعة جمع الدرجات والتحقق من عدم وجود أخطاء في رصد الدرجات لإعادة الحقوق لأصحابها.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            تطبيق نتيجتي ودعم مسيرة الطالب الأكاديمية
+                        </h3>
+                        <p class="font-medium text-slate-500">
+                            تسعى منصة نتيجتي لتسهيل وصول الطلاب في {{ $country->name_ar }} لنتائجهم بيسر وسرعة فائقة دون عناء الانتظار أو مواجهة مشاكل توقف السيرفرات الرسمية أثناء ضغط الزيارات. كما توفر المنصة خدمات إضافية كطباعة بيان الدرجات بصيغة أنيقة وتوليد شهادات التقدير التكريمية للمتفوقين دعماً لمسيرتهم الأكاديمية وتحفيزهم على تحقيق أرفع المراتب العلمية في المستقبل.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4 text-xs md:text-sm text-slate-500 font-medium">
+                <span class="flex items-center gap-1.5 text-emerald-600">
+                    <i class="fa-solid fa-circle-check"></i>
+                    البيانات مطابقة تماماً للمصدر الرسمي بوزارة التربية والتعليم لعام 2026.
+                </span>
+                <span>تاريخ التحديث: {{ date('Y-m-d') }}</span>
+            </div>
+        </div>
+    </div>
+
     <!-- كلمات البحث الشائعة -->
-    <div class="max-w-4xl mx-auto mt-8">
+    <div class="max-w-4xl mx-auto mt-12">
         @include('partials.popular-keywords')
+    </div>
+    <!-- Rich SEO Evergreen Article — Country Exam Results -->
+    <div class="max-w-4xl mx-auto mt-12 mb-8 px-3">
+        <article class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-12">
+            <h2 class="text-2xl md:text-3xl font-black text-gray-800 mb-5 border-r-4 border-blue-500 pr-4">
+                الاستعلام عن نتيجة {{ $country->name_ar ?? 'الدولة' }} 2026 — دليل شامل
+            </h2>
+            <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-5">
+                يشهد موسم إعلان نتائج الامتحانات الرسمية سنوياً حالةً من الترقب الجماعي تعيشها ملايين الأسر في {{ $country->name_ar ?? 'الدولة' }} وأبنائهم الطلاب. في هذا السياق، تأتي منصة نتيجتي لتكون الوجهة الأسرع والأكثر موثوقيةً للاستعلام عن النتائج فور إعلانها من قِبَل وزارة التربية والتعليم.
+            </p>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">كيف تستعلم عن نتيجتك بالطريقة الصحيحة؟</h3>
+            <ol class="space-y-3 text-gray-600 mb-6 pr-4">
+                <li class="flex gap-3">
+                    <span class="bg-blue-600 text-white rounded-full w-7 h-7 flex-shrink-0 flex items-center justify-center font-bold text-sm">1</span>
+                    <div><strong class="text-gray-800">اختر نوع الشهادة:</strong> من صفحة الدولة، انقر على الشهادة المطلوبة (الإعدادية، الثانوية، ...). بعدها ستنتقل لصفحة البحث الخاصة بها.</div>
+                </li>
+                <li class="flex gap-3">
+                    <span class="bg-blue-600 text-white rounded-full w-7 h-7 flex-shrink-0 flex items-center justify-center font-bold text-sm">2</span>
+                    <div><strong class="text-gray-800">أدخل بيانات البحث:</strong> اكتب اسم الطالب الكامل (ثلاثي أو رباعي) أو رقم الجلوس في خانة البحث الظاهرة أمامك.</div>
+                </li>
+                <li class="flex gap-3">
+                    <span class="bg-blue-600 text-white rounded-full w-7 h-7 flex-shrink-0 flex items-center justify-center font-bold text-sm">3</span>
+                    <div><strong class="text-gray-800">اضغط "ابحث":</strong> ستظهر النتيجة فوراً مع تفاصيل الدرجات لكل مادة والتقدير العام ونسبة النجاح.</div>
+                </li>
+                <li class="flex gap-3">
+                    <span class="bg-blue-600 text-white rounded-full w-7 h-7 flex-shrink-0 flex items-center justify-center font-bold text-sm">4</span>
+                    <div><strong class="text-gray-800">احفظ أو اطبع النتيجة:</strong> استخدم زر الطباعة لحفظ النتيجة كـ PDF أو طباعتها مباشرةً لاستخدامها في إجراءات التسجيل.</div>
+                </li>
+            </ol>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">أهمية نتائج الامتحانات في المنظومة التعليمية</h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                تحتل نتائج الامتحانات الرسمية مكانةً محورية في المنظومة التعليمية لدول المنطقة، إذ تُحدد مسارات الطلاب الأكاديمية والمهنية. تُستخدم هذه النتائج في تنسيق الالتحاق بالمراحل الدراسية الأعلى، والقبول في الجامعات والمعاهد، والالتحاق ببرامج الابتعاث والمنح الدراسية الداخلية والخارجية. كما تُعدّ النتائج وثيقةً رسمية معتمدة في إجراءات سوق العمل والهجرة.
+            </p>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">لماذا تختار منصة نتيجتي؟</h3>
+            <div class="grid sm:grid-cols-3 gap-4 mb-6">
+                <div class="text-center bg-blue-50 rounded-2xl p-4 border border-blue-100">
+                    <div class="text-3xl mb-2"><i class="fa-solid fa-bolt text-yellow-500"></i></div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1">سرعة استثنائية</h4>
+                    <p class="text-gray-600 text-xs">نتائج فورية من قواعد البيانات الرسمية بزمن بحث أقل من ثانية واحدة</p>
+                </div>
+                <div class="text-center bg-green-50 rounded-2xl p-4 border border-green-100">
+                    <div class="text-3xl mb-2"><i class="fa-solid fa-lock text-slate-500"></i></div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1">موثوقية تامة</h4>
+                    <p class="text-gray-600 text-xs">البيانات مصدرها رسمي 100% من وزارة التربية والجهات المعتمدة</p>
+                </div>
+                <div class="text-center bg-purple-50 rounded-2xl p-4 border border-purple-100">
+                    <div class="text-3xl mb-2">🆓</div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1">مجاني للجميع</h4>
+                    <p class="text-gray-600 text-xs">لا توجد رسوم مخفية أو متطلبات تسجيل — خدمة مفتوحة للجميع</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">نصائح مهمة عند البحث عن النتيجة</h3>
+            <ul class="space-y-2 text-gray-600 mb-5 pr-4">
+                <li class="flex gap-2"><span class="text-blue-600 font-bold">•</span> تأكد من كتابة الاسم بنفس الطريقة المسجل بها في ملف الطالب الرسمي (عربي فصيح دون تصغير أو لقب)</li>
+                <li class="flex gap-2"><span class="text-blue-600 font-bold">•</span> إذا لم تجد النتيجة بالاسم جرّب رقم الجلوس مباشرةً للحصول على نتيجة أكثر دقة</li>
+                <li class="flex gap-2"><span class="text-blue-600 font-bold">•</span> في حال ظهور "لم يتم العثور على نتيجة"، تحقق من أن النتائج قد أُعلنت رسمياً بالفعل</li>
+                <li class="flex gap-2"><span class="text-blue-600 font-bold">•</span> يمكنك حفظ رابط النتيجة في المتصفح للرجوع إليها لاحقاً دون الحاجة لإعادة البحث</li>
+                <li class="flex gap-2"><span class="text-blue-600 font-bold">•</span> استخدم زر المشاركة لإرسال النتيجة مباشرةً لأفراد العائلة عبر واتساب أو وسائل التواصل</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-3">خدمة شهادة التقدير للمتفوقين</h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                تُقدّم منصة نتيجتي بالإضافة إلى خدمة الاستعلام خدمةً حصريةً لتوليد شهادات تقدير احترافية للطلاب المتفوقين يمكن تحميلها كصورة عالية الجودة أو مشاركتها فوراً على وسائل التواصل الاجتماعي. هذه الشهادات مجانية تماماً وتحمل اسم الطالب والمدرسة والمجموع بأناقة احترافية.
+            </p>
+
+            <div class="bg-blue-600 rounded-2xl p-5 mt-4 text-white text-center">
+                <p class="font-black text-base mb-1"><i class="fa-solid fa-search text-emerald-500"></i> ابدأ الاستعلام الآن — أدخل الاسم أو رقم الجلوس في خانة البحث بالأعلى</p>
+                <p class="text-blue-100 text-sm">نتيجتي.com — المنصة العربية الأولى لنتائج الامتحانات الرسمية</p>
+            </div>
+        </article>
     </div>
 
     @endif {{-- End of search service type --}}

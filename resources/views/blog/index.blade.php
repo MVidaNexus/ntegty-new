@@ -11,7 +11,7 @@
         <!-- Hero Header -->
         <div class="text-center mb-12 space-y-4">
             <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-sm font-black border border-blue-100 shadow-sm">
-                📚 مدونة نتيجتي التعليمية
+                <i class="fa-solid fa-book-open text-emerald-600"></i> مدونة نتيجتي التعليمية
             </span>
             <h1 class="text-3xl md:text-5xl font-black text-slate-800 tracking-tight leading-relaxed">
                 آخر الأخبار و <span class="text-blue-600">المستجدات التعليمية</span>
@@ -53,7 +53,7 @@
                         <!-- Featured Image Wrapper -->
                         <div class="relative aspect-[16/10] overflow-hidden bg-slate-100">
                             @if($post->image_path)
-                                <img src="{{ asset($post->image_path) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                                <img src="{{ asset('storage/' . $post->image_path) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 text-white">
                                     <i class="fa-solid fa-graduation-cap text-5xl opacity-30"></i>
@@ -78,11 +78,11 @@
                             <div class="space-y-3">
                                 <!-- Meta (Date) -->
                                 <div class="flex items-center gap-2 text-xs text-slate-400 font-semibold">
+                                    <i class="fa-regular fa-user text-sm text-blue-500"></i>
+                                    <span>{{ $post->user ? $post->user->name : 'إدارة نتيجتي' }}</span>
+                                    <span class="mx-1">•</span>
                                     <i class="fa-regular fa-calendar-check text-sm text-blue-500"></i>
                                     <span>{{ $post->published_at ? $post->published_at->format('Y-m-d') : $post->created_at->format('Y-m-d') }}</span>
-                                    <span class="mx-1">•</span>
-                                    <i class="fa-regular fa-clock text-sm text-blue-500"></i>
-                                    <span>قراءة 5 دقائق</span>
                                 </div>
 
                                 <!-- Title -->

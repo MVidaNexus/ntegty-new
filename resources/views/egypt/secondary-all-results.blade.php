@@ -24,7 +24,7 @@
                             </div>
                         </td>
                         <td class="header-center">
-                            <div class="logo-text">🎓 نتيجتي</div>
+                            <div class="logo-text"><i class="fa-solid fa-graduation-cap text-blue-600"></i> نتيجتي</div>
                             <div class="site-url">ntegty.com</div>
                         </td>
                         <td class="header-left">
@@ -41,28 +41,32 @@
             <div class="print-title-section">
                 <h1 class="print-main-title">
                     @if(isset($topCount) && $topCount != 'all')
-                        🏆 كشف أوائل الثانوية العامة
+                        <i class="fa-solid fa-trophy text-yellow-500"></i> كشف أوائل الثانوية العامة
                     @else
-                        📋 كشف نتائج الثانوية العامة
+                        <i class="fa-solid fa-clipboard-list text-emerald-500"></i> كشف نتائج الثانوية العامة
                     @endif
                 </h1>
                 <div class="print-badges">
                     <span class="print-badge badge-system">
                         @if(isset($systemType) && $systemType)
-                            {{ $systemType == 'old' ? '📚 النظام القديم' : '💻 النظام الحديث' }}
+                            @if($systemType == 'old')
+                                <i class="fa-solid fa-book-open text-emerald-600"></i> النظام القديم
+                            @else
+                                <i class="fa-solid fa-laptop text-slate-600"></i> النظام الحديث
+                            @endif
                         @else
-                            📊 جميع الأنظمة
+                            <i class="fa-solid fa-chart-column text-blue-500"></i> جميع الأنظمة
                         @endif
                     </span>
                     <span class="print-badge badge-branch">
                         @if(isset($selectedBranch))
-                            🎓 {{ $selectedBranch->name_ar }}
+                            <i class="fa-solid fa-graduation-cap text-blue-600"></i> {{ $selectedBranch->name_ar }}
                         @else
-                            📖 جميع الشعب
+                            <i class="fa-solid fa-book-open-reader text-blue-500"></i> جميع الشعب
                         @endif
                     </span>
                     @if(isset($topCount) && $topCount != 'all')
-                        <span class="print-badge badge-count">👥 أعلى {{ $topCount }} طالب</span>
+                        <span class="print-badge badge-count"><i class="fa-solid fa-users text-emerald-500"></i> أعلى {{ $topCount }} طالب</span>
                     @endif
                 </div>
             </div>
@@ -116,11 +120,11 @@
                     <tr class="{{ $printRank <= 3 ? 'top-three' : '' }} {{ $printRank % 2 == 0 ? 'even-row' : '' }}">
                         <td class="col-rank">
                             @if($printRank == 1)
-                                🥇
+                                <i class="fa-solid fa-medal text-yellow-500"></i>
                             @elseif($printRank == 2)
-                                🥈
+                                <i class="fa-solid fa-medal text-slate-400"></i>
                             @elseif($printRank == 3)
-                                🥉
+                                <i class="fa-solid fa-medal text-amber-700"></i>
                             @else
                                 {{ $printRank }}
                             @endif
@@ -145,7 +149,7 @@
             <!-- تذييل الطباعة -->
             <div class="print-footer">
                 <div class="footer-note">
-                    ⚠️ تنبيه: هذا الكشف غير رسمي - للاستعلام الرسمي يرجى مراجعة المدرسة أو موقع الوزارة
+                    <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>️ تنبيه: هذا الكشف غير رسمي - للاستعلام الرسمي يرجى مراجعة المدرسة أو موقع الوزارة
                 </div>
                 <div class="footer-info">
                     <span>ntegty.com</span>
@@ -593,7 +597,7 @@
                    class="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-amber-900 font-bold rounded-xl transition-all shadow-lg hover:shadow-xl text-base">
                     <i class="fa-solid fa-trophy text-xl"></i>
                     <div class="text-right">
-                        <span class="block">🏆 طباعة أوائل الثانوية العامة</span>
+                        <span class="block"><i class="fa-solid fa-trophy text-yellow-500"></i> طباعة أوائل الثانوية العامة</span>
                         <span class="block text-xs opacity-80 mt-1">
                             ({{ isset($systemType) && $systemType ? ($systemType == 'old' ? 'النظام القديم' : 'النظام الحديث') : 'جميع الأنظمة' }} - أول 100 طالب)
                         </span>
@@ -605,7 +609,7 @@
                         class="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl text-base cursor-pointer">
                     <i class="fa-solid fa-print text-xl"></i>
                     <div class="text-right">
-                        <span class="block">📋 طباعة هذه الصفحة</span>
+                        <span class="block"><i class="fa-solid fa-clipboard-list text-emerald-500"></i> طباعة هذه الصفحة</span>
                         <span class="block text-xs opacity-80 mt-1">
                             ({{ isset($systemType) && $systemType ? ($systemType == 'old' ? 'النظام القديم' : 'النظام الحديث') : 'جميع الأنظمة' }} - 
                             @if(isset($topCount) && $topCount == 'all')
@@ -623,7 +627,7 @@
                    class="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl text-base">
                     <i class="fa-solid fa-list-ol text-xl"></i>
                     <div class="text-right">
-                        <span class="block">📊 عرض كشف الدرجات الكامل</span>
+                        <span class="block"><i class="fa-solid fa-chart-column text-blue-500"></i> عرض كشف الدرجات الكامل</span>
                         <span class="block text-xs opacity-80 mt-1">
                             ({{ isset($systemType) && $systemType ? ($systemType == 'old' ? 'النظام القديم' : 'النظام الحديث') : 'جميع الأنظمة' }} - كل الطلاب)
                         </span>

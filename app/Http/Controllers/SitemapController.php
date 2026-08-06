@@ -102,6 +102,8 @@ class SitemapController extends Controller
         }
 
         // ===== 6. خرائط نتائج الطلاب - مقسمة حسب السنوات الدراسية =====
+        // تم تعطيل خرائط الطلاب الفردية للحفاظ على الخصوصية ومنع تضخم الأرشفة
+        /*
         if (!$settings || $settings->include_students) {
             $academicYears = \App\Models\AcademicYear::orderBy('year', 'desc')->get();
             
@@ -116,6 +118,7 @@ class SitemapController extends Controller
                 }
             }
         } // إغلاق شرط include_students
+        */
 
         // ===== 7. خرائط المدارس =====
         if (!$settings || $settings->include_schools) {
@@ -149,6 +152,7 @@ class SitemapController extends Controller
      */
     public function academicYearIndex(string $yearSlug)
     {
+        return abort(404);
         $xml = Cache::remember("sitemap:index:{$yearSlug}", $this->getCacheTtl(), function () use ($yearSlug) {
             $baseUrl = config('app.url');
             $lastmod = now()->toW3cString();
@@ -483,6 +487,7 @@ class SitemapController extends Controller
      */
     public function students(string $yearSlug, string $countrySlug, string $examTypeSlug, int $page = 1)
     {
+        return abort(404);
         $cacheKey = "sitemap:students:{$yearSlug}:{$countrySlug}:{$examTypeSlug}:{$page}";
         
         $urls = Cache::remember($cacheKey, $this->getCacheTtl(), function () use ($yearSlug, $countrySlug, $examTypeSlug, $page) {
@@ -526,6 +531,7 @@ class SitemapController extends Controller
      */
     public function studentsWithGov(string $yearSlug, string $countrySlug, string $examTypeSlug, string $govSlug, int $page = 1)
     {
+        return abort(404);
         $cacheKey = "sitemap:students:{$yearSlug}:{$countrySlug}:{$examTypeSlug}:{$govSlug}:{$page}";
         
         $urls = Cache::remember($cacheKey, $this->getCacheTtl(), function () use ($yearSlug, $countrySlug, $examTypeSlug, $govSlug, $page) {

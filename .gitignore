@@ -57,3 +57,17 @@ sitemap.xml.bak
 
 # Temp data files
 /website_pages.xlsx
+
+# macOS / OS files
+.DS_Store
+*.DS_Store
+
+# Temporary scratch & deploy scripts
+/scratch/
+/*.tar.gz
+/*.png
+/check_*.php
+/deploy_*.php
+/find_flags.php
+/read_htaccess.php
+

@@ -89,25 +89,25 @@
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
-                    <p class="font-medium text-gray-700 dark:text-gray-300 mb-1">📊 متى استخدم Excel؟</p>
+                    <p class="font-medium text-gray-700 dark:text-gray-300 mb-1"><i class="fa-solid fa-chart-column text-blue-500"></i> متى استخدم Excel؟</p>
                     <p class="text-gray-600 dark:text-gray-400">
                         عندما تريد أن يبحث الطلاب برقم الجلوس ويحصلوا على نتيجتهم. مناسب للنتائج التفصيلية.
                     </p>
                 </div>
                 <div>
-                    <p class="font-medium text-gray-700 dark:text-gray-300 mb-1">📄 متى استخدم PDF؟</p>
+                    <p class="font-medium text-gray-700 dark:text-gray-300 mb-1"><i class="fa-solid fa-file-lines text-slate-500"></i> متى استخدم PDF؟</p>
                     <p class="text-gray-600 dark:text-gray-400">
                         عندما تريد عرض ملف كامل للتصفح أو التحميل. مناسب للكشوف الرسمية.
                     </p>
                 </div>
                 <div>
-                    <p class="font-medium text-gray-700 dark:text-gray-300 mb-1">🌐 متى استخدم iFrame؟</p>
+                    <p class="font-medium text-gray-700 dark:text-gray-300 mb-1"><i class="fa-solid fa-globe text-blue-500"></i> متى استخدم iFrame؟</p>
                     <p class="text-gray-600 dark:text-gray-400">
                         عندما تريد تضمين موقع الوزارة أو مصدر خارجي داخل صفحتك.
                     </p>
                 </div>
                 <div>
-                    <p class="font-medium text-gray-700 dark:text-gray-300 mb-1">📋 متى استخدم جدول المحافظات؟</p>
+                    <p class="font-medium text-gray-700 dark:text-gray-300 mb-1"><i class="fa-solid fa-clipboard-list text-emerald-500"></i> متى استخدم جدول المحافظات؟</p>
                     <p class="text-gray-600 dark:text-gray-400">
                         عندما تصدر النتيجة تدريجياً لكل محافظة ملف منفصل (مثل الإعدادية).
                     </p>

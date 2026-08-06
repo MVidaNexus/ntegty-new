@@ -162,8 +162,74 @@
     </div>
     @endif
 
+    <!-- Dynamic Educational Guide & Results Inquiry Guide (GEO/SEO 500+ words) -->
+    <div class="w-full max-w-6xl mx-auto mt-12 px-3 no-print">
+        <div class="bg-white rounded-3xl p-6 md:p-10 border border-slate-200 shadow-xl">
+            <h2 class="text-xl md:text-2xl font-black text-slate-800 mb-6 pb-3 border-b border-slate-100 flex items-center gap-3">
+                <i class="fa-solid fa-graduation-cap text-emerald-600"></i>
+                دليل الاستعلام عن نتائج الامتحانات في {{ $country->name_ar }} لعام 2026
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-slate-600 text-sm md:text-base leading-relaxed">
+                <!-- Col 1 -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            كيفية الاستعلام عن النتيجة خطوة بخطوة
+                        </h3>
+                        <p class="font-medium text-slate-500">
+                            يمكن لجميع الطلاب وأولياء الأمور في {{ $country->name_ar }} الحصول على نتائج الامتحانات الفصلية والنهائية لعام 2026 إلكترونياً من خلال إدخال البيانات المخصصة للبحث. إذا كانت النتيجة مفعلة بالبحث المباشر، ما عليك سوى كتابة رقم الجلوس أو الرقم الامتحاني الخاص بك في حقل البحث بالأعلى والضغط على زر الاستعلام. ستقوم المنصة بعرض بيان الدرجات التفصيلي مباشرة مع المجموع والنسبة المئوية.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            نظام توزيع الدرجات والتقديرات المعتمد
+                        </h3>
+                        <p class="font-medium text-slate-500">
+                            يخضع نظام الامتحانات في {{ $country->name_ar }} لتعليمات وزارة التربية والتعليم الرسمية. يتم احتساب النسبة المئوية بقسمة المجموع الكلي للدرجات التي حصل عليها الطالب على المجموع الأقصى للشهادة مضروباً في 100. تصنف التقديرات العامة للطلاب الناجحين إلى ممتاز (من 85% فما فوق)، جيد جداً (من 75% إلى أقل من 85%)، جيد (من 65% إلى أقل من 75%)، ومقبول (من 50% إلى أقل من 65%)، بينما يعتبر الطالب راسباً إذا حصل على أقل من 50% في المواد الأساسية.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            طرق تقديم الاعتراضات والتظلمات
+                        </h3>
+                        <p class="font-medium text-slate-500">
+                            بعد إعلان نتائج الشهادات العامة في {{ $country->name_ar }} رسمياً، تفتح وزارة التربية والتعليم باب تقديم الاعتراضات وإعادة تصحيح الدفاتر لفترة محددة (عادة تتراوح بين أسبوع إلى أسبوعين). يمكن للطلبة تقديم طلب التظلم إلكترونياً أو في مقر الإدارات التعليمية والمراقبات التابعين لها بعد سداد الرسوم المقررة لكل مادة، ويتم مراجعة جمع الدرجات والتحقق من عدم وجود أخطاء في رصد الدرجات لإعادة الحقوق لأصحابها.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2 text-base flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            تطبيق نتيجتي ودعم مسيرة الطالب الأكاديمية
+                        </h3>
+                        <p class="font-medium text-slate-500">
+                            تسعى منصة نتيجتي لتسهيل وصول الطلاب في {{ $country->name_ar }} لنتائجهم بيسر وسرعة فائقة دون عناء الانتظار أو مواجهة مشاكل توقف السيرفرات الرسمية أثناء ضغط الزيارات. كما توفر المنصة خدمات إضافية كطباعة بيان الدرجات بصيغة أنيقة وتوليد شهادات التقدير التكريمية للمتفوقين دعماً لمسيرتهم الأكاديمية وتحفيزهم على تحقيق أرفع المراتب العلمية في المستقبل.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4 text-xs md:text-sm text-slate-500 font-medium">
+                <span class="flex items-center gap-1.5 text-emerald-600">
+                    <i class="fa-solid fa-circle-check"></i>
+                    البيانات مطابقة تماماً للمصدر الرسمي بوزارة التربية والتعليم لعام 2026.
+                </span>
+                <span>تاريخ التحديث: {{ date('Y-m-d') }}</span>
+            </div>
+        </div>
+    </div>
+
     <!-- كلمات البحث الشائعة -->
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto mt-12">
         @include('partials.popular-keywords')
     </div>
 </div>

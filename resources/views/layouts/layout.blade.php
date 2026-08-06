@@ -1,9 +1,103 @@
+@php
+    // Resolve country dynamically for SEO Geo-targeting
+    $currentCountry = null;
+    if (isset($country)) {
+        $currentCountry = $country;
+    } elseif (isset($examType) && $examType->country) {
+        $currentCountry = $examType->country;
+    } elseif (isset($governorate) && $governorate->country) {
+        $currentCountry = $governorate->country;
+    } elseif (isset($result) && $result->examType && $result->examType->country) {
+        $currentCountry = $result->examType->country;
+    }
+
+    $geoRegion = 'AR'; 
+    $geoPosition = '23.8859;45.0792'; 
+    $geoPlacename = 'الوطن العربي';
+    $ogLocale = 'ar_AR';
+
+    if ($currentCountry) {
+        $code = strtoupper($currentCountry->code);
+        $geoRegion = $code;
+        $ogLocale = 'ar_' . $code;
+
+        switch ($code) {
+            case 'EG':
+                $geoPosition = '30.0444;31.2357';
+                $geoPlacename = 'Egypt';
+                break;
+            case 'IQ':
+                $geoPosition = '33.3152;44.3661';
+                $geoPlacename = 'Iraq';
+                break;
+            case 'LY':
+                $geoPosition = '32.8872;13.1913';
+                $geoPlacename = 'Libya';
+                break;
+            case 'SD':
+                $geoPosition = '15.5007;32.5599';
+                $geoPlacename = 'Sudan';
+                break;
+            case 'PS':
+                $geoPosition = '31.9522;35.2332';
+                $geoPlacename = 'Palestine';
+                break;
+            case 'YE':
+                $geoPosition = '15.3694;44.1910';
+                $geoPlacename = 'Yemen';
+                break;
+            case 'JO':
+                $geoPosition = '31.9454;35.9284';
+                $geoPlacename = 'Jordan';
+                break;
+            case 'SY':
+                $geoPosition = '33.5138;36.2765';
+                $geoPlacename = 'Syria';
+                break;
+        }
+    }
+
+    // Dynamic publication and modification dates for SEO
+    $datePublished = now()->toIso8601String();
+    $dateModified = now()->toIso8601String();
+
+    if (isset($result)) {
+        $datePublished = $result->created_at ? $result->created_at->toIso8601String() : $datePublished;
+        $dateModified = $result->updated_at ? $result->updated_at->toIso8601String() : $dateModified;
+    } elseif (isset($examType)) {
+        $datePublished = $examType->created_at ? $examType->created_at->toIso8601String() : $datePublished;
+        $dateModified = $examType->updated_at ? $examType->updated_at->toIso8601String() : $dateModified;
+    } elseif (isset($country)) {
+        $datePublished = $country->created_at ? $country->created_at->toIso8601String() : $datePublished;
+        $dateModified = $country->updated_at ? $country->updated_at->toIso8601String() : $dateModified;
+    } elseif (isset($governorate)) {
+        $datePublished = $governorate->created_at ? $governorate->created_at->toIso8601String() : $datePublished;
+        $dateModified = $governorate->updated_at ? $governorate->updated_at->toIso8601String() : $dateModified;
+    }
+@endphp
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" x-data="{ darkMode: $persist(false) }" :class="{ 'dark': darkMode }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <script>
+        try {
+            const stored = localStorage.getItem('_x_darkMode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (stored === 'true' || stored === '"true"' || (stored === null && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        } catch (e) {}
+    </script>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#10b981">
+    <link rel="apple-touch-icon" href="{{ asset('images/icon-192x192.png') }}">
     
     <!-- SEO Meta Tags -->
     @hasSection('meta')
@@ -20,9 +114,28 @@
     @endif
     <meta name="robots" content="{{ $meta['robots'] ?? 'index, follow' }}">
     <link rel="canonical" href="{{ $meta['canonical'] ?? url()->current() }}">
+    
+    <!-- Publication & Modification Dates SEO -->
+    <meta name="publish-date" content="{{ $datePublished }}" />
+    <meta name="pubdate" content="{{ $datePublished }}" />
+    <meta name="last-modified" content="{{ $dateModified }}" />
+    <meta property="article:published_time" content="{{ $datePublished }}" />
+    <meta property="article:modified_time" content="{{ $dateModified }}" />
+    
     <link rel="icon" type="image/png" href="{{ isset($settings['favicon']) ? asset('uploads/' . $settings['favicon']) : asset('favicon.ico') }}">
-    <link rel="alternate" hreflang="ar" href="{{ url()->current() }}" />
+    <!-- Geo-Targeting & Regional SEO -->
+    <meta name="geo.region" content="{{ $geoRegion }}" />
+    <meta name="geo.position" content="{{ $geoPosition }}" />
+    <meta name="ICBM" content="{{ $geoPosition }}" />
+    <meta name="geo.placename" content="{{ $geoPlacename }}" />
+    <meta name="content-language" content="{{ strtolower($geoRegion) === 'ar' ? 'ar' : 'ar-' . strtolower($geoRegion) }}" />
+    
+    <!-- Dynamic Hreflang Tags -->
     <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}" />
+    <link rel="alternate" hreflang="ar" href="{{ url()->current() }}" />
+    @if($currentCountry)
+    <link rel="alternate" hreflang="ar-{{ strtolower($currentCountry->code) }}" href="{{ url()->current() }}" />
+    @endif
     
     <!-- Open Graph -->
     <meta property="og:site_name" content="{{ $settings['site_name'] ?? 'نتيجتي' }}">
@@ -34,7 +147,7 @@
     <meta property="og:image:alt" content="نتيجتي - بوابة النتائج التعليمية">
     <meta property="og:type" content="{{ $meta['og_type'] ?? 'website' }}">
     <meta property="og:url" content="{{ $meta['og_url'] ?? url()->current() }}">
-    <meta property="og:locale" content="ar_EG">
+    <meta property="og:locale" content="{{ $ogLocale }}">
     @if(!empty($settings['fb_app_id']))
     <meta property="fb:app_id" content="{{ $settings['fb_app_id'] }}">
     @endif
@@ -61,47 +174,11 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Suppress Tailwind Play CDN warning in production */
-        @media print { .no-print { display: none !important; } }
-    </style>
+    <!-- Compiled CSS/JS via Vite -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.13.3/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'cairo': ['Cairo', 'sans-serif'],
-                        'tajawal': ['Tajawal', 'sans-serif'],
-                    },
-                    colors: {
-                        'egypt': {
-                            50: '#fef2f2',
-                            100: '#fee2e2',
-                            500: '#ef4444',
-                            600: '#dc2626',
-                            700: '#b91c1c',
-                        },
-                        'iraq': {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            200: '#bbf7d0',
-                            400: '#4ade80',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#15803d',
-                        }
-                    },
-                    animation: {
-                        'bounce-slow': 'bounce 3s infinite',
-                    }
-                }
-            }
-        }
-    </script>
     
     <style>
         body { font-family: 'Tajawal', sans-serif; }
@@ -131,13 +208,20 @@
         
         /* Table Styles for Rich Content */
         .prose table, .content-section table { 
+            display: block;
             width: 100%; 
             border-collapse: collapse; 
             margin: 1.5rem 0; 
             font-size: 0.95rem; 
             border-radius: 0.5rem;
-            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        @media (min-width: 768px) {
+            .prose table, .content-section table {
+                display: table;
+            }
         }
         .prose table th, .prose table td,
         .content-section table th, .content-section table td { 
@@ -211,8 +295,140 @@
                 padding: 0 !important;
             }
         }
+        
+        /* Unified site-wide dark mode overrides */
+        .dark .bg-white {
+            background-color: rgb(30, 41, 59) !important; /* bg-slate-800 */
+            color: rgb(241, 245, 249) !important;
+        }
+        .dark .bg-gray-50 {
+            background-color: rgb(15, 23, 42) !important; /* bg-slate-900 */
+        }
+        .dark .text-gray-800, .dark .text-slate-800 {
+            color: rgb(241, 245, 249) !important;
+        }
+        .dark .text-gray-700, .dark .text-slate-700 {
+            color: rgb(203, 213, 225) !important;
+        }
+        .dark .text-gray-600, .dark .text-slate-600 {
+            color: rgb(148, 163, 184) !important;
+        }
+        .dark .text-gray-500, .dark .text-slate-500 {
+            color: rgb(148, 163, 184) !important;
+        }
+        .dark .text-gray-900 {
+            color: rgb(248, 250, 252) !important;
+        }
+        .dark .border-blue-100, .dark .border-gray-100, .dark .border-slate-100 {
+            border-color: rgb(51, 65, 85) !important; /* border-slate-700 */
+        }
+        .dark .bg-blue-50 {
+            background-color: rgba(30, 41, 59, 0.6) !important;
+        }
+        .dark .from-blue-50 {
+            --tw-gradient-from: rgb(30, 41, 59) !important;
+            --tw-gradient-to: rgb(15, 23, 42) !important;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+        }
+        .dark .from-white {
+            --tw-gradient-from: rgb(30, 41, 59) !important;
+            --tw-gradient-to: rgb(15, 23, 42) !important;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+        }
+        .dark .from-blue-500 {
+            --tw-gradient-from: #3b82f6 !important;
+        }
+        .dark .to-blue-50 {
+            --tw-gradient-to: rgb(15, 23, 42) !important;
+        }
+        .dark .border-gray-200, .dark .border-slate-200, .dark .border-slate-200\/60 {
+            border-color: rgb(51, 65, 85) !important;
+        }
+        .dark .bg-emerald-50 {
+            background-color: rgba(6, 78, 59, 0.4) !important;
+            color: rgb(52, 211, 153) !important;
+        }
+        .dark .text-emerald-700 {
+            color: rgb(52, 211, 153) !important;
+        }
+        .dark .bg-purple-50 {
+            background-color: rgba(88, 28, 135, 0.4) !important;
+            color: rgb(192, 132, 252) !important;
+        }
+        .dark .text-purple-700 {
+            color: rgb(192, 132, 252) !important;
+        }
+        .dark .bg-cyan-50 {
+            background-color: rgba(21, 94, 117, 0.4) !important;
+            color: rgb(34, 211, 238) !important;
+        }
+        .dark .text-cyan-700 {
+            color: rgb(34, 211, 238) !important;
+        }
+        .dark select, .dark input[type="text"], .dark input[type="number"], .dark select option {
+            background-color: rgb(15, 23, 42) !important;
+            border-color: rgb(51, 65, 85) !important;
+            color: rgb(241, 245, 249) !important;
+        }
+        .dark .divide-gray-100 > * + * {
+            border-color: rgb(51, 65, 85) !important;
+        }
+        /* Dynamic content and prose classes in dark mode */
+        .dark .gov-content-body {
+            color: rgb(203, 213, 225) !important;
+        }
+        .dark .gov-content-body h1, .dark .gov-content-body h2, .dark .gov-content-body h3, .dark .gov-content-body h4 {
+            color: rgb(241, 245, 249) !important;
+        }
+        .dark .gov-content-body table th, .dark .gov-content-body table td {
+            border-color: rgb(51, 65, 85) !important;
+        }
+        .dark .gov-content-body table tbody tr:nth-child(even) {
+            background-color: rgb(30, 41, 59) !important;
+        }
+        .dark .gov-content-body table tbody tr:hover {
+            background-color: rgb(15, 23, 42) !important;
+        }
+        .dark .prose {
+            color: rgb(203, 213, 225) !important;
+        }
+        .dark .prose h2, .dark .prose h3, .dark .prose h4 {
+            color: rgb(241, 245, 249) !important;
+        }
     </style>
     
+    {{-- Automated Schema Fallback Generator --}}
+    @php
+        if (!isset($structuredData)) {
+            $crumbs = [['name' => 'الرئيسية', 'url' => url('/')]];
+            if (isset($breadcrumbs)) {
+                $crumbs = [];
+                foreach ($breadcrumbs as $crumb) {
+                    $crumbs[] = [
+                        'name' => $crumb['name'],
+                        'url' => $crumb['url'] ?? null
+                    ];
+                }
+            }
+            $schemaGraph = [
+                '@context' => 'https://schema.org',
+                '@graph' => [
+                    \App\Services\SchemaService::organization(),
+                    \App\Services\SchemaService::website(),
+                    \App\Services\SchemaService::webPage(
+                        $meta['title'] ?? $settings['seo_title'] ?? 'نتيجتي',
+                        $meta['description'] ?? $settings['seo_description'] ?? '',
+                        url()->current(),
+                        $datePublished,
+                        $dateModified
+                    ),
+                    \App\Services\SchemaService::breadcrumb($crumbs)
+                ]
+            ];
+            $structuredData = json_encode($schemaGraph, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        }
+    @endphp
+
     {{-- Structured Data / JSON-LD --}}
     @hasSection('structured_data')
     <script type="application/ld+json">
@@ -284,8 +500,24 @@
     @if($customCss)
     <style>{!! $customCss !!}</style>
     @endif
+
+    {{-- Speculation Rules API for instant page loads --}}
+    <script type="speculationrules">
+    {
+      "prerender": [{
+        "source": "document",
+        "where": {
+          "and": [
+            { "href_matches": "/*" },
+            { "not": { "href_matches": ["/admin*", "/nova*", "/dashboard*", "/login*", "/logout*"] } }
+          ]
+        },
+        "eagerness": "moderate"
+      }]
+    }
+    </script>
 </head>
-<body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 flex flex-col min-h-screen transition-colors duration-300">
     
     <!-- Header -->
     <!-- Top Bar -->
@@ -317,7 +549,7 @@
     @endif
 
     <!-- Main Header -->
-    <header class="bg-white shadow-lg sticky top-0 z-50 no-print border-b-4 border-emerald-600" x-data="{ mobileMenuOpen: false }">
+    <header class="bg-white dark:bg-slate-800 shadow-lg sticky top-0 z-50 no-print border-b-4 border-emerald-600 transition-colors duration-300" x-data="{ mobileMenuOpen: false }">
         <div class="w-full px-4 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logo Section -->
@@ -336,116 +568,31 @@
                     @endif
                 </a>
 
-                <!-- Mobile Navigation Bar (Scrollable Flags) -->
-                <nav class="flex lg:hidden items-center gap-3 overflow-x-auto no-scrollbar py-2 max-w-[50%] md:max-w-none">
-                    <a href="{{ route('egypt.preparatory') }}" class="flex-shrink-0 flex flex-col items-center gap-1">
-                        <img src="https://flagcdn.com/w40/eg.png" class="w-6 h-4 shadow-sm rounded-sm" alt="Egypt">
-                        <span class="text-[9px] font-bold text-slate-600">مصر</span>
-                    </a>
-                    <a href="{{ route('country.exam', ['country' => 'iraq', 'slug' => 'prep']) }}" class="flex-shrink-0 flex flex-col items-center gap-1">
-                        <img src="https://flagcdn.com/w40/iq.png" class="w-6 h-4 shadow-sm rounded-sm" alt="Iraq">
-                        <span class="text-[9px] font-bold text-slate-600">العراق</span>
-                    </a>
-                    <a href="{{ route('country.exam', ['country' => 'libya', 'slug' => 'prep']) }}" class="flex-shrink-0 flex flex-col items-center gap-1">
-                        <img src="https://flagcdn.com/w40/ly.png" class="w-6 h-4 shadow-sm rounded-sm" alt="ليبيا">
-                        <span class="text-[9px] font-bold text-slate-600">ليبيا</span>
-                    </a>
-                    <a href="{{ route('country.exam', ['country' => 'palestine', 'slug' => 'secondary']) }}" class="flex-shrink-0 flex flex-col items-center gap-1">
-                        <img src="https://flagcdn.com/w40/ps.png" class="w-6 h-4 shadow-sm rounded-sm" alt="فلسطين">
-                        <span class="text-[9px] font-bold text-slate-600">فلسطين</span>
-                    </a>
-                    <a href="{{ route('country.exam', ['country' => 'jordan', 'slug' => 'secondary']) }}" class="flex-shrink-0 flex flex-col items-center gap-1">
-                        <img src="https://flagcdn.com/w40/jo.png" class="w-6 h-4 shadow-sm rounded-sm" alt="الأردن">
-                        <span class="text-[9px] font-bold text-slate-600">الأردن</span>
-                    </a>
-                </nav>
+
                 
                 <!-- Desktop Navigation -->
-                <nav class="hidden lg:flex items-center gap-8">
-                    <!-- Egypt Preparatory -->
-                    <a href="{{ route('egypt.preparatory') }}" 
-                       class="flex flex-col items-center group">
-                        <span class="text-xs text-slate-400 font-semibold mb-1 group-hover:text-emerald-500 transition">جمهورية مصر العربية</span>
-                        <div class="flex items-center gap-2 text-slate-700 font-bold text-sm group-hover:text-emerald-600 transition">
-                            <img src="https://flagcdn.com/w20/eg.png" class="w-4 h-auto shadow-sm" alt="Egypt">
-                            <span>الشهادة الإعدادية</span>
-                        </div>
-                        <span class="h-0.5 w-0 bg-emerald-600 mt-1 transition-all duration-300 group-hover:w-full"></span>
+                <nav class="hidden lg:flex items-center gap-6">
+                    <!-- Home -->
+                    <a href="{{ route('home') }}" class="text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 font-extrabold text-sm transition duration-200">
+                        الرئيسية
                     </a>
 
-                    <!-- Egypt Secondary -->
-                    <a href="{{ route('egypt.secondary') }}" 
-                       class="flex flex-col items-center group">
-                        <span class="text-xs text-slate-400 font-semibold mb-1 group-hover:text-emerald-500 transition">جمهورية مصر العربية</span>
-                        <div class="flex items-center gap-2 text-slate-700 font-bold text-sm group-hover:text-emerald-600 transition">
-                            <img src="https://flagcdn.com/w20/eg.png" class="w-4 h-auto shadow-sm" alt="Egypt">
-                            <span>الثانوية العامة</span>
-                        </div>
-                        <span class="h-0.5 w-0 bg-emerald-600 mt-1 transition-all duration-300 group-hover:w-full"></span>
+                    <!-- Blog -->
+                    <a href="{{ route('blog.index') }}" class="text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 font-extrabold text-sm transition duration-200 flex items-center gap-1.5">
+                        <i class="fa-regular fa-newspaper text-emerald-500"></i>
+                        <span>الأخبار التعليمية</span>
                     </a>
 
-                    <!-- Egypt Technical Diplomas -->
-                    <a href="{{ route('egypt.diplomas.index') }}" 
-                       class="flex flex-col items-center group">
-                        <span class="text-xs text-slate-400 font-semibold mb-1 group-hover:text-emerald-500 transition">جمهورية مصر العربية</span>
-                        <div class="flex items-center gap-2 text-slate-700 font-bold text-sm group-hover:text-emerald-600 transition">
-                            <img src="https://flagcdn.com/w20/eg.png" class="w-4 h-auto shadow-sm" alt="Egypt">
-                            <span>الدبلومات الفنية</span>
-                        </div>
-                        <span class="h-0.5 w-0 bg-emerald-600 mt-1 transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-
-                    <!-- Iraq Sixth Preparatory -->
-                    <a href="{{ route('country.exam', ['country' => 'iraq', 'slug' => 'prep']) }}" 
-                       class="flex flex-col items-center group">
-                        <span class="text-xs text-slate-400 font-semibold mb-1 group-hover:text-emerald-500 transition">جمهورية العراق</span>
-                        <div class="flex items-center gap-2 text-slate-700 font-bold text-sm group-hover:text-emerald-600 transition">
-                            <img src="https://flagcdn.com/w20/iq.png" class="w-4 h-auto shadow-sm" alt="Iraq">
-                            <span>السادس الاعدادي</span>
-                        </div>
-                        <span class="h-0.5 w-0 bg-emerald-600 mt-1 transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-
-                    <!-- Libya Preparatory -->
-                    <a href="{{ route('country.exam', ['country' => 'libya', 'slug' => 'prep']) }}" 
-                       class="flex flex-col items-center group">
-                        <span class="text-xs text-slate-400 font-semibold mb-1 group-hover:text-emerald-500 transition">دولة ليبيا</span>
-                        <div class="flex items-center gap-2 text-slate-700 font-bold text-sm group-hover:text-emerald-600 transition">
-                            <img src="https://flagcdn.com/w20/ly.png" class="w-4 h-auto shadow-sm" alt="Libya">
-                            <span>الشهادة الإعدادية</span>
-                        </div>
-                        <span class="h-0.5 w-0 bg-emerald-600 mt-1 transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-
-                    <!-- Palestine Tawjihi -->
-                    <a href="{{ route('country.exam', ['country' => 'palestine', 'slug' => 'secondary']) }}" 
-                       class="flex flex-col items-center group">
-                        <span class="text-xs text-slate-400 font-semibold mb-1 group-hover:text-emerald-500 transition">دولة فلسطين</span>
-                        <div class="flex items-center gap-2 text-slate-700 font-bold text-sm group-hover:text-emerald-600 transition">
-                            <img src="https://flagcdn.com/w20/ps.png" class="w-4 h-auto shadow-sm" alt="Palestine">
-                            <span>التوجيهي</span>
-                        </div>
-                        <span class="h-0.5 w-0 bg-emerald-600 mt-1 transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-
-                    <!-- Jordan Tawjihi -->
-                    <a href="{{ route('country.exam', ['country' => 'jordan', 'slug' => 'secondary']) }}" 
-                       class="flex flex-col items-center group">
-                        <span class="text-xs text-slate-400 font-semibold mb-1 group-hover:text-emerald-500 transition">المملكة الأردنية</span>
-                        <div class="flex items-center gap-2 text-slate-700 font-bold text-sm group-hover:text-emerald-600 transition">
-                            <img src="https://flagcdn.com/w20/jo.png" class="w-4 h-auto shadow-sm" alt="Jordan">
-                            <span>التوجيهي</span>
-                        </div>
-                        <span class="h-0.5 w-0 bg-emerald-600 mt-1 transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-
-                    <!-- More Button with Alpine.js Delay -->
+                    <!-- Results Dropdown -->
                     <div class="relative" x-data="{ open: false, timeout: null }" 
                          @mouseenter="clearTimeout(timeout); open = true" 
-                         @mouseleave="timeout = setTimeout(() => open = false, 300)">
-                        <button class="flex items-center gap-1 text-slate-600 hover:text-emerald-600 font-semibold py-2">
-                            <span>المزيد</span>
-                            <svg class="w-4 h-4 transition-transform duration-200" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                         @mouseleave="timeout = setTimeout(() => open = false, 250)">
+                        <button class="flex items-center gap-1.5 text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 font-extrabold text-sm transition duration-200">
+                            <i class="fa-solid fa-graduation-cap text-emerald-500"></i>
+                            <span>نتائج الامتحانات</span>
+                            <svg class="w-3.5 h-3.5 transition-transform duration-200" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
                         </button>
                         
                         <div x-show="open" 
@@ -456,43 +603,89 @@
                              x-transition:leave-start="opacity-100 translate-y-0"
                              x-transition:leave-end="opacity-0 translate-y-1"
                              style="display: none;"
-                             class="absolute top-full left-0 mt-0 pt-2 w-56 z-50">
-                            <!-- Dropdown content... -->
-                            <div class="bg-white shadow-xl rounded-lg py-2 border border-gray-100">
-                                <a href="{{ route('country.exam', ['country' => 'syria', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition">
-                                    <img src="https://flagcdn.com/w20/sy.png" class="w-5 h-auto" alt="Syria">
-                                    <span class="text-gray-700 font-medium whitespace-nowrap">سوريا (البكالوريا)</span>
+                             class="absolute top-full right-0 mt-0 pt-2 w-72 z-50">
+                            <div class="bg-white dark:bg-slate-800 shadow-xl rounded-2xl py-2 border border-slate-100 dark:border-slate-700/80">
+                                <a href="{{ route('egypt.preparatory') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
+                                    <img src="https://flagcdn.com/w20/eg.png" class="w-5 h-auto rounded-sm" alt="Egypt">
+                                    <span class="text-slate-700 dark:text-slate-200 font-bold text-xs">مصر - الشهادة الإعدادية</span>
                                 </a>
-                                <a href="{{ route('country.exam', ['country' => 'tunisia', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition">
-                                    <img src="https://flagcdn.com/w20/tn.png" class="w-5 h-auto" alt="Tunisia">
-                                    <span class="text-gray-700 font-medium whitespace-nowrap">تونس (البكالوريا)</span>
+                                <a href="{{ route('egypt.secondary') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
+                                    <img src="https://flagcdn.com/w20/eg.png" class="w-5 h-auto rounded-sm" alt="Egypt">
+                                    <span class="text-slate-700 dark:text-slate-200 font-bold text-xs">مصر - الثانوية العامة</span>
                                 </a>
-                                <a href="{{ route('country.exam', ['country' => 'algeria', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition">
-                                    <img src="https://flagcdn.com/w20/dz.png" class="w-5 h-auto" alt="Algeria">
-                                    <span class="text-gray-700 font-medium whitespace-nowrap">الجزائر (البكالوريا)</span>
+                                <a href="{{ route('egypt.diplomas.index') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
+                                    <img src="https://flagcdn.com/w20/eg.png" class="w-5 h-auto rounded-sm" alt="Egypt">
+                                    <span class="text-slate-700 dark:text-slate-200 font-bold text-xs">مصر - الدبلومات الفنية</span>
                                 </a>
-                                <a href="{{ route('country.exam', ['country' => 'lebanon', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition">
-                                    <img src="https://flagcdn.com/w20/lb.png" class="w-5 h-auto" alt="Lebanon">
-                                    <span class="text-gray-700 font-medium whitespace-nowrap">لبنان (البكالوريا)</span>
+                                <div class="border-t border-slate-100 dark:border-slate-700 my-1.5"></div>
+                                <a href="{{ route('country.exam', ['country' => 'iraq', 'slug' => 'prep']) }}" class="flex items-center gap-3 px-4 py-2 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
+                                    <img src="https://flagcdn.com/w20/iq.png" class="w-5 h-auto rounded-sm" alt="Iraq">
+                                    <span class="text-slate-700 dark:text-slate-200 font-bold text-xs">العراق - السادس الإعدادي</span>
                                 </a>
-                                <a href="{{ route('country.exam', ['country' => 'morocco', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition">
-                                    <img src="https://flagcdn.com/w20/ma.png" class="w-5 h-auto" alt="Morocco">
-                                    <span class="text-gray-700 font-medium whitespace-nowrap">المغرب (البكالوريا)</span>
+                                <a href="{{ route('country.exam', ['country' => 'libya', 'slug' => 'prep']) }}" class="flex items-center gap-3 px-4 py-2 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
+                                    <img src="https://flagcdn.com/w20/ly.png" class="w-5 h-auto rounded-sm" alt="Libya">
+                                    <span class="text-slate-700 dark:text-slate-200 font-bold text-xs">ليبيا - الشهادة الإعدادية</span>
+                                </a>
+                                <a href="{{ route('country.exam', ['country' => 'palestine', 'slug' => 'secondary']) }}" class="flex items-center gap-3 px-4 py-2 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
+                                    <img src="https://flagcdn.com/w20/ps.png" class="w-5 h-auto rounded-sm" alt="Palestine">
+                                    <span class="text-slate-700 dark:text-slate-200 font-bold text-xs">فلسطين - التوجيهي</span>
+                                </a>
+                                <a href="{{ route('country.exam', ['country' => 'jordan', 'slug' => 'secondary']) }}" class="flex items-center gap-3 px-4 py-2 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
+                                    <img src="https://flagcdn.com/w20/jo.png" class="w-5 h-auto rounded-sm" alt="Jordan">
+                                    <span class="text-slate-700 dark:text-slate-200 font-bold text-xs">الأردن - التوجيهي</span>
+                                </a>
+                                <div class="border-t border-slate-100 dark:border-slate-700 my-1.5"></div>
+                                <a href="{{ route('country.exam', ['country' => 'syria', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-2 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
+                                    <img src="https://flagcdn.com/w20/sy.png" class="w-5 h-auto rounded-sm" alt="Syria">
+                                    <span class="text-slate-700 dark:text-slate-200 font-bold text-xs">سوريا - البكالوريا</span>
+                                </a>
+                                <a href="{{ route('country.exam', ['country' => 'tunisia', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-2 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
+                                    <img src="https://flagcdn.com/w20/tn.png" class="w-5 h-auto rounded-sm" alt="Tunisia">
+                                    <span class="text-slate-700 dark:text-slate-200 font-bold text-xs">تونس - البكالوريا</span>
+                                </a>
+                                <a href="{{ route('country.exam', ['country' => 'algeria', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-2 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
+                                    <img src="https://flagcdn.com/w20/dz.png" class="w-5 h-auto rounded-sm" alt="Algeria">
+                                    <span class="text-slate-700 dark:text-slate-200 font-bold text-xs">الجزائر - البكالوريا</span>
                                 </a>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Certificate -->
+                    <a href="{{ route('certificate.index') }}" class="text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 font-extrabold text-sm transition duration-200 flex items-center gap-1.5">
+                        <i class="fa-solid fa-trophy text-amber-500"></i>
+                        <span>شهادة تقدير</span>
+                    </a>
+
+                    <!-- Contact -->
+                    <a href="{{ route('contact') }}" class="text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 font-extrabold text-sm transition duration-200 flex items-center gap-1.5">
+                        <i class="fa-regular fa-envelope text-blue-500"></i>
+                        <span>اتصل بنا</span>
+                    </a>
                 </nav>
 
-                <!-- Mobile Menu Button -->
-                <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-slate-600 hover:text-emerald-600">
-                    <svg x-show="!mobileMenuOpen" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
-                    </svg>
-                    <svg x-show="mobileMenuOpen" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
+                <!-- Actions Container -->
+                <div class="flex items-center gap-3">
+                    <!-- Install App PWA Button (Hidden by default, shown via JS if supported) -->
+                    <button id="pwa-install-btn" class="hidden text-xs bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 px-3 py-1.5 rounded-full font-bold hover:bg-emerald-200 transition">
+                        <i class="fa-solid fa-download ml-1"></i> تثبيت التطبيق
+                    </button>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button @click="darkMode = !darkMode" class="text-slate-600 hover:text-emerald-600 dark:text-slate-300 dark:hover:text-emerald-400 p-2 rounded-full focus:outline-none transition">
+                        <i class="fa-solid text-xl" :class="darkMode ? 'fa-sun text-yellow-400' : 'fa-moon'"></i>
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-slate-600 hover:text-emerald-600 dark:text-slate-300">
+                        <svg x-show="!mobileMenuOpen" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                        </svg>
+                        <svg x-show="mobileMenuOpen" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
             
             <!-- Mobile Menu -->
@@ -504,87 +697,149 @@
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-2"
                  style="display: none;"
-                 class="lg:hidden border-t border-gray-200 py-4">
+                 class="lg:hidden border-t border-gray-200 dark:border-slate-700 py-4 max-h-[80vh] overflow-y-auto">
                 <nav class="space-y-2">
+                    <!-- Home -->
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
+                        <span class="text-2xl w-5 flex justify-center text-emerald-500"><i class="fa-solid fa-house"></i></span>
+                        <div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">الرئيسية</div>
+                        </div>
+                    </a>
+
+                    <!-- Blog -->
+                    <a href="{{ route('blog.index') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
+                        <span class="text-2xl w-5 flex justify-center text-emerald-500"><i class="fa-regular fa-newspaper"></i></span>
+                        <div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">الأخبار التعليمية</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">تغطية شاملة لحظة بلحظة</div>
+                        </div>
+                    </a>
+
                     <!-- Egypt Links -->
-                    <a href="{{ route('egypt.preparatory') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition rounded-lg">
+                    <a href="{{ route('egypt.preparatory') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
                         <img src="https://flagcdn.com/w20/eg.png" class="w-5 h-auto" alt="Egypt">
                         <div>
-                            <div class="text-sm font-bold text-gray-800">الشهادة الإعدادية</div>
-                            <div class="text-xs text-gray-500">جمهورية مصر العربية</div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">الشهادة الإعدادية</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">جمهورية مصر العربية</div>
                         </div>
                     </a>
                     
-                    <a href="{{ route('egypt.secondary') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition rounded-lg">
+                    <a href="{{ route('egypt.secondary') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
                         <img src="https://flagcdn.com/w20/eg.png" class="w-5 h-auto" alt="Egypt">
                         <div>
-                            <div class="text-sm font-bold text-gray-800">الثانوية العامة</div>
-                            <div class="text-xs text-gray-500">جمهورية مصر العربية</div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">الثانوية العامة</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">جمهورية مصر العربية</div>
                         </div>
                     </a>
                     
-                    <a href="{{ route('egypt.diplomas.index') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition rounded-lg">
+                    <a href="{{ route('egypt.diplomas.index') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
                         <img src="https://flagcdn.com/w20/eg.png" class="w-5 h-auto" alt="Egypt">
                         <div>
-                            <div class="text-sm font-bold text-gray-800">الدبلومات الفنية</div>
-                            <div class="text-xs text-gray-500">جمهورية مصر العربية</div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">الدبلومات الفنية</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">جمهورية مصر العربية</div>
                         </div>
                     </a>
                     
                     <!-- Iraq -->
-                    <a href="{{ route('country.exam', ['country' => 'iraq', 'slug' => 'prep']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition rounded-lg">
+                    <a href="{{ route('country.exam', ['country' => 'iraq', 'slug' => 'prep']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
                         <img src="https://flagcdn.com/w20/iq.png" class="w-5 h-auto" alt="Iraq">
                         <div>
-                            <div class="text-sm font-bold text-gray-800">السادس الاعدادي</div>
-                            <div class="text-xs text-gray-500">جمهورية العراق</div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">السادس الاعدادي</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">جمهورية العراق</div>
                         </div>
                     </a>
                     
                     <!-- Libya -->
-                    <a href="{{ route('country.exam', ['country' => 'libya', 'slug' => 'prep']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition rounded-lg">
+                    <a href="{{ route('country.exam', ['country' => 'libya', 'slug' => 'prep']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
                         <img src="https://flagcdn.com/w20/ly.png" class="w-5 h-auto" alt="Libya">
                         <div>
-                            <div class="text-sm font-bold text-gray-800">الشهادة الإعدادية</div>
-                            <div class="text-xs text-gray-500">دولة ليبيا</div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">الشهادة الإعدادية</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">دولة ليبيا</div>
                         </div>
                     </a>
                     
                     <!-- Palestine -->
-                    <a href="{{ route('country.exam', ['country' => 'palestine', 'slug' => 'secondary']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition rounded-lg">
+                    <a href="{{ route('country.exam', ['country' => 'palestine', 'slug' => 'secondary']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
                         <img src="https://flagcdn.com/w20/ps.png" class="w-5 h-auto" alt="Palestine">
                         <div>
-                            <div class="text-sm font-bold text-gray-800">التوجيهي</div>
-                            <div class="text-xs text-gray-500">دولة فلسطين</div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">التوجيهي</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">دولة فلسطين</div>
                         </div>
                     </a>
                     
                     <!-- Jordan -->
-                    <a href="{{ route('country.exam', ['country' => 'jordan', 'slug' => 'secondary']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition rounded-lg">
+                    <a href="{{ route('country.exam', ['country' => 'jordan', 'slug' => 'secondary']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
                         <img src="https://flagcdn.com/w20/jo.png" class="w-5 h-auto" alt="Jordan">
                         <div>
-                            <div class="text-sm font-bold text-gray-800">التوجيهي</div>
-                            <div class="text-xs text-gray-500">المملكة الأردنية</div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">التوجيهي</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">المملكة الأردنية</div>
+                        </div>
+                    </a>
+
+                    <!-- Syria -->
+                    <a href="{{ route('country.exam', ['country' => 'syria', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
+                        <img src="https://flagcdn.com/w20/sy.png" class="w-5 h-auto" alt="Syria">
+                        <div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">سوريا - البكالوريا</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">الجمهورية العربية السورية</div>
+                        </div>
+                    </a>
+
+                    <!-- Tunisia -->
+                    <a href="{{ route('country.exam', ['country' => 'tunisia', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
+                        <img src="https://flagcdn.com/w20/tn.png" class="w-5 h-auto" alt="Tunisia">
+                        <div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">تونس - البكالوريا</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">الجمهورية التونسية</div>
+                        </div>
+                    </a>
+
+                    <!-- Algeria -->
+                    <a href="{{ route('country.exam', ['country' => 'algeria', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
+                        <img src="https://flagcdn.com/w20/dz.png" class="w-5 h-auto" alt="Algeria">
+                        <div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">الجزائر - البكالوريا</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">الجمهورية الجزائرية</div>
+                        </div>
+                    </a>
+
+                    <!-- Morocco -->
+                    <a href="{{ route('country.exam', ['country' => 'morocco', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
+                        <img src="https://flagcdn.com/w20/ma.png" class="w-5 h-auto" alt="Morocco">
+                        <div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">المغرب - البكالوريا</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">المملكة المغربية</div>
+                        </div>
+                    </a>
+
+                    <!-- Lebanon -->
+                    <a href="{{ route('country.exam', ['country' => 'lebanon', 'slug' => 'baccalaureate']) }}" class="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 dark:hover:bg-slate-700 transition rounded-lg">
+                        <img src="https://flagcdn.com/w20/lb.png" class="w-5 h-auto" alt="Lebanon">
+                        <div>
+                            <div class="text-sm font-bold text-gray-800 dark:text-slate-200">لبنان - البكالوريا</div>
+                            <div class="text-xs text-gray-500 dark:text-slate-400">الجمهورية اللبنانية</div>
                         </div>
                     </a>
                     
                     <!-- Divider -->
-                    <div class="border-t border-gray-200 my-2"></div>
+                    <div class="border-t border-gray-200 dark:border-slate-700 my-2"></div>
                     
                     <!-- Certificate -->
-                    <a href="{{ route('certificate.index') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-amber-50 transition rounded-lg">
-                        <span class="text-2xl"><i class="fa-solid fa-trophy"></i></span>
+                    <a href="{{ route('certificate.index') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-amber-50 dark:hover:bg-slate-700 transition rounded-lg">
+                        <span class="text-2xl text-amber-500"><i class="fa-solid fa-trophy"></i></span>
                         <div>
-                            <div class="text-sm font-bold text-amber-700">شهادة تقدير</div>
-                            <div class="text-xs text-amber-600">اصنع شهادتك مجاناً</div>
+                            <div class="text-sm font-bold text-amber-700 dark:text-amber-500">شهادة تقدير</div>
+                            <div class="text-xs text-amber-600 dark:text-amber-400">اصنع شهادتك مجاناً</div>
                         </div>
                     </a>
                     
                     <!-- Contact -->
-                    <a href="{{ route('contact') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition rounded-lg">
-                        <span class="text-2xl"><i class="fa-solid fa-envelope"></i></span>
+                    <a href="{{ route('contact') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-700 transition rounded-lg">
+                        <span class="text-2xl text-blue-500"><i class="fa-solid fa-envelope"></i></span>
                         <div>
-                            <div class="text-sm font-bold text-blue-700">اتصل بنا</div>
-                            <div class="text-xs text-blue-600">نسعد بتواصلك</div>
+                            <div class="text-sm font-bold text-blue-700 dark:text-blue-500">اتصل بنا</div>
+                            <div class="text-xs text-blue-600 dark:text-blue-400">نسعد بتواصلك</div>
                         </div>
                     </a>
                 </nav>
@@ -734,5 +989,45 @@
     
     {{-- Custom Footer Scripts --}}
     {!! $settings['footer_scripts'] ?? '' !!}
+    
+    <script>
+        // PWA Service Worker Registration & Install Logic
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(error => {
+                    console.log('SW registration failed: ', error);
+                });
+            });
+        }
+
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwa-install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Update UI to notify the user they can add to home screen
+            if(installBtn) {
+                installBtn.classList.remove('hidden');
+            }
+        });
+
+        if(installBtn) {
+            installBtn.addEventListener('click', (e) => {
+                // hide our user interface that shows our A2HS button
+                installBtn.classList.add('hidden');
+                // Show the prompt
+                if(deferredPrompt) {
+                    deferredPrompt.prompt();
+                    // Wait for the user to respond to the prompt
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        deferredPrompt = null;
+                    });
+                }
+            });
+        }
+    </script>
 </body>
 </html>

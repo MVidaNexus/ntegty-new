@@ -1,7 +1,7 @@
 @php
     $record = $getRecord();
     $bgImage = $record?->background_image;
-    $bgUrl = $bgImage ? url('public/storage/' . $bgImage) : '';
+    $bgUrl = $bgImage ? asset('storage/' . $bgImage) : '';
     
     // تحديد الجنس
     $gender = $gender ?? 'male';
@@ -112,14 +112,14 @@
     <!-- تعليمات الاستخدام -->
     <div class="mb-4 p-3 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-2 border-green-300 dark:border-green-800 rounded-xl">
         <p class="text-sm text-green-800 dark:text-green-200 flex items-center gap-2">
-            <span class="text-lg">✅</span>
+            <span class="text-lg"><i class="fa-solid fa-circle-check text-emerald-500"></i></span>
             <span><strong>جديد:</strong> الآن عند تغيير المواضع، يتم الحفظ تلقائياً! فقط اضغط زر "حفظ" أعلى الصفحة بعد الانتهاء.</span>
         </p>
     </div>
     
     <!-- المتغيرات المتاحة -->
     <div class="mb-4 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
-        <p class="text-sm font-bold text-blue-800 dark:text-blue-200 mb-2">📝 المتغيرات المتاحة للنصوص:</p>
+        <p class="text-sm font-bold text-blue-800 dark:text-blue-200 mb-2"><i class="fa-solid fa-file-pen text-blue-500"></i> المتغيرات المتاحة للنصوص:</p>
         <div class="flex flex-wrap gap-2 text-xs">
             <code class="bg-white dark:bg-gray-800 px-2 py-1 rounded border">{student_name}</code>
             <code class="bg-white dark:bg-gray-800 px-2 py-1 rounded border">{school_name}</code>
@@ -139,7 +139,7 @@
         <div class="flex flex-wrap items-center gap-4">
             <!-- تكبير/تصغير -->
             <div class="flex items-center gap-2 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 shadow-sm">
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">🔍</span>
+                <span class="text-sm font-medium text-gray-600 dark:text-gray-400"><i class="fa-solid fa-search text-emerald-500"></i></span>
                 <input type="range" x-model="scale" min="0.2" max="0.6" step="0.05" class="w-24 accent-blue-500">
                 <span class="text-sm font-bold min-w-[45px] text-center" x-text="Math.round(scale * 100) + '%'"></span>
             </div>
@@ -147,7 +147,11 @@
             <!-- نوع الجنس -->
             <div class="flex items-center gap-2 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 shadow-sm">
                 <span class="px-3 py-1 rounded-lg font-bold text-sm {{ $isFemale ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700' }}">
-                    {{ $isFemale ? '👩 أنثى' : '👨 ذكر' }}
+                    @if($isFemale)
+                        <i class="fa-solid fa-person-dress text-pink-500"></i> أنثى
+                    @else
+                        <i class="fa-solid fa-person text-blue-500"></i> ذكر
+                    @endif
                 </span>
             </div>
             
@@ -159,7 +163,7 @@
         </div>
         
         <div class="text-sm text-gray-500 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 shadow-sm">
-            📐 <span class="font-mono font-bold" x-text="canvasWidth + ' × ' + canvasHeight"></span> px
+            <i class="fa-solid fa-ruler-combined text-slate-500"></i> <span class="font-mono font-bold" x-text="canvasWidth + ' × ' + canvasHeight"></span> px
         </div>
     </div>
 
@@ -184,7 +188,7 @@
             <template x-if="!bgUrl">
                 <div class="absolute inset-0 bg-gradient-to-br from-amber-100 via-yellow-50 to-orange-100 flex items-center justify-center pointer-events-none">
                     <div class="text-center text-gray-400">
-                        <div class="text-4xl mb-2">🖼️</div>
+                        <div class="text-4xl mb-2"><i class="fa-solid fa-image text-emerald-500"></i>️</div>
                         <p class="text-sm">ارفع صورة الخلفية من تبويب "التصميم"</p>
                     </div>
                 </div>
@@ -282,7 +286,7 @@
         <!-- تحكم العنصر المحدد -->
         <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-700">
             <h4 class="font-bold text-lg mb-3 flex items-center gap-2">
-                <span class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">🎯</span>
+                <span class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center"><i class="fa-solid fa-bullseye text-red-500"></i></span>
                 <span x-text="selectedElement ? 'تحكم: ' + selectedElementLabel : 'اختر عنصراً للتحكم'"></span>
             </h4>
             
@@ -322,14 +326,14 @@
                             @click="applyChanges()"
                             class="bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg text-sm"
                         >
-                            ✅ تطبيق التغييرات
+                            <i class="fa-solid fa-circle-check text-emerald-500"></i> تطبيق التغييرات
                         </button>
                         <button 
                             type="button"
                             @click="copyValues()"
                             class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg text-sm"
                         >
-                            📋 نسخ القيم
+                            <i class="fa-solid fa-clipboard-list text-emerald-500"></i> نسخ القيم
                         </button>
                     </div>
                     
@@ -343,7 +347,7 @@
             
             <template x-if="!selectedElement">
                 <div class="text-center text-gray-400 py-8">
-                    <div class="text-4xl mb-2">👆</div>
+                    <div class="text-4xl mb-2"><i class="fa-solid fa-hand-point-up text-emerald-500"></i></div>
                     <p>انقر على أي عنصر في المعاينة للتحكم به</p>
                     <p class="text-sm mt-2">يمكنك أيضاً سحب العناصر مباشرة</p>
                 </div>
@@ -353,7 +357,7 @@
         <!-- معلومات المواضع -->
         <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-700">
             <h4 class="font-bold text-lg mb-3 flex items-center gap-2">
-                <span class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">📍</span>
+                <span class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center"><i class="fa-solid fa-location-dot text-red-500"></i></span>
                 مواضع العناصر الحالية
             </h4>
             
@@ -395,7 +399,7 @@
             target="_blank"
             class="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all shadow-xl hover:shadow-blue-500/30"
         >
-            <span>🔍</span>
+            <span><i class="fa-solid fa-search text-emerald-500"></i></span>
             <span>معاينة الشهادة الكاملة</span>
         </a>
         <a 
@@ -403,7 +407,7 @@
             target="_blank"
             class="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-3 px-6 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all shadow-xl hover:shadow-green-500/30"
         >
-            <span>📝</span>
+            <span><i class="fa-solid fa-file-pen text-blue-500"></i></span>
             <span>صفحة الشهادة الفعلية</span>
         </a>
     </div>
@@ -581,7 +585,7 @@ function certificateEditor(settings, wire) {
                     this.wire.set('data.signature_right_font_size', this.signatureRight.fontSize);
                 }
                 
-                console.log('✅ تم مزامنة القيم مع Livewire');
+                console.log('<i class="fa-solid fa-circle-check text-emerald-500"></i> تم مزامنة القيم مع Livewire');
             } catch (e) {
                 console.error('خطأ في المزامنة:', e);
                 // fallback to DOM manipulation
@@ -591,7 +595,7 @@ function certificateEditor(settings, wire) {
         
         copyValues() {
             const suffix = this.isFemale ? '_female' : '';
-            let text = `📋 القيم للنسخ (${this.isFemale ? 'إناث' : 'ذكور'}):\n\n`;
+            let text = `<i class="fa-solid fa-clipboard-list text-emerald-500"></i> القيم للنسخ (${this.isFemale ? 'إناث' : 'ذكور'}):\n\n`;
             
             text += `موضع الاسم:\n`;
             text += `  X: ${this.namePositionX}\n`;
@@ -621,14 +625,14 @@ function certificateEditor(settings, wire) {
             }
             
             navigator.clipboard.writeText(text).then(() => {
-                this.showNotification('📋 تم نسخ جميع القيم! الصقها في أي مكان للرجوع إليها.');
+                this.showNotification('<i class="fa-solid fa-clipboard-list text-emerald-500"></i> تم نسخ جميع القيم! الصقها في أي مكان للرجوع إليها.');
             });
         },
         
         applyChanges() {
             // مزامنة مع Livewire
             this.syncToLivewire();
-            this.showNotification('✅ تم تطبيق التغييرات! اضغط "حفظ" أعلى الصفحة.');
+            this.showNotification('<i class="fa-solid fa-circle-check text-emerald-500"></i> تم تطبيق التغييرات! اضغط "حفظ" أعلى الصفحة.');
         },
         
         applyChangesViaDOM() {
@@ -662,11 +666,11 @@ function certificateEditor(settings, wire) {
                         }
                         
                         updatedCount++;
-                        console.log(`✅ Updated ${fieldName} = ${value}`);
+                        console.log(`<i class="fa-solid fa-circle-check text-emerald-500"></i> Updated ${fieldName} = ${value}`);
                         return true;
                     }
                 }
-                console.warn(`⚠️ Field not found: ${fieldName}`);
+                console.warn(`<i class="fa-solid fa-triangle-exclamation text-amber-500"></i>️ Field not found: ${fieldName}`);
                 return false;
             };
             

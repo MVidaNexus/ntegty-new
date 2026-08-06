@@ -227,7 +227,7 @@
                 ⬆️ فعّل "تفعيل تحديد المنطقة" أعلاه لاستخدام أداة القص
             </span>
             <span x-show="cropEnabled" class="text-primary-700 dark:text-primary-300">
-                <span class="font-bold">🖱️ اسحب بالماوس</span> لتحديد المنطقة المراد عرضها
+                <span class="font-bold"><i class="fa-solid fa-computer-mouse text-slate-500"></i>️ اسحب بالماوس</span> لتحديد المنطقة المراد عرضها
             </span>
         </p>
     </div>
@@ -325,7 +325,7 @@
             @click="clearSelection()"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors"
         >
-            🔄 إعادة تعيين
+            <i class="fa-solid fa-rotate text-blue-500"></i> إعادة تعيين
         </button>
         
         <button 
@@ -342,7 +342,7 @@
             x-show="hasSelection"
             class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg"
         >
-            ✅ تم تحديد المنطقة
+            <i class="fa-solid fa-circle-check text-emerald-500"></i> تم تحديد المنطقة
         </div>
     </div>
     @endif

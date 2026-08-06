@@ -2,7 +2,7 @@
     <!-- Instructions -->
     <div class="p-3 mb-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
         <p class="text-sm text-blue-800 dark:text-blue-300">
-            <span class="font-bold">🖱️ أداة القص التفاعلية:</span>
+            <span class="font-bold"><i class="fa-solid fa-computer-mouse text-slate-500"></i>️ أداة القص التفاعلية:</span>
             فعّل "تحديد المنطقة" ثم اسحب بالماوس على المعاينة لتحديد الجزء المراد عرضه
         </p>
     </div>
@@ -75,7 +75,7 @@
             id="btnResetEdit"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors"
         >
-            🔄 إعادة تعيين
+            <i class="fa-solid fa-rotate text-blue-500"></i> إعادة تعيين
         </button>
         
         <button 
@@ -92,7 +92,7 @@
             id="statusBadgeEdit"
             class="hidden inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg"
         >
-            ✅ تم تحديد المنطقة
+            <i class="fa-solid fa-circle-check text-emerald-500"></i> تم تحديد المنطقة
         </div>
     </div>
 </div>
