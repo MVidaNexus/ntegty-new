@@ -64,7 +64,7 @@
                 <!-- Featured Image -->
                 @if($post->image_path)
                     <div class="rounded-2xl overflow-hidden mb-8 shadow-sm border border-slate-50 aspect-[21/9] bg-slate-100">
-                        <img src="{{ asset('storage/' . $post->image_path) }}" alt="{{ $post->title }}" class="w-full h-full object-cover">
+                        <img src="{{ $post->image_url }}" alt="{{ $post->title }}" class="w-full h-full object-cover">
                     </div>
                 @endif
 
@@ -293,7 +293,7 @@
                                 <a href="{{ route('blog.show', $recent) }}" class="flex gap-4 group">
                                     @if($recent->image_path)
                                         <div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 border border-slate-50 bg-slate-100 aspect-square">
-                                            <img src="{{ asset('storage/' . $recent->image_path) }}" alt="{{ $recent->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                            <img src="{{ $recent->image_url }}" alt="{{ $recent->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                         </div>
                                     @else
                                         <div class="w-20 h-20 rounded-xl bg-blue-50 text-blue-500 shrink-0 flex items-center justify-center text-xl aspect-square">

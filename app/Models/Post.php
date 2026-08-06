@@ -56,6 +56,25 @@ class Post extends Model
     }
 
     /**
+     * Get the full URL for the post image.
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image_path) {
+            return null;
+        }
+
+        if (str_starts_with($this->image_path, 'http://') || str_starts_with($this->image_path, 'https://')) {
+            return $this->image_path;
+        }
+
+        $path = ltrim($this->image_path, '/');
+        $path = preg_replace('#^uploads/#', '', $path);
+
+        return asset('storage/' . $path);
+    }
+
+    /**
      * Helper to get category name in Arabic.
      */
     public function getCategoryNameArAttribute(): string
