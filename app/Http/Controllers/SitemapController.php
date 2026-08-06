@@ -811,12 +811,22 @@ class SitemapController extends Controller
     // Helper Methods
     // ========================================
 
+    protected function jsonExtractExpr(string $field): string
+    {
+        $driver = DB::connection()->getDriverName();
+        if ($driver === 'sqlite') {
+            return "JSON_EXTRACT(subjects_data, '$.\"{$field}\"')";
+        }
+        return "JSON_UNQUOTE(JSON_EXTRACT(subjects_data, '$.\"{$field}\"'))";
+    }
+
     protected function getUniqueSchoolsCount(): int
     {
         return Cache::remember('sitemap:schools-count', 3600, function () {
+            $expr = $this->jsonExtractExpr('المدرسة');
             return Result::whereNotNull('subjects_data')
                 ->whereRaw("JSON_EXTRACT(subjects_data, '$.\"المدرسة\"') IS NOT NULL")
-                ->selectRaw("COUNT(DISTINCT JSON_UNQUOTE(JSON_EXTRACT(subjects_data, '$.\"المدرسة\"'))) as cnt")
+                ->selectRaw("COUNT(DISTINCT {$expr}) as cnt")
                 ->value('cnt') ?? 0;
         });
     }
@@ -824,9 +834,10 @@ class SitemapController extends Controller
     protected function getUniqueAdministrationsCount(): int
     {
         return Cache::remember('sitemap:admins-count', 3600, function () {
+            $expr = $this->jsonExtractExpr('الإدارة');
             return Result::whereNotNull('subjects_data')
                 ->whereRaw("JSON_EXTRACT(subjects_data, '$.\"الإدارة\"') IS NOT NULL")
-                ->selectRaw("COUNT(DISTINCT JSON_UNQUOTE(JSON_EXTRACT(subjects_data, '$.\"الإدارة\"'))) as cnt")
+                ->selectRaw("COUNT(DISTINCT {$expr}) as cnt")
                 ->value('cnt') ?? 0;
         });
     }
@@ -835,11 +846,12 @@ class SitemapController extends Controller
     {
         $governorates = Governorate::whereHas('country', fn($q) => $q->where('slug', 'egypt'))->get();
         $allSchools = collect();
+        $expr = $this->jsonExtractExpr('المدرسة');
 
         foreach ($governorates as $governorate) {
             $schools = Result::where('governorate_id', $governorate->id)
                 ->whereNotNull('subjects_data')
-                ->selectRaw("DISTINCT JSON_UNQUOTE(JSON_EXTRACT(subjects_data, '$.\"المدرسة\"')) as school_name")
+                ->selectRaw("DISTINCT {$expr} as school_name")
                 ->whereRaw("JSON_EXTRACT(subjects_data, '$.\"المدرسة\"') IS NOT NULL")
                 ->pluck('school_name')
                 ->filter()
@@ -855,11 +867,12 @@ class SitemapController extends Controller
     {
         $governorates = Governorate::whereHas('country', fn($q) => $q->where('slug', 'egypt'))->get();
         $allAdmins = collect();
+        $expr = $this->jsonExtractExpr('الإدارة');
 
         foreach ($governorates as $governorate) {
             $admins = Result::where('governorate_id', $governorate->id)
                 ->whereNotNull('subjects_data')
-                ->selectRaw("DISTINCT JSON_UNQUOTE(JSON_EXTRACT(subjects_data, '$.\"الإدارة\"')) as admin_name")
+                ->selectRaw("DISTINCT {$expr} as admin_name")
                 ->whereRaw("JSON_EXTRACT(subjects_data, '$.\"الإدارة\"') IS NOT NULL")
                 ->pluck('admin_name')
                 ->filter()
