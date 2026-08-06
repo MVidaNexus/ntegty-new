@@ -55,9 +55,11 @@
                 @endif
             </p>
             
-            <!-- Decorative Line -->
-            <div class="flex items-center justify-cente    <div class="container mx-auto px-4">
-        <div class="flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto">
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row gap-6 md:gap-8 max-w-7xl mx-auto">
             <!-- Sidebar -->
             <div class="w-full lg:w-1/3 space-y-4">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-5 border-2 border-blue-100 dark:border-slate-700 transition-colors duration-300">
@@ -228,7 +230,7 @@
                 <span>تاريخ التحديث: {{ date('Y-m-d') }}</span>
             </div>
         </div>
-    </div>�ي (Landscape) عند الطباعة، وضبط الهوامش على خيار "بلا هوامش" (No margins) ليتم ملء الورقة بالشهادة بالكامل دون أطراف بيضاء مشوهة للتصميم.</p>
+    </div>ي (Landscape) عند الطباعة، وضبط الهوامش على خيار "بلا هوامش" (No margins) ليتم ملء الورقة بالشهادة بالكامل دون أطراف بيضاء مشوهة للتصميم.</p>
                             <p><strong>جودة الألوان ودقة الحبر</strong>: استخدم طابعة ملونة ذات دقة ممتازة (Inject أو Laser) وتأكد من ضبط مستويات الحبر لضمان ظهور تفاصيل الإطار الذهبي والخطوط الزخرفية بدقة فائقة الجمال.</p>
                         </div>
                     </div>
